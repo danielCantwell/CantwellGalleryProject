@@ -11,19 +11,20 @@
     <android.support.v4.widget.SlidingPaneLayout
             android:layout_height="match_parent"
             android:layout_width="match_parent"
-            android:layoutDirection="rtl">
+            android:layoutDirection="rtl"
+            android:id="@+id/slidingpanelayout">
 
-        <TextView
+        <fragment
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#EC7703"
-                android:text="Pane 1"/>
+                android:name="com.cantwellcode.cantwellgallery.AlbumPane"
+                android:id="@+id/album_pane"/>
 
-        <TextView
+        <fragment
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#2F0069"
-                android:text="Pane 2"/>
+                android:name="com.cantwellcode.cantwellgallery.PhotoPane"
+                android:id="@+id/photo_pane"/>
 
     </android.support.v4.widget.SlidingPaneLayout>
 
