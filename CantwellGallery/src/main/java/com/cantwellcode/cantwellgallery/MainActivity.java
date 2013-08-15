@@ -1,19 +1,15 @@
 package com.cantwellcode.cantwellgallery;
 
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
+import android.content.Context;
 import android.os.Bundle;
-import android.app.Activity;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SlidingPaneLayout;
-import android.view.Display;
-import android.view.Menu;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.TextView;
+import android.widget.ListView;
 
 public class MainActivity extends FragmentActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

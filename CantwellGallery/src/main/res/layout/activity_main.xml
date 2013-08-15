@@ -8,23 +8,46 @@
                 android:paddingBottom="@dimen/activity_vertical_margin"
                 tools:context=".MainActivity">
 
+    <ListView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:id="@+id/quickBar"
+            android:layout_above="@+id/imageButton"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"/>
+
+    <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:id="@+id/imageButton"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="false"
+            android:layout_alignLeft="@+id/quickBar"
+            android:layout_alignRight="@+id/quickBar"/>
+
     <android.support.v4.widget.SlidingPaneLayout
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:layoutDirection="rtl"
-            android:id="@+id/slidingpanelayout">
+            android:id="@+id/slidingpanelayout"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentRight="false"
+            android:layout_toRightOf="@+id/quickBar">
 
         <fragment
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:name="com.cantwellcode.cantwellgallery.AlbumPane"
-                android:id="@+id/album_pane"/>
+                android:id="@+id/album_pane"
+                tools:layout="@layout/album_pane"/>
 
         <fragment
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:name="com.cantwellcode.cantwellgallery.PhotoPane"
-                android:id="@+id/photo_pane"/>
+                android:id="@+id/photo_pane"
+                tools:layout="@layout/photo_pane"/>
 
     </android.support.v4.widget.SlidingPaneLayout>
 
