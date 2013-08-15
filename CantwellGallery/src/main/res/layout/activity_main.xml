@@ -14,8 +14,7 @@
             android:id="@+id/quickBar"
             android:layout_above="@+id/addNewDirectoryButton"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:onClick="addNewDirectoryButtonClick"/>
+            android:layout_alignParentTop="true"/>
 
     <ImageButton
             android:layout_width="wrap_content"
@@ -24,7 +23,8 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="false"
             android:layout_alignLeft="@+id/quickBar"
-            android:layout_alignRight="@+id/quickBar"/>
+            android:layout_alignRight="@+id/quickBar"
+            android:onClick="addNewDirectoryButtonClick"/>
 
     <android.support.v4.widget.SlidingPaneLayout
             android:layout_height="match_parent"
