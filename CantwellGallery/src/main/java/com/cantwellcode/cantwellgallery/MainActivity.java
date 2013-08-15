@@ -8,14 +8,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ListView;
 
-public class MainActivity extends FragmentActivity {
+import java.io.File;
+import java.util.ArrayList;
 
+public class MainActivity extends FragmentActivity {
+    ListView quickBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final View root = getLayoutInflater().inflate(R.layout.activity_main, null);
         setContentView(root);
+
+        quickBar = (ListView) this.findViewById(R.id.quickBar);
+        AlbumListAdapter adapter = new AlbumListAdapter(this,new ArrayList<File>(),0);
+        quickBar.setAdapter(adapter);
 
         final SlidingPaneLayout slidingPaneLayout = SlidingPaneLayout.class.cast(root.findViewById(R.id.slidingpanelayout));
 
@@ -51,6 +58,10 @@ public class MainActivity extends FragmentActivity {
                 }
             }
         });
+
+    }
+
+    private void onAddDirectoryButtonClick(){
 
     }
 

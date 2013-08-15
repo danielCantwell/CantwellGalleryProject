@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:alpha="0.5f">
+
+    <ImageView
+            android:layout_width="@dimen/inactive_album_icon_width"
+            android:layout_height="@dimen/inactive_album_icon_height"
+            android:id="@+id/inactiveAlbumIcon"
+            android:layout_gravity="left|center_vertical"
+            />
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Text"
+            android:id="@+id/inactiveAlbumName"
+            android:layout_gravity="left|center_vertical"/>
+</LinearLayout>

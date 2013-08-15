@@ -12,14 +12,15 @@
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:id="@+id/quickBar"
-            android:layout_above="@+id/imageButton"
+            android:layout_above="@+id/addNewDirectoryButton"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"/>
+            android:layout_alignParentTop="true"
+            android:onClick="addNewDirectoryButtonClick"/>
 
     <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:id="@+id/imageButton"
+            android:id="@+id/addNewDirectoryButton"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="false"
             android:layout_alignLeft="@+id/quickBar"
