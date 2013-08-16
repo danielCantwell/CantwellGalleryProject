@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.CursorAdapter;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.util.Log;
 import android.view.View;
@@ -23,23 +25,26 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private static final String   IMAGE_DIRECTORY_ID = MediaStore.Images.ImageColumns._ID;
     private static final String   IMAGE_BUCKET_ID    = MediaStore.Images.ImageColumns.BUCKET_ID;
     private static final String   IMAGE_DIRECTORY    = MediaStore.Images.ImageColumns.DATA;
+    private static final String   IMAGE_DIRECTORY_NAME = MediaStore.Images.ImageColumns.DISPLAY_NAME;
     private static final String   IMAGE_DATA         = MediaStore.Images.Media.DATA;
     private static final String   IMAGE_ID           = MediaStore.Images.Media._ID;
     private static final String   IMAGE_THUMBNAIL    = MediaStore.Images.Media.MINI_THUMB_MAGIC;
+    private static final String   IMAGE_DISPLAY_NAME = MediaStore.Images.Media.DISPLAY_NAME;
     private static final String   IMAGE_SORT_ORDER   = MediaStore.Images.Media.DEFAULT_SORT_ORDER;
-    private static final String[] PROJECTION         = {IMAGE_DIRECTORY_ID,IMAGE_DIRECTORY,IMAGE_ID,IMAGE_DATA,IMAGE_THUMBNAIL};
-    private static final String   SELECTION          = null;
-    private static final String[] SELECTION_ARGS     = {};
+    private static final String[] IMAGE_PROJECTION   =
+            {IMAGE_DIRECTORY_ID,IMAGE_DIRECTORY,IMAGE_ID,IMAGE_DISPLAY_NAME,IMAGE_DATA,IMAGE_THUMBNAIL};
+    private static final String   IMAGE_SELECTION    = null;
+    private static final String[] IMAGE_SELECTION_ARGS = {};
     private static final int      IMAGE_FILE_LOADER  = 0;
 
     private ListView  mQuickBar;
-    private Cursor    mCursor;
+    private CursorAdapter mQuickBarAdapter;
 
     @Override
     public Loader<Cursor> onCreateLoader(int loaderID, Bundle bundle) {
         switch (loaderID){
             case IMAGE_FILE_LOADER:
-                return new CursorLoader(this,IMAGE_URI,PROJECTION,SELECTION,SELECTION_ARGS, IMAGE_SORT_ORDER);
+                return new CursorLoader(this,IMAGE_URI, IMAGE_PROJECTION, IMAGE_SELECTION, IMAGE_SELECTION_ARGS, IMAGE_SORT_ORDER);
             default:
                 return null;
         }
@@ -47,19 +52,18 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+        // Swap the new cursor in.  (The framework will take care of closing the
+        // old cursor once we return.)
         Log.d(TAG,"MediaStore Query complete. " + cursor.getCount() + " files found.");
-        final int MAX;
-        if(cursor.getCount() >= 10) MAX = 10;
-        else MAX = cursor.getCount();
-        if(!cursor.isFirst()) cursor.moveToFirst();
-        for (int i=0; i<MAX; ++i){
-        }
-        cursor.close();
+        mQuickBarAdapter.swapCursor(cursor);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
-
+        // This is called when the last Cursor provided to onLoadFinished()
+        // above is about to be closed.  We need to make sure we are no
+        // longer using it.
+        mQuickBarAdapter.swapCursor(null);
     }
 
     @Override
@@ -70,11 +74,13 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         final View root = getLayoutInflater().inflate(R.layout.activity_main, null);
         setContentView(root);
 
-        getSupportLoaderManager().initLoader(IMAGE_FILE_LOADER,null,this);
+        mQuickBar = (ListView) findViewById(R.id.quickBar);
+        String[] displayFields = {IMAGE_DISPLAY_NAME};
+        int[] displayViews = {R.id.activeAlbumName};
+        mQuickBarAdapter = new SimpleCursorAdapter(this,R.layout.active_album,null,displayFields,displayViews,0);
+        mQuickBar.setAdapter(mQuickBarAdapter);
 
-//        mQuickBar = (ListView) this.findViewById(R.id.quickBar);
-//        AlbumListAdapter adapter = new AlbumListAdapter(this,new ArrayList<File>(),0);
-//        mQuickBar.setAdapter(adapter);
+        getSupportLoaderManager().initLoader(IMAGE_FILE_LOADER, null, this);
 
         final SlidingPaneLayout slidingPaneLayout = SlidingPaneLayout.class.cast(root.findViewById(R.id.slidingpanelayout));
 
@@ -111,14 +117,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             }
         });
 
-    }
-
-    private void initMedia() {
-        Uri imageUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-        String[] projection = {MediaStore.Images.ImageColumns.DATA}; // Find image directories
-        String selectionClause = null;
-        String[] selectionArgs = {""};
-//        Cursor cursor = getContentResolver().query(fileUri,projection,);
     }
 
 /*    private static SortedSet<Album> getExternalStorageAlbums(Context context){
@@ -162,6 +160,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         }
     }
 */
+
 
     private void onAddDirectoryButtonClick(){
 

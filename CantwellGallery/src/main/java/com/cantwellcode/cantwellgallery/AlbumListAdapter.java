@@ -1,10 +1,11 @@
 package com.cantwellcode.cantwellgallery;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,8 +15,10 @@ import java.util.List;
 
 /**
  * Created by Chris on 8/14/13.
+ * Adapter for displaying data from a cursor in a ListView.
+ * Accepts a position corresponding to an active selection.
  */
-public class AlbumListAdapter extends BaseAdapter {
+public class AlbumListAdapter extends CursorAdapter {
 
     /**
      * Inner class to hold the icon and text for each view in the list
@@ -31,83 +34,64 @@ public class AlbumListAdapter extends BaseAdapter {
      */
     private static final int ACTIVE_KEY   = 0;
     private static final int INACTIVE_KEY = 1;
+    private static final int DEFAULT_ACTIVE_POSITION = 0;
 
-    private int             mActivePosition;
-    private Context         mContext;
-    private LayoutInflater  mInflater;
-    private List<File>      mAlbums;
+    private int mActivePosition;
+    private LayoutInflater mInflater;
+
 
     /**
-     * Constructor that does not have a List of Files as a parameter
-     * so it creates a blank list
+     * Default constructor.  Creates a blank list and uses the default active position.
      * @param context
+     * @param cursor
+     */
+    public AlbumListAdapter(Context context, Cursor cursor){
+        super(context,cursor,0);
+        init(DEFAULT_ACTIVE_POSITION);
+    }
+    /**
+     * Constructor that does not have a List of IDs as a parameter
+     * so it creates a blank list.
+     * @param context
+     * @param cursor
      * @param activePosition
      */
-    public AlbumListAdapter(Context context, int activePosition){
-        init(context, new ArrayList<File>(), activePosition);
+    public AlbumListAdapter(Context context, Cursor cursor, int activePosition){
+        super(context,cursor,0);
+        init(activePosition);
     }
 
-    /**
-     * Constructor that includes the List of Files, which are the albums
-     * @param context
-     * @param albums
-     * @param activePosition
-     */
-    public AlbumListAdapter(Context context, List<File> albums, int activePosition){
-        init(context,albums,activePosition);
+/*    public AlbumListAdapter(Context context, Cursor c, boolean autoRequery) {
+        super(context, c, autoRequery);
     }
 
-    /**
-     * Returns the size of the List of album Files
-     * @return
-     */
-    @Override
-    public int getCount() {
-        return mAlbums.size();
+    public AlbumListAdapter(Context context, Cursor c, int flags) {
+        super(context, c, flags);
     }
+*/
 
-    /**
-     * Returns the File at index i
-     * @param i
-     * @return
-     */
-    @Override
-    public Object getItem(int i) {
-        return mAlbums.get(i);
-    }
-
-    /**
-     * Returns the @id/ of the item at index i
-     * @param i
-     * @return
-     */
-    @Override
-    public long getItemId(int i) {
-        return 0;
-    }
 
     /**
      * Called each time a view needs to be loaded
      * to be displayed in the list
      * It controls what and how each item is displayed
-     * @param position
-     * @param convertView
-     * @param parent
+     * @param //position
+     * @param //convertView
+     * @param //parent
      * @return
      */
+/*
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ViewHolder holder;
-
-        File album = mAlbums.get(position);
 
         // if the list view is first being populated
         if (convertView == null){
             holder = new ViewHolder();
 
             // for the active position
-            if (position==mActivePosition){
+            if (position== mActivePosition){
                 // inflate the view with the layout for "active position"
                 convertView=mInflater.inflate(R.layout.active_album, null, false);
 
@@ -144,21 +128,55 @@ public class AlbumListAdapter extends BaseAdapter {
         }
 
         // set the text and icon information for the view, whether it is active or inactive position
-        holder.text.setText(album.getName());
+        holder.text.setText("Text");
         holder.icon.setImageResource(R.drawable.ic_launcher);
 
         return convertView;
     }
+*/
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if (!mDataValid) {
+            throw new IllegalStateException("this should only be called when the cursor is valid");
+        }
+        if (!mCursor.moveToPosition(position)) {
+            throw new IllegalStateException("couldn't move cursor to position " + position);
+        }
+        View v;
+        if (convertView == null) {
+            v = newView(mContext, mCursor, parent);
+        } else {
+            v = convertView;
+        }
+        bindView(v, mContext, mCursor);
+        return v;
+    }
+    @Override
+    public View newView(Context context, Cursor cursor, ViewGroup viewGroup) {
+        ViewHolder holder = new ViewHolder();
+        View v;
+        int position = cursor.getPosition();
+        if (position == mActivePosition){
+            v = mInflater.inflate(R.layout.active_album,null,false);
+        }
+        else{
+            v = mInflater.inflate(R.layout.inactive_album,null,false);
+        }
+        return v;
+    }
+
+    @Override
+    public void bindView(View view, Context context, Cursor cursor) {
+        int position = cursor.getPosition();
+        if(position==mActivePosition){
+        }
+    }
 
     /**
      * Initialize member variables
-     * @param context
-     * @param albums
      * @param activePosition
      */
-    private void init(Context context, List<File> albums, int activePosition){
-        mContext        = context;
-        mAlbums         = albums;
+    private void init(int activePosition){
         mActivePosition = activePosition;
         mInflater       = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
