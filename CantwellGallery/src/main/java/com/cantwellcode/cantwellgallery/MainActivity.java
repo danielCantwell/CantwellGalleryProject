@@ -1,10 +1,8 @@
 package com.cantwellcode.cantwellgallery;
 
-import android.app.LoaderManager;
-import android.content.ContentResolver;
-import android.content.Context;
-import android.content.CursorLoader;
-import android.content.Loader;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,23 +13,24 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
 /**
  * Main Activity that is first loaded when the application starts
  */
 public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
-    private static final String   TAG               = "CANTWELL_GALLERY";
-    private static final Uri      URI               = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-    private static final String[] PROJECTION        = {""};
-    private static final String   SELECTION         = null;
-    private static final String[] SELECTION_ARGS    = {};
-    private static final String   SORT_ORDER        = null;
-    private static final int      MEDIA_FILE_LOADER = 0;
+    private static final String   TAG                = "CANTWELL_GALLERY";
+    private static final Uri      IMAGE_URI          = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+    private static final String   IMAGE_DIRECTORY_ID = MediaStore.Images.ImageColumns._ID;
+    private static final String   IMAGE_BUCKET_ID    = MediaStore.Images.ImageColumns.BUCKET_ID;
+    private static final String   IMAGE_DIRECTORY    = MediaStore.Images.ImageColumns.DATA;
+    private static final String   IMAGE_DATA         = MediaStore.Images.Media.DATA;
+    private static final String   IMAGE_ID           = MediaStore.Images.Media._ID;
+    private static final String   IMAGE_THUMBNAIL    = MediaStore.Images.Media.MINI_THUMB_MAGIC;
+    private static final String   IMAGE_SORT_ORDER   = MediaStore.Images.Media.DEFAULT_SORT_ORDER;
+    private static final String[] PROJECTION         = {IMAGE_DIRECTORY_ID,IMAGE_DIRECTORY,IMAGE_ID,IMAGE_DATA,IMAGE_THUMBNAIL};
+    private static final String   SELECTION          = null;
+    private static final String[] SELECTION_ARGS     = {};
+    private static final int      IMAGE_FILE_LOADER  = 0;
 
     private ListView  mQuickBar;
     private Cursor    mCursor;
@@ -39,8 +38,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     @Override
     public Loader<Cursor> onCreateLoader(int loaderID, Bundle bundle) {
         switch (loaderID){
-            case MEDIA_FILE_LOADER:
-                return new CursorLoader(this,URI,PROJECTION,SELECTION,SELECTION_ARGS,SORT_ORDER);
+            case IMAGE_FILE_LOADER:
+                return new CursorLoader(this,IMAGE_URI,PROJECTION,SELECTION,SELECTION_ARGS, IMAGE_SORT_ORDER);
             default:
                 return null;
         }
@@ -48,7 +47,14 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-
+        Log.d(TAG,"MediaStore Query complete. " + cursor.getCount() + " files found.");
+        final int MAX;
+        if(cursor.getCount() >= 10) MAX = 10;
+        else MAX = cursor.getCount();
+        if(!cursor.isFirst()) cursor.moveToFirst();
+        for (int i=0; i<MAX; ++i){
+        }
+        cursor.close();
     }
 
     @Override
@@ -64,7 +70,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         final View root = getLayoutInflater().inflate(R.layout.activity_main, null);
         setContentView(root);
 
-        getLoaderManager().initLoader(MEDIA_FILE_LOADER,null,this);
+        getSupportLoaderManager().initLoader(IMAGE_FILE_LOADER,null,this);
 
 //        mQuickBar = (ListView) this.findViewById(R.id.quickBar);
 //        AlbumListAdapter adapter = new AlbumListAdapter(this,new ArrayList<File>(),0);
