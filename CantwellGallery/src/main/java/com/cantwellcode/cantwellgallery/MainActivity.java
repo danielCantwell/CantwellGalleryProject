@@ -18,8 +18,8 @@ import android.widget.ListView;
 /**
  * Main Activity that is first loaded when the application starts
  */
-public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<Cursor>{
-
+public class MainActivity extends FragmentActivity implements QuickBarFragment.QuickBarCallbacks{
+/*
     private static final String   TAG                = "CANTWELL_GALLERY";
     private static final Uri      IMAGE_URI          = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
     private static final String   IMAGE_DIRECTORY_ID = MediaStore.Images.ImageColumns._ID;
@@ -36,10 +36,10 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private static final String   IMAGE_SELECTION    = null;
     private static final String[] IMAGE_SELECTION_ARGS = {};
     private static final int      IMAGE_FILE_LOADER  = 0;
-
+*/
     private ListView  mQuickBar;
     private CursorAdapter mQuickBarAdapter;
-
+/*
     @Override
     public Loader<Cursor> onCreateLoader(int loaderID, Bundle bundle) {
         switch (loaderID){
@@ -65,7 +65,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         // longer using it.
         mQuickBarAdapter.swapCursor(null);
     }
-
+*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,14 +73,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         // inflate the main view with the main activity layout
         final View root = getLayoutInflater().inflate(R.layout.activity_main, null);
         setContentView(root);
-
-        mQuickBar = (ListView) findViewById(R.id.quickBar);
-        String[] displayFields = {IMAGE_DISPLAY_NAME};
-        int[] displayViews = {R.id.activeAlbumName};
-        mQuickBarAdapter = new SimpleCursorAdapter(this,R.layout.active_album,null,displayFields,displayViews,0);
-        mQuickBar.setAdapter(mQuickBarAdapter);
-
-        getSupportLoaderManager().initLoader(IMAGE_FILE_LOADER, null, this);
 
         final SlidingPaneLayout slidingPaneLayout = SlidingPaneLayout.class.cast(root.findViewById(R.id.slidingpanelayout));
 
@@ -161,10 +153,21 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
 */
 
+    @Override
+    public QuickBarFragment.CursorLoaderArgs onQuickBarCursorLoaderArgsRequest() {
+        Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+        String[] projection = {MediaStore.Images.ImageColumns._ID, MediaStore.Images.ImageColumns.DATA,
+                MediaStore.Images.ImageColumns.MINI_THUMB_MAGIC};
+        String selection = null;
+        String[] selectionArgs = {};
+        String sortOrder = null;
 
-    private void onAddDirectoryButtonClick(){
-
+        QuickBarFragment.CursorLoaderArgs args = new QuickBarFragment.CursorLoaderArgs(uri,projection,selection,selectionArgs,sortOrder);
+        return args;
     }
 
-    
+    @Override
+    public void onQuickBarButtonClick() {
+
+    }
 }

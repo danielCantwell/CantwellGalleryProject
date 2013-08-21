@@ -7,16 +7,16 @@
               android:background="#000000">
 
     <ListView
-            android:layout_width="@dimen/quick_bar_width"
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/quickBarListView"
             android:layout_gravity="left|center_vertical"
             android:layout_above="@+id/quickBarImageButton"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"/>
 
     <ImageButton
-            android:layout_width="@dimen/quick_bar_width"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/quick_bar_width"
             android:id="@+id/quickBarImageButton"
             android:layout_gravity="left|center_vertical"

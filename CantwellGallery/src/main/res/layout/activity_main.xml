@@ -9,7 +9,7 @@
                 tools:context=".MainActivity">
 
     <ListView
-            android:layout_width="50dp"
+            android:layout_width="@dimen/quick_bar_width"
             android:layout_height="match_parent"
             android:id="@+id/quickBar"
             android:layout_above="@+id/addNewDirectoryButton"
