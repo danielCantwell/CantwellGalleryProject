@@ -11,10 +11,13 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
@@ -25,6 +28,8 @@ import java.util.List;
  * Created by Chris on 8/16/13.
  */
 public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
+    private static final String TAG = "QuickBarFragment";
+    private static final int    CURSOR_LOADER = 0;
 
     static class QuickBarAdapter extends CursorAdapter {
 
@@ -96,10 +101,14 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
         public void onQuickBarButtonClick();
     }
 
-    private CursorLoaderArgs mCursorLoaderArgs;
     private QuickBarCallbacks mListener;
+
+    private Cursor mCursor;
+
     private SimpleCursorAdapter mQuickBarAdapter;
     private ListView mListView;
+
+
 
     /**
      * Called when the fragment is attached to the host activity.
@@ -116,16 +125,6 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
         }
     }
 
-    /**
-     * Called when the fragment is created or reinstantiated.
-     * @param savedInstanceState: null on creation.  If the fragment is pushed onto the backstack
-     *                          this can be used to save certain parameters for reinstantiation
-     */
-    @Override
-    public void onCreate(Bundle savedInstanceState){
-        mCursorLoaderArgs = null;
-        getLoaderManager().initLoader(0,null,this);
-    }
 
     /**
      * Called when the fragment view is created.
@@ -140,13 +139,26 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the view for this fragment from the associated xml file.
         final View root = inflater.inflate(R.layout.quick_bar, container, false);
-        // Initialize the ListView adapter and attach it to the ListView.
-        String[] from = {MediaStore.Images.ImageColumns.DATA};
+
+        // Create empty adapter
+        String[] from = {MediaStore.Images.ImageColumns._ID};
         int[] to = {R.id.activeAlbumName};
-        mQuickBarAdapter = new SimpleCursorAdapter(getActivity(),R.layout.active_album,null,from,to,0);
-        mListView = root != null ? (ListView) root.findViewById(R.id.quickBar) : null;
-        if (mListView != null) mListView.setAdapter(mQuickBarAdapter);
+        mQuickBarAdapter = new SimpleCursorAdapter(getActivity(),R.layout.active_album,null,
+                from,to,0);
+
+        // Set adapter to ListView
+        mListView = (ListView) root.findViewById(R.id.quickBarListView);
+        mListView.setAdapter(mQuickBarAdapter);
+
+        // Initialize cursor loader.  It will swap data into adapter when finished loading
+        getLoaderManager().initLoader(CURSOR_LOADER, null, this);
+
         return root;
+    }
+
+    private static String cursorLogData(Cursor cursor) {
+        if (null==cursor) return "Null Cursor";
+        else return cursor.toString();
     }
 
     /**
@@ -160,10 +172,10 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
     public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {
         // Loader creation requires a Uri to a datasource. This is held in the fragment's mCursorLoaderArgs
         // member.  If this is null, the host acitvity should provide it.
-        if (null == mCursorLoaderArgs) mCursorLoaderArgs = mListener.onQuickBarCursorLoaderArgsRequest();
-        CursorLoader loader = new CursorLoader(this.getActivity(),mCursorLoaderArgs.uri,
-                mCursorLoaderArgs.projection,mCursorLoaderArgs.selection,mCursorLoaderArgs.selectionArgs,
-                mCursorLoaderArgs.sortOrder);
+        CursorLoaderArgs args = mListener.onQuickBarCursorLoaderArgsRequest();
+        CursorLoader loader = new CursorLoader(this.getActivity(),args.uri,
+                args.projection,args.selection,args.selectionArgs,
+                args.sortOrder);
         return loader;
     }
 
@@ -191,4 +203,6 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
         // Swap a null cursor into the adapter so it doesn't try to reference an invalid cursor.
         mQuickBarAdapter.swapCursor(null);
     }
+
+
 }
