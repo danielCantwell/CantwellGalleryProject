@@ -26,6 +26,11 @@ import java.util.List;
 
 /**
  * Created by Chris on 8/16/13.
+ * Displays a subset of directories from a database provided by the host activity.
+ * Host activity must provide a Uri for the database, the column name for the
+ * directory id and the Active and Inactive views to be used for display, along with their
+ * associated bindings.
+ * This fragment will then keep a modifiable list of directories to display
  */
 public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
     private static final String TAG = "QuickBarFragment";
@@ -141,7 +146,7 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
         final View root = inflater.inflate(R.layout.quick_bar, container, false);
 
         // Create empty adapter
-        String[] from = {MediaStore.Images.ImageColumns._ID};
+        String[] from = {MediaStore.Images.Media.BUCKET_DISPLAY_NAME};
         int[] to = {R.id.activeAlbumName};
         mQuickBarAdapter = new SimpleCursorAdapter(getActivity(),R.layout.active_album,null,
                 from,to,0);
