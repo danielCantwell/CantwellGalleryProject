@@ -1,8 +1,9 @@
 package com.cantwellcode.cantwellgallery;
 
 import android.app.Activity;
-import android.content.Context;
 import android.database.Cursor;
+import android.database.DataSetObservable;
+import android.database.DataSetObserver;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,8 +14,11 @@ import android.util.Log;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 /**
@@ -22,7 +26,68 @@ import java.util.Map;
  */
 public class LoaderManagerFragment extends Fragment
         implements LoaderManager.LoaderCallbacks<Cursor>, ManagedList.Manager{
+
     private static final String TAG = "LOADER_MANAGER_FRAGMENT";
+
+    public static class DatabaseSubset extends DataSetObserver {
+        private static final String TAG = "DATABASE_SUBSET";
+
+        private Cursor mCursor;
+        private Map<String,List<String>> mData;
+        private List<Observer> mObservers;
+
+        public static interface Observer{
+            public void onChanged();
+            public void onInvalidated();
+        }
+
+        public DatabaseSubset(Cursor database) {
+            mCursor = database;
+            mCursor.registerDataSetObserver(this);
+        }
+
+
+        private void update() {
+        }
+
+        public List<String> get(String columnName){
+            return mData.get(columnName);
+        }
+
+        @Override
+        public void onChanged(){
+            Log.d(TAG, this.toString() + ": The data backing this subset has changed.");
+            // Update the data
+            update();
+            // Notify observers
+            for (Observer observer : mObservers) observer.onChanged();
+        }
+
+        @Override
+        public void onInvalidated(){
+            Log.d(TAG, this.toString() + ": The data backing this subset has been invalidated.");
+            // Remove cursor reference
+            mCursor = null;
+            // Notify observers
+            for (Observer observer : mObservers) observer.onInvalidated();
+        }
+
+    }
+
+
+    public DatabaseSubset getNewDatabaseSubset(int databaseID){
+        Cursor database = mCursors.get(databaseID);
+        DatabaseSubset subset = new DatabaseSubset(database);
+        return null;
+    }
+
+    private static class PendingLoader {
+        Bundle bundle;
+        public PendingLoader(Bundle bundle) {
+            this.bundle = bundle;
+        }
+    }
+
 
     public static final String URI              = "URI";
     public static final String PROJECTION       = "PROJECTION";
@@ -30,29 +95,22 @@ public class LoaderManagerFragment extends Fragment
     public static final String SELECTION_ARGS   = "SELECTION_ARGS";
     public static final String SORT_ORDER       = "SORT_ORDER";
 
-    public interface Callbacks{
-    }
-    private static class PendingLoad{
-        int id;
-        Bundle bundle;
-
-        public PendingLoad(int id, Bundle bundle) {
-            this.id = id;
-            this.bundle = bundle;
-        }
-    }
+    private final Object mOnAttachLock = new Object();
+    private boolean mIsAttached = false;
+    private Map<String,PendingLoader> mPendingLoaders= new HashMap<String, PendingLoader>();
 
     private int mLoaderCount;
     private Map<String,Cursor> mCursors;
-    private boolean mIsAttached = false;
-    private List<PendingLoad> mPendingLoads = new ArrayList<PendingLoad>();
 
     @Override
     public void onAttach(Activity activity){
         super.onAttach(activity);
-        mIsAttached = true;
-        load(mPendingLoads);
-//        mPendingLoads.clear();
+        Log.d(TAG, "onAttach() thread = " + Thread.currentThread().getName());
+        load(mPendingLoaders);
+        synchronized (mOnAttachLock){
+            mIsAttached = true;
+            mOnAttachLock.notifyAll();
+        }
      }
 
     @Override
@@ -60,6 +118,10 @@ public class LoaderManagerFragment extends Fragment
         super.onCreate(savedInstanceState);
         mLoaderCount = 0;
         mCursors = new HashMap<String, Cursor>();
+    }
+
+    public static LoaderManagerFragment newInstance(){
+        return new LoaderManagerFragment();
     }
 
     /**
@@ -72,6 +134,7 @@ public class LoaderManagerFragment extends Fragment
      * @return
      */
     public int load(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder){
+        Log.d(TAG, "load() thread = " + Thread.currentThread().getName());
         int id = generateNewLoaderID();
         Bundle bundle = new Bundle();
         bundle.putParcelable(URI,uri);
@@ -80,17 +143,50 @@ public class LoaderManagerFragment extends Fragment
         bundle.putStringArray(SELECTION_ARGS,selectionArgs);
         bundle.putString(SORT_ORDER,sortOrder);
         // If the fragment is not attached to an activity yet save the load data.
-        if (!mIsAttached)mPendingLoads.add(new PendingLoad(id,bundle));
+        if (!mIsAttached) mPendingLoaders.put(String.valueOf(id), new PendingLoader(bundle));
         else getLoaderManager().initLoader(id, bundle, this);
         return id;
     }
 
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {
+        Log.d(TAG, "onCreateLoader() thread = " + Thread.currentThread().getName());
+        Uri uri = bundle.getParcelable(URI);
+        String[] projection = bundle.getStringArray(PROJECTION);
+        String selection = bundle.getString(SELECTION);
+        String[] selectionArgs = bundle.getStringArray(SELECTION_ARGS);
+        String sortOrder = bundle.getString(SORT_ORDER);
+        CursorLoader loader = new CursorLoader(this.getActivity(),uri,projection,selection,selectionArgs,sortOrder);
+        return loader;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+        Log.d(TAG, "Load of " + cursor.toString() + " complete.  " + cursor.getCount() + " rows found.");
+        // For each ObservableList associated with this loader, update data.
+
+        // Remove instance of cursor.
+        swapCursor(String.valueOf(cursorLoader.getId()), cursor);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> cursorLoader) {
+        // For each observable list associated with this loader, invalidate data.
+
+        // Remove instance of cursor
+        swapCursor(String.valueOf(cursorLoader.getId()), null);
+    }
+
+
     /**
-     * Private helper function to load more than one data set
-     * @param pendingLoads
+     * Private helper function to load any pending loaders
+     * @param pendingLoaders
      */
-    private void load(List<PendingLoad> pendingLoads) {
-        for (PendingLoad p : pendingLoads) getLoaderManager().initLoader(p.id,p.bundle,this);
+    private void load(Map<String, PendingLoader> pendingLoaders) {
+        for (String key : pendingLoaders.keySet()){
+            getLoaderManager().initLoader(getLoaderID(key),pendingLoaders.get(key).bundle,this);
+            pendingLoaders.remove(key);
+        }
     }
 
     /**
@@ -117,25 +213,21 @@ public class LoaderManagerFragment extends Fragment
         return old;
     }
 
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {
-        Uri uri = bundle.getParcelable(URI);
-        String[] projection = bundle.getStringArray(PROJECTION);
-        String selection = bundle.getString(SELECTION);
-        String[] selectionArgs = bundle.getStringArray(SELECTION_ARGS);
-        String sortOrder = bundle.getString(SORT_ORDER);
-        CursorLoader loader = new CursorLoader(this.getActivity(),uri,projection,selection,selectionArgs,sortOrder);
-        return loader;
+    /**
+     * Helper function for converting a String value corresponding to a map key into an int loader id
+     * @param loaderKey
+     * @return
+     */
+    private static int getLoaderID(String loaderKey){
+        return Integer.valueOf(loaderKey);
     }
 
-    @Override
-    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        Log.d(TAG, "Load of " + cursor.toString() + " complete.  " + cursor.getCount() + " rows found.");
-        swapCursor(String.valueOf(cursorLoader.getId()), cursor);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> cursorLoader) {
-        swapCursor(String.valueOf(cursorLoader.getId()), null);
+    /**
+     * Helper function for converting an int loader id into a String value to be used as a map key
+     * @param loaderID
+     * @return
+     */
+    private static String getLoaderMapKey(int loaderID){
+        return String.valueOf(loaderID);
     }
 }
