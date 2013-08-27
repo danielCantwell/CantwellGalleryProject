@@ -28,14 +28,14 @@
         <fragment
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:name="com.cantwellcode.cantwellgallery.AlbumPane"
+                android:name="com.cantwellcode.cantwellgallery.DirectoryFragment"
                 android:id="@+id/album_pane"
                 tools:layout="@layout/album_pane"/>
 
         <fragment
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:name="com.cantwellcode.cantwellgallery.PhotoPane"
+                android:name="com.cantwellcode.cantwellgallery.DirectoryContentFragment"
                 android:id="@+id/photo_pane"
                 tools:layout="@layout/photo_pane"/>
 

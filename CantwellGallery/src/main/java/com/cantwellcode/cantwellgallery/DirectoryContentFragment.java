@@ -10,14 +10,14 @@ import android.graphics.Color;
 /**
  * Created by Daniel on 8/13/13.
  */
-public class AlbumPane extends Fragment {
+public class DirectoryContentFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        final View root = inflater.inflate(R.layout.album_pane, container, false);
+        final View root = inflater.inflate(R.layout.photo_pane, container, false);
         root.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        root.setBackgroundColor(Color.GREEN);
+        root.setBackgroundColor(Color.CYAN);
 
         return root;
     }

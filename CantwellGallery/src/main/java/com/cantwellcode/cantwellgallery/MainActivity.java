@@ -21,57 +21,17 @@ import android.widget.ListView;
  * Main Activity that is first loaded when the application starts
  */
 public class MainActivity extends FragmentActivity
-        implements QuickBarFragment.QuickBarCallbacks, LoaderManagerFragment.Callbacks{
-/*
-    private static final String   TAG                = "CANTWELL_GALLERY";
-    private static final Uri      IMAGE_URI          = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-    private static final String   IMAGE_DIRECTORY_ID = MediaStore.Images.ImageColumns._ID;
-    private static final String   IMAGE_BUCKET_ID    = MediaStore.Images.ImageColumns.BUCKET_ID;
-    private static final String   IMAGE_DIRECTORY    = MediaStore.Images.ImageColumns.DATA;
-    private static final String   IMAGE_DIRECTORY_NAME = MediaStore.Images.ImageColumns.DISPLAY_NAME;
-    private static final String   IMAGE_DATA         = MediaStore.Images.Media.DATA;
-    private static final String   IMAGE_ID           = MediaStore.Images.Media._ID;
-    private static final String   IMAGE_THUMBNAIL    = MediaStore.Images.Media.MINI_THUMB_MAGIC;
-    private static final String   IMAGE_DISPLAY_NAME = MediaStore.Images.Media.DISPLAY_NAME;
-    private static final String   IMAGE_SORT_ORDER   = MediaStore.Images.Media.DEFAULT_SORT_ORDER;
-    private static final String[] IMAGE_PROJECTION   =
-            {IMAGE_DIRECTORY_ID,IMAGE_DIRECTORY,IMAGE_ID,IMAGE_DISPLAY_NAME,IMAGE_DATA,IMAGE_THUMBNAIL};
-    private static final String   IMAGE_SELECTION    = null;
-    private static final String[] IMAGE_SELECTION_ARGS = {};
-    private static final int      IMAGE_FILE_LOADER  = 0;
-*/
+        implements QuickBarFragment.QuickBarCallbacks, LoaderManagerFragment.ListenerCallbacks{
 
+    private static final String TAG                     = "MAIN ACTIVITY";
     private static final String LOADER_MANAGER_FRAGMENT = "LOADER_MANAGER_FRAGMENT";
-    private ListView  mQuickBar;
-    private CursorAdapter mQuickBarAdapter;
+    private static final int    IMAGE_BUCKET_LOADER     = 0x001;
+    private static final int    IMAGE_THUMBNAIL_LOADER  = 0x002;
+    private static final int    IMAGE_DATA_LOADER       = 0x003;
+
     private LoaderManagerFragment mLoaderManagerFragment;
-/*
-    @Override
-    public Loader<Cursor> onCreateLoader(int loaderID, Bundle bundle) {
-        switch (loaderID){
-            case IMAGE_FILE_LOADER:
-                return new CursorLoader(this,IMAGE_URI, IMAGE_PROJECTION, IMAGE_SELECTION, IMAGE_SELECTION_ARGS, IMAGE_SORT_ORDER);
-            default:
-                return null;
-        }
-    }
 
-    @Override
-    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        // Swap the new cursor in.  (The framework will take care of closing the
-        // old cursor once we return.)
-        Log.d(TAG,"MediaStore Query complete. " + cursor.getCount() + " files found.");
-        mQuickBarAdapter.swapCursor(cursor);
-    }
 
-    @Override
-    public void onLoaderReset(Loader<Cursor> cursorLoader) {
-        // This is called when the last Cursor provided to onLoadFinished()
-        // above is about to be closed.  We need to make sure we are no
-        // longer using it.
-        mQuickBarAdapter.swapCursor(null);
-    }
-*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,10 +42,11 @@ public class MainActivity extends FragmentActivity
 
         // Initialize LoaderManagerFragment
         mLoaderManagerFragment = new LoaderManagerFragment();
-        Bundle args = new Bundle();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(mLoaderManagerFragment,LOADER_MANAGER_FRAGMENT).commit();
-        mLoaderManagerFragment.load(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,null,null,null,null);
+
+        load(IMAGE_THUMBNAIL_LOADER);
+        load(IMAGE_BUCKET_LOADER);
 
 
         final SlidingPaneLayout slidingPaneLayout = SlidingPaneLayout.class.cast(root.findViewById(R.id.slidingpanelayout));
@@ -125,65 +86,58 @@ public class MainActivity extends FragmentActivity
 
     }
 
-/*    private static SortedSet<Album> getExternalStorageAlbums(Context context){
-        Uri imageUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-        String[] projection =
-                {MediaStore.Images.Media._ID, MediaStore.Images.ImageColumns.BUCKET_ID,
-                        MediaStore.Images.ImageColumns.DATA};
-        String selection = null;
-        String[] selectionArgs = {};
-        String sortOrder = null;
-        ContentResolver resolver = context.getContentResolver();
-        Cursor cursor;
-        try{
-            cursor = resolver.query(imageUri,projection,selection,selectionArgs,sortOrder);
-        }catch(RuntimeException e){
-            Log.e(TAG,e.getMessage());
-            return null;
+    private void load(int loaderID) {
+        Uri uri;
+        String[] projection;
+        String selection;
+        String[] selectionArgs;
+        String sortOrder;
+        switch (loaderID){
+            case IMAGE_BUCKET_LOADER:
+                uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                projection = new String[]{"DISTINCT " + MediaStore.Images.Media.BUCKET_ID,
+                        MediaStore.Images.Media.BUCKET_DISPLAY_NAME};
+                selection = null;
+                selectionArgs = new String[]{};
+                sortOrder = null;
+                break;
+            case IMAGE_THUMBNAIL_LOADER:
+                uri = MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI;
+                projection = new String[]{MediaStore.Images.Thumbnails._ID,
+                    MediaStore.Images.Thumbnails.IMAGE_ID};
+                selection = null;
+                selectionArgs = new String[]{};
+                sortOrder = null;
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid loader id: " + loaderID);
         }
-        if (null==cursor){
-            Log.e(TAG,"MediaStore Query Failed:"
-            + " context=\"" + context.toString() + "\""
-            + " imageURI=\"" + imageUri.toString() + "\""
-            + " projection=\"" + projection.toString() + "\""
-            + " selection=\"" + selection.toString() + "\""
-            + " selectionArgs=\"" + selectionArgs.toString() + "\""
-            + " sortOdrer=\"" + sortOrder.toString() + "\"");
-            return null;
-        }else if (cursor.getCount() < 1){
-            Log.d(TAG,"No Media Found");
-            cursor.close();
-            return new TreeSet<Album>();
-        }else{
-            String[] columnNames = cursor.getColumnNames();
-            int numRows = cursor.getCount();
-            Log.d(TAG,"Found " + numRows + " rows satisfying the query for columns: " + columnNames.toString());
-            SortedSet<Album> albums = new TreeSet<Album>();
-            for (int i=0; i<cursor.getCount(); ++i){
-
-            }
-            return albums;
-        }
+        mLoaderManagerFragment.load(loaderID,uri,projection,selection,selectionArgs,sortOrder);
     }
-*/
 
-    @Override
-    public QuickBarFragment.CursorLoaderArgs onQuickBarCursorLoaderArgsRequest() {
-        Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-        String[] projection = null;
-//                {MediaStore.Images.ImageColumns._ID, MediaStore.Images.ImageColumns.DATA,
-//                MediaStore.Images.ImageColumns.MINI_THUMB_MAGIC};
-        String selection = null;
-        String[] selectionArgs = {};
-        String sortOrder = null;
-
-        QuickBarFragment.CursorLoaderArgs args = new QuickBarFragment.CursorLoaderArgs(uri,projection,selection,selectionArgs,sortOrder);
-        return args;
-    }
 
     @Override
     public void onQuickBarButtonClick() {
 
     }
 
+    @Override
+    public void onLoadFinished(int id, Cursor cursor) {
+        Log.d(TAG,"Loader " + id + " finished loading.  " + cursor.getCount() + " rows returned.");
+        switch (id){
+            case IMAGE_BUCKET_LOADER:
+                Log.d(TAG,"Image bucket data finished loading.  Construct new view list");
+                break;
+            case IMAGE_THUMBNAIL_LOADER:
+                Log.d(TAG,"Image thumbnail data finished loading.  Get directory thumbnails");
+                break;
+            default:
+                throw new IllegalArgumentException(id + " is not a valid Loader id.");
+        }
+    }
+
+    @Override
+    public void onLoaderReset(int id) {
+
+    }
 }
