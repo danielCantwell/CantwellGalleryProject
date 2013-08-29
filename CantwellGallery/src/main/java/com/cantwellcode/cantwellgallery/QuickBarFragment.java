@@ -3,6 +3,7 @@ package com.cantwellcode.cantwellgallery;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -63,6 +64,7 @@ public class QuickBarFragment extends Fragment{
         super.onCreate(savedInstanceState);
         mItemIds = new ArrayList<String>();
         mItemNames = new ArrayList<String>();
+
     }
 
     /**
