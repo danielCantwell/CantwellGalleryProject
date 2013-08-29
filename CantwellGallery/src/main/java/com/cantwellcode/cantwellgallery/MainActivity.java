@@ -1,21 +1,18 @@
 package com.cantwellcode.cantwellgallery;
 
-import android.content.Context;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.widget.CursorAdapter;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.util.Log;
 import android.view.View;
-import android.widget.ListView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Main Activity that is first loaded when the application starts
@@ -25,11 +22,16 @@ public class MainActivity extends FragmentActivity
 
     private static final String TAG                     = "MAIN ACTIVITY";
     private static final String LOADER_MANAGER_FRAGMENT = "LOADER_MANAGER_FRAGMENT";
-    private static final int    IMAGE_BUCKET_LOADER     = 0x001;
-    private static final int    IMAGE_THUMBNAIL_LOADER  = 0x002;
-    private static final int    IMAGE_DATA_LOADER       = 0x003;
+    private static final String _ID                     = MediaStore.Images.Media._ID;
+    private static final String BUCKET_ID               = MediaStore.Images.Media.BUCKET_ID;
+    private static final String BUCKET_DISPLAY_NAME     = MediaStore.Images.Media.BUCKET_DISPLAY_NAME;
+
+    private static final int    IMAGE_BUCKET_DATA       = 0x001;
+    private static final int    IMAGE_THUMBNAIL_DATA    = 0x002;
 
     private LoaderManagerFragment mLoaderManagerFragment;
+    private QuickBarFragment mQuickBarFragment;
+    private Map<Integer,Cursor> mCursors;
 
 
     @Override
@@ -40,13 +42,19 @@ public class MainActivity extends FragmentActivity
         final View root = getLayoutInflater().inflate(R.layout.activity_main, null);
         setContentView(root);
 
+        mCursors = new HashMap<Integer, Cursor>();
+        FragmentManager fm = getSupportFragmentManager();
+        // Initialize QuickBarFragment
+        mQuickBarFragment = (QuickBarFragment) fm.findFragmentById(R.id.quickBarFragment);
+
         // Initialize LoaderManagerFragment
         mLoaderManagerFragment = new LoaderManagerFragment();
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction ft = fm.beginTransaction();
         ft.add(mLoaderManagerFragment,LOADER_MANAGER_FRAGMENT).commit();
 
-        load(IMAGE_THUMBNAIL_LOADER);
-        load(IMAGE_BUCKET_LOADER);
+        load(IMAGE_THUMBNAIL_DATA);
+        load(IMAGE_BUCKET_DATA);
+
 
 
         final SlidingPaneLayout slidingPaneLayout = SlidingPaneLayout.class.cast(root.findViewById(R.id.slidingpanelayout));
@@ -93,15 +101,14 @@ public class MainActivity extends FragmentActivity
         String[] selectionArgs;
         String sortOrder;
         switch (loaderID){
-            case IMAGE_BUCKET_LOADER:
+            case IMAGE_BUCKET_DATA:
                 uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-                projection = new String[]{"DISTINCT " + MediaStore.Images.Media.BUCKET_ID,
-                        MediaStore.Images.Media.BUCKET_DISPLAY_NAME};
+                projection = new String[]{"DISTINCT "+BUCKET_ID,BUCKET_DISPLAY_NAME};
                 selection = null;
                 selectionArgs = new String[]{};
                 sortOrder = null;
                 break;
-            case IMAGE_THUMBNAIL_LOADER:
+            case IMAGE_THUMBNAIL_DATA:
                 uri = MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI;
                 projection = new String[]{MediaStore.Images.Thumbnails._ID,
                     MediaStore.Images.Thumbnails.IMAGE_ID};
@@ -125,16 +132,24 @@ public class MainActivity extends FragmentActivity
     public void onLoadFinished(int id, Cursor cursor) {
         Log.d(TAG,"Loader " + id + " finished loading.  " + cursor.getCount() + " rows returned.");
         switch (id){
-            case IMAGE_BUCKET_LOADER:
+            case IMAGE_BUCKET_DATA:
                 Log.d(TAG,"Image bucket data finished loading.  Construct new view list");
+                mCursors.put(IMAGE_BUCKET_DATA,cursor);
+                updateQuickBar();
                 break;
-            case IMAGE_THUMBNAIL_LOADER:
+            case IMAGE_THUMBNAIL_DATA:
                 Log.d(TAG,"Image thumbnail data finished loading.  Get directory thumbnails");
+                mCursors.put(IMAGE_THUMBNAIL_DATA, cursor);
                 break;
             default:
                 throw new IllegalArgumentException(id + " is not a valid Loader id.");
         }
     }
+
+    private void updateQuickBar() {
+        mQuickBarFragment.changeCursor(mCursors.get(IMAGE_BUCKET_DATA),BUCKET_ID,BUCKET_DISPLAY_NAME);
+    }
+
 
     @Override
     public void onLoaderReset(int id) {

@@ -1,8 +1,13 @@
 package com.cantwellcode.cantwellgallery;
 
 import android.app.Activity;
+import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.CursorAdapter;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,50 +30,16 @@ import java.util.List;
 public class QuickBarFragment extends Fragment{
     private static final String TAG = "QuickBarFragment";
 
-    public class Item{
-        public int id;
-        public String displayName;
-    }
-
-    public class QuickBarAdapter extends BaseAdapter{
-
-        private List<Item> mItems;
-
-        @Override
-        public int getCount() {
-            return mItems.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return mItems.get(i);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return mItems.get(i).id;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            return null;
-        }
-
-        public List<Item> swap(List<Item> newItems){
-            List<Item> old = mItems;
-            mItems = newItems;
-            return old;
-        }
-    }
-
     public interface QuickBarCallbacks{
          public void onQuickBarButtonClick();
     }
 
     private QuickBarCallbacks mListener;
     private ListView mListView;
-    private ListAdapter mListAdapter;
-    private List<Item> mItems;
+    private ArrayAdapter mListAdapter;
+    private Cursor mCursor;
+    private List<String> mItemIds;
+    private List<String> mItemNames;
 
 
 
@@ -90,7 +61,8 @@ public class QuickBarFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mItems = new ArrayList<Item>();
+        mItemIds = new ArrayList<String>();
+        mItemNames = new ArrayList<String>();
     }
 
     /**
@@ -107,12 +79,33 @@ public class QuickBarFragment extends Fragment{
         // Inflate the view for this fragment from the associated xml file.
         final View root = inflater.inflate(R.layout.quick_bar, container, false);
         mListView = (ListView) root.findViewById(R.id.quickBarListView);
-        mListAdapter = new ArrayAdapter<Item>(getActivity(),R.layout.activity_main,mItems);
+        mListAdapter = new ArrayAdapter<String>(getActivity(),R.layout.active_album,R.id.activeAlbumName,mItemNames);
+        mListView.setAdapter(mListAdapter);
         return root;
     }
 
-    public void updateList(List<Item> newItems){
-        mItems = newItems;
+    public void changeCursor(Cursor cursor, String idColumn, String displayNameColumn){
+        List<String> ids = null;
+        List<String> names = null;
+        if (cursor != null){
+            ids = new ArrayList<String>();
+            names = new ArrayList<String>();
+            int idIndex = cursor.getColumnIndexOrThrow(idColumn);
+            int nameIndex = cursor.getColumnIndexOrThrow(displayNameColumn);
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()){
+                ids.add(cursor.getString(idIndex));
+                names.add(cursor.getString(nameIndex));
+                cursor.moveToNext();
+            }
+        }
+        mItemIds = ids;
+        mItemNames = names;
+        if (mListAdapter != null){
+            mListAdapter.clear();
+            mListAdapter.addAll(names);
+            mListAdapter.notifyDataSetChanged();
+        }
     }
 
 

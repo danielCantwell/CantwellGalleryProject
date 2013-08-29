@@ -12,7 +12,7 @@
             android:layout_width="@dimen/quick_bar_width"
             android:layout_height="match_parent"
             android:name="com.cantwellcode.cantwellgallery.QuickBarFragment"
-            android:id="@+id/quickBar"
+            android:id="@+id/quickBarFragment"
             tools:layout="@layout/quick_bar"/>
 
     <android.support.v4.widget.SlidingPaneLayout
@@ -23,7 +23,7 @@
             android:layout_alignParentEnd="false"
             android:layout_alignParentLeft="false"
             android:layout_alignParentRight="false"
-            android:layout_toRightOf="@+id/quickBar">
+            android:layout_toRightOf="@+id/quickBarFragment">
 
         <fragment
                 android:layout_width="match_parent"
