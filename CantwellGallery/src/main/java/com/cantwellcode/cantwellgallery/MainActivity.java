@@ -1,7 +1,5 @@
 package com.cantwellcode.cantwellgallery;
 
-import android.app.ActivityManager;
-import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.database.Cursor;
@@ -13,9 +11,7 @@ import android.support.v4.widget.SlidingPaneLayout;
 import android.util.Log;
 import android.view.View;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,31 +20,18 @@ import java.util.Map;
 public class MainActivity extends FragmentActivity
         implements QuickBarFragment.QuickBarCallbacks, LoaderManagerFragment.ListenerCallbacks{
 
-    // Log tags
     private static final String TAG                     = "MAIN ACTIVITY";
     private static final String LOADER_MANAGER_FRAGMENT = "LOADER_MANAGER_FRAGMENT";
-
-    // Exception strings
-    private static final String INVALID_ID              = " is an invalid loader id. " +
-            "If this is a BucketCursor, add the BUCKET_ID to mBucketCursors keyset before " +
-            "calling load.";
-
-    // Database Uri and column Strings
-    private static final Uri    CONTENT_URI             = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
     private static final String _ID                     = MediaStore.Images.Media._ID;
     private static final String BUCKET_ID               = MediaStore.Images.Media.BUCKET_ID;
     private static final String BUCKET_DISPLAY_NAME     = MediaStore.Images.Media.BUCKET_DISPLAY_NAME;
 
-    // IDs
-    private static final int    BUCKET_IDS              = 0x001;
+    private static final int    IMAGE_BUCKET_DATA       = 0x001;
+    private static final int    IMAGE_THUMBNAIL_DATA    = 0x002;
 
-    // Private Members
-    private LoaderManagerFragment   mLoaderManagerFragment;
-    private QuickBarFragment        mQuickBarFragment;
-    private Cursor                  mBucketIds;
-    private Map<Long,Cursor>        mBucketCursors;
-    private Map<Long,Long>          mBucketThumbnailIDMap;
-    private ThumbnailCache          mThumbnailCache;
+    private LoaderManagerFragment mLoaderManagerFragment;
+    private QuickBarFragment mQuickBarFragment;
+    private Map<Integer,Cursor> mCursors;
 
 
     @Override
@@ -59,21 +42,18 @@ public class MainActivity extends FragmentActivity
         final View root = getLayoutInflater().inflate(R.layout.activity_main, null);
         setContentView(root);
 
-        mBucketIds = null;
-        mBucketCursors = null;
-        mThumbnailCache = getThumbnailCache();
-
+        mCursors = new HashMap<Integer, Cursor>();
         FragmentManager fm = getSupportFragmentManager();
+        // Initialize QuickBarFragment
+        mQuickBarFragment = (QuickBarFragment) fm.findFragmentById(R.id.quickBarFragment);
 
         // Initialize LoaderManagerFragment
         mLoaderManagerFragment = new LoaderManagerFragment();
         FragmentTransaction ft = fm.beginTransaction();
         ft.add(mLoaderManagerFragment,LOADER_MANAGER_FRAGMENT).commit();
 
-        load(BUCKET_IDS);
-        // Initialize QuickBarFragment
-        mQuickBarFragment = (QuickBarFragment) fm.findFragmentById(R.id.quickBarFragment);
-
+        load(IMAGE_THUMBNAIL_DATA);
+        load(IMAGE_BUCKET_DATA);
 
 
 
@@ -114,47 +94,32 @@ public class MainActivity extends FragmentActivity
 
     }
 
-    private ThumbnailCache getThumbnailCache() {
-        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        int memoryClassBytes = manager.getMemoryClass()*1024*1024;
-        return new ThumbnailCache(memoryClassBytes/8);
-    }
-
-    /**
-     * Constructs Loader arguments and requests load() from the LoaderManagerFragment
-     * @param id : Reference ID of the Cursor to be loaded.
-     */
-    private void load(int id) {
+    private void load(int loaderID) {
         Uri uri;
         String[] projection;
         String selection;
         String[] selectionArgs;
         String sortOrder;
-        switch (id){
-            case BUCKET_IDS:
-                uri = CONTENT_URI;
-                projection = new String[]{"DISTINCT "+BUCKET_ID};
+        switch (loaderID){
+            case IMAGE_BUCKET_DATA:
+                uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                projection = new String[]{"DISTINCT "+BUCKET_ID,BUCKET_DISPLAY_NAME};
+                selection = null;
+                selectionArgs = new String[]{};
+                sortOrder = null;
+                break;
+            case IMAGE_THUMBNAIL_DATA:
+                uri = MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI;
+                projection = new String[]{MediaStore.Images.Thumbnails._ID,
+                    MediaStore.Images.Thumbnails.IMAGE_ID};
                 selection = null;
                 selectionArgs = new String[]{};
                 sortOrder = null;
                 break;
             default:
-                // If this is a BucketCursor Loader that has been added to mBucketCursors, load
-                if(isBucketCursor(id)){
-                    // Intended State:
-                    //      mBucketCursors.contains(id) == true
-                    // Description:
-                    // Action: Construct the appropriate Loader initialization arguments to
-                    //      get a cursor with data associated with this BUCKET_ID
-                    uri = CONTENT_URI;
-                    projection = new String[]{_ID,BUCKET_ID,BUCKET_DISPLAY_NAME};
-                    selection = BUCKET_ID + "=?";
-                    selectionArgs = new String[]{String.valueOf(id)};
-                    sortOrder = null;
-                }
-                else throw new IllegalArgumentException(id + INVALID_ID);
+                throw new IllegalArgumentException("Invalid loader id: " + loaderID);
         }
-        mLoaderManagerFragment.load(id,uri,projection,selection,selectionArgs,sortOrder);
+        mLoaderManagerFragment.load(loaderID,uri,projection,selection,selectionArgs,sortOrder);
     }
 
 
@@ -167,53 +132,22 @@ public class MainActivity extends FragmentActivity
     public void onLoadFinished(int id, Cursor cursor) {
         Log.d(TAG,"Loader " + id + " finished loading.  " + cursor.getCount() + " rows returned.");
         switch (id){
-            case BUCKET_IDS:
-                Log.d(TAG,"BUCKET_IDs finished loading.");
-                updateBucketIDs(cursor);
+            case IMAGE_BUCKET_DATA:
+                Log.d(TAG,"Image bucket data finished loading.  Construct new view list");
+                mCursors.put(IMAGE_BUCKET_DATA,cursor);
+                updateQuickBar();
+                break;
+            case IMAGE_THUMBNAIL_DATA:
+                Log.d(TAG,"Image thumbnail data finished loading.  Get directory thumbnails");
+                mCursors.put(IMAGE_THUMBNAIL_DATA, cursor);
                 break;
             default:
-                // If this is a bucket cursor id, add it to the map.
-                if(isBucketCursor(id)) updateBucketCursor(id,cursor);
-                else throw new IllegalArgumentException(id + INVALID_ID);
-        }
-    }
-
-    private void updateBucketCursor(int id, Cursor cursor) {
-        mBucketCursors.put(Long.valueOf(id), cursor);
-    }
-
-    private void updateBucketIDs(Cursor cursor) {
-        mBucketIds = cursor;
-        loadBucketCursors(cursor);
-    }
-
-    private boolean isBucketCursor(int id) {
-        if(null == mBucketCursors) return false;
-        else return mBucketCursors.containsKey(id);
-    }
-
-    /**
-     * Given a cursor providing a list of unique BUCKET_IDs, load data cursors for
-     *  data associated with that BUCKET_ID
-     * @param cursor
-     */
-    private void loadBucketCursors(Cursor cursor) {
-        //mBucketCursors = new HashMap<Integer,Cursor>();
-        cursor.moveToFirst();
-        int bucketIDColumn = cursor.getColumnIndex(BUCKET_ID);
-        // For each id in the Bucket_ID cursor, create a new map entry in mBucketCursors
-        // with a null Cursor, and initialize the load of the cursor data.
-        // The BUCKET_ID will serve as the loader reference id for the associated cursor.
-        while(!cursor.isAfterLast()){
-            Integer key = cursor.getInt(bucketIDColumn);
-            //mBucketCursors.put(key,null);
-            load(key);
-            cursor.moveToNext();
+                throw new IllegalArgumentException(id + " is not a valid Loader id.");
         }
     }
 
     private void updateQuickBar() {
-        mQuickBarFragment.changeCursor(mBucketIds,BUCKET_ID,BUCKET_DISPLAY_NAME);
+        mQuickBarFragment.changeCursor(mCursors.get(IMAGE_BUCKET_DATA),BUCKET_ID,BUCKET_DISPLAY_NAME);
     }
 
 
