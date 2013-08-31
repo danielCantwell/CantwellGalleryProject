@@ -9,7 +9,7 @@
     <ImageView
             android:layout_width="@dimen/active_album_icon_width"
             android:layout_height="@dimen/active_album_icon_height"
-            android:id="@+id/activeAlbumIcon"
+            android:id="@+id/quickBarItemImageView"
             android:layout_gravity="left|center_vertical"/>
 
     <TextView
@@ -17,7 +17,7 @@
             android:layout_height="20dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Text"
-            android:id="@+id/activeAlbumName"
+            android:id="@+id/quickBarItemTextView"
             android:layout_gravity="center|left"
             android:textAlignment="center"
             android:gravity="center_horizontal"/>

@@ -18,7 +18,7 @@ import java.util.Map;
  * Main Activity that is first loaded when the application starts
  */
 public class MainActivity extends FragmentActivity
-        implements QuickBarFragment.QuickBarCallbacks, LoaderManagerFragment.ListenerCallbacks{
+        implements QuickBarFragment.QuickBarCallbacks{
 
     private static final String TAG                     = "MAIN ACTIVITY";
     private static final String LOADER_MANAGER_FRAGMENT = "LOADER_MANAGER_FRAGMENT";
@@ -42,11 +42,11 @@ public class MainActivity extends FragmentActivity
         final View root = getLayoutInflater().inflate(R.layout.activity_main, null);
         setContentView(root);
 
-        mCursors = new HashMap<Integer, Cursor>();
         FragmentManager fm = getSupportFragmentManager();
         // Initialize QuickBarFragment
         mQuickBarFragment = (QuickBarFragment) fm.findFragmentById(R.id.quickBarFragment);
 
+        /*
         // Initialize LoaderManagerFragment
         mLoaderManagerFragment = new LoaderManagerFragment();
         FragmentTransaction ft = fm.beginTransaction();
@@ -54,7 +54,7 @@ public class MainActivity extends FragmentActivity
 
         load(IMAGE_THUMBNAIL_DATA);
         load(IMAGE_BUCKET_DATA);
-
+*/
 
 
         final SlidingPaneLayout slidingPaneLayout = SlidingPaneLayout.class.cast(root.findViewById(R.id.slidingpanelayout));
@@ -94,6 +94,12 @@ public class MainActivity extends FragmentActivity
 
     }
 
+    @Override
+    public void onQuickBarButtonClick() {
+
+    }
+
+/*
     private void load(int loaderID) {
         Uri uri;
         String[] projection;
@@ -122,12 +128,6 @@ public class MainActivity extends FragmentActivity
         mLoaderManagerFragment.load(loaderID,uri,projection,selection,selectionArgs,sortOrder);
     }
 
-
-    @Override
-    public void onQuickBarButtonClick() {
-
-    }
-
     @Override
     public void onLoadFinished(int id, Cursor cursor) {
         Log.d(TAG,"Loader " + id + " finished loading.  " + cursor.getCount() + " rows returned.");
@@ -147,7 +147,7 @@ public class MainActivity extends FragmentActivity
     }
 
     private void updateQuickBar() {
-        mQuickBarFragment.changeCursor(mCursors.get(IMAGE_BUCKET_DATA),BUCKET_ID,BUCKET_DISPLAY_NAME);
+
     }
 
 
@@ -155,4 +155,5 @@ public class MainActivity extends FragmentActivity
     public void onLoaderReset(int id) {
 
     }
+    */
 }

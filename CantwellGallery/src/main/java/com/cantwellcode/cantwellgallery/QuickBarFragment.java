@@ -1,23 +1,19 @@
 package com.cantwellcode.cantwellgallery;
 
 import android.app.Activity;
-import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.CursorAdapter;
-import android.support.v4.widget.SimpleCursorAdapter;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Chris on 8/16/13.
@@ -27,19 +23,47 @@ import java.util.List;
  * associated bindings.
  * This fragment will then keep a modifiable list of directories to display
  */
-public class QuickBarFragment extends Fragment{
+public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
     private static final String TAG = "QuickBarFragment";
+
+    // Bundle tags
+    private static final String URI             = "URI";
+    private static final String PROJECTION      = "PROJECTION";
+    private static final String SELECTION       = "SELECTION";
+    private static final String SELECTION_ARGS  = "SELECTION_ARGS";
+    private static final String SORT_ORDER      = "SORT_ORDER";
+
+    // Exception Strings
+    private static final String INVALID_LOADER_ID       = "Invalid Loader ID.";
+
+    // Database Columns
+    private static final String _ID                     = MediaStore.Images.Media._ID;
+    private static final String BUCKET_ID               = MediaStore.Images.Media.BUCKET_ID;
+    private static final String BUCKET_DISPLAY_NAME     = MediaStore.Images.Media.BUCKET_DISPLAY_NAME;
+    private static final String DEFAULT_SORT_ORDER      = MediaStore.Images.Media.DEFAULT_SORT_ORDER;
+
+    // Loader Args
+    // The following will produce a cursor that contains only the first row of images for each
+    //  unique bucket id.  This only works because the underlying database for MediaStore is SQLite
+    // This produces the SQLite query string:
+    //      SELECT %BUCKET_PROJECTION FROM (%URI) WHERE (1) GROUP BY (%BUCKET_ID) ORDER BY (%DEFAULT_SORT_ORDER)
+    // WHERE (%s)
+    private static final Uri        BUCKET_URI              = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+    private static final String     MIN_ID                  = "MIN(" + _ID + ")";
+    private static final String[]   BUCKET_PROJECTION       = {MIN_ID,BUCKET_ID,BUCKET_DISPLAY_NAME};
+    private static final String     BUCKET_SELECTION        = "1) GROUP BY (" + BUCKET_ID;
+    private static final String[]   BUCKET_SELECTION_ARGS   = null;
+    private static final String     BUCKET_SORT_ORDER       = DEFAULT_SORT_ORDER;
+
+    // Private member variables
+    private QuickBarCallbacks       mListener;
+    private ListView                mListView;
+    private QuickBarCursorAdapter   mQuickBarAdapter;
 
     public interface QuickBarCallbacks{
          public void onQuickBarButtonClick();
     }
 
-    private QuickBarCallbacks mListener;
-    private ListView mListView;
-    private ArrayAdapter mListAdapter;
-    private Cursor mCursor;
-    private List<String> mItemIds;
-    private List<String> mItemNames;
 
 
 
@@ -56,57 +80,54 @@ public class QuickBarFragment extends Fragment{
         }catch (ClassCastException e){
             throw new ClassCastException(activity.toString() + " must implement QuickBarCallbacks");
         }
+        load();
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mItemIds = new ArrayList<String>();
-        mItemNames = new ArrayList<String>();
-    }
-
-    /**
-     * Called when the fragment view is created.
-     * Initializes the Adpter and ListView associated with the fragment.
-     * @param inflater: Used to inflate the xml file describing the fragment view.
-     * @param container: ViewGroup in the activity that the fragment belongs to.
-     * @param savedInstanceState: : null on creation.  If the fragment is pushed onto the backstack
-     *                          this can be used to save certain parameters for reinstantiation
-     * @return: The view associated with this fragment.
-     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the view for this fragment from the associated xml file.
         final View root = inflater.inflate(R.layout.quick_bar, container, false);
         mListView = (ListView) root.findViewById(R.id.quickBarListView);
-        mListAdapter = new ArrayAdapter<String>(getActivity(),R.layout.active_album,R.id.activeAlbumName,mItemNames);
-        mListView.setAdapter(mListAdapter);
+        mQuickBarAdapter = new QuickBarCursorAdapter(getActivity(),null,BUCKET_ID,BUCKET_DISPLAY_NAME,MIN_ID);
+        mListView.setAdapter(mQuickBarAdapter);
+
         return root;
     }
 
-    public void changeCursor(Cursor cursor, String idColumn, String displayNameColumn){
-        List<String> ids = null;
-        List<String> names = null;
-        if (cursor != null){
-            ids = new ArrayList<String>();
-            names = new ArrayList<String>();
-            int idIndex = cursor.getColumnIndexOrThrow(idColumn);
-            int nameIndex = cursor.getColumnIndexOrThrow(displayNameColumn);
-            cursor.moveToFirst();
-            while (!cursor.isAfterLast()){
-                ids.add(cursor.getString(idIndex));
-                names.add(cursor.getString(nameIndex));
-                cursor.moveToNext();
-            }
-        }
-        mItemIds = ids;
-        mItemNames = names;
-        if (mListAdapter != null){
-            mListAdapter.clear();
-            mListAdapter.addAll(names);
-            mListAdapter.notifyDataSetChanged();
-        }
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {
+        Log.d(TAG, "onCreateLoader() thread = " + Thread.currentThread().getName());
+        Uri uri = bundle.getParcelable(URI);
+        String[] projection = bundle.getStringArray(PROJECTION);
+        String selection = bundle.getString(SELECTION);
+        String[] selectionArgs = bundle.getStringArray(SELECTION_ARGS);
+        String sortOrder = bundle.getString(SORT_ORDER);
+        CursorLoader loader = new CursorLoader(this.getActivity(),uri,projection,selection,selectionArgs,sortOrder);
+        return loader;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+        Log.d(TAG, BUCKET_ID + " cursor finished loading. " + cursor.getCount() + " rows found.");
+        mQuickBarAdapter.changeCursor(cursor);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> cursorLoader) {
+        mQuickBarAdapter.changeCursor(null);
     }
 
 
+    /**
+     * Construct load parameters and initialize loader
+     */
+    private void load() {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(URI,BUCKET_URI);
+        bundle.putStringArray(PROJECTION, BUCKET_PROJECTION);
+        bundle.putString(SELECTION, BUCKET_SELECTION);
+        bundle.putStringArray(SELECTION_ARGS, BUCKET_SELECTION_ARGS);
+        bundle.putString(SORT_ORDER,BUCKET_SORT_ORDER);
+        getLoaderManager().initLoader(0,bundle,this);
+    }
 }
