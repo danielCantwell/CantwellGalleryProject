@@ -1,8 +1,10 @@
 package com.cantwellcode.cantwellgallery;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +32,7 @@ public class QuickBarCursorAdapter extends BaseAdapter {
     private Context             mContext;
     private Cursor              mCursor;
     private LayoutInflater      mInflater;
+    private ThumbnailCache      mCache;
 
     private static class ViewHolder{
         TextView textView;
@@ -51,6 +54,10 @@ public class QuickBarCursorAdapter extends BaseAdapter {
         else throw new IllegalArgumentException(NULL_COLUMN_NAMES);
 
         mInflater = LayoutInflater.from(context);
+
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        int memoryClassBytes = am.getMemoryClass()*1024*1024;
+        mCache = new ThumbnailCache(memoryClassBytes/16);
     }
 
     public void changeCursor(Cursor cursor) {
@@ -110,9 +117,8 @@ public class QuickBarCursorAdapter extends BaseAdapter {
         }
         mCursor.moveToPosition(position);
         holder.textView.setText(mCursor.getString(mTextIndex));
-        Bitmap thumb = MediaStore.Images.Thumbnails.getThumbnail(
-                mContext.getContentResolver(),mCursor.getLong(mImageIDIndex),MediaStore.Images.Thumbnails.MINI_KIND,null);
-        holder.imageView.setImageBitmap(thumb);
+        long imageID = mCursor.getLong(mImageIDIndex);
+        new ThumbnailAsyncTask(mContext,holder.imageView,mCache).execute(imageID);
         return convertView;
     }
 
