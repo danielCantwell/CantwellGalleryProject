@@ -14,15 +14,15 @@ public class MyDragShadowBuilder extends View.DragShadowBuilder {
 
     public MyDragShadowBuilder(View v) {
         super(v);
-        mShadow = v.getResources().getDrawable(R.drawable.ic_launcher);
-        mShadow.setCallback(v);
-        mShadow.setBounds(0, 0, v.getWidth(), v.getHeight());
+        //mShadow = v.getResources().getDrawable(R.drawable.ic_launcher);
+        //mShadow.setCallback(v);
+        //mShadow.setBounds(0, 0, v.getWidth(), v.getHeight());
     }
 
     @Override
     public void onDrawShadow(Canvas canvas) {
         super.onDrawShadow(canvas);
-        mShadow.draw(canvas);
+        //mShadow.draw(canvas);
         getView().draw(canvas);
     }
 }

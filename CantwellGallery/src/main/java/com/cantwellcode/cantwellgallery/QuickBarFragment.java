@@ -193,9 +193,7 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
         bundle.putString(SORT_ORDER,BUCKET_SORT_ORDER);
         getLoaderManager().initLoader(0,bundle,this);
     }
-        });
-    }
-*/
+
     /**
      * Process the drop event
      *
@@ -208,30 +206,5 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
 
         return true;
     }
-/*
-    private class MyListViewDragListener implements View.OnDragListener {
-        @Override
-        public boolean onDrag(View v, DragEvent event) {
-            final int action = event.getAction();
-            switch(action) {
-                case DragEvent.ACTION_DRAG_STARTED:
-                    return true;
-                case DragEvent.ACTION_DROP:
-                    // We drag the item on top of the one which is at itemPosition
-                    int itemPosition = _myListView.pointToPosition((int)event.getX(), (int)event.getY());
-                    // We can even get the view at itemPosition thanks to get/setid
-                    View itemView = _myListView.findViewById(itemPosition );
-                /* If you try the same thing in ACTION_DRAG_LOCATION, itemView
-                 * is sometimes null; if you need this view, just return if null.
-                 * As the same event is then fired later, only process the event
-                 * when itemView is not null.
-                 * It can be more problematic in ACTION_DRAG_DROP but for now
-                 * I never had itemView null in this event. */
-                    // Handle the drop as you like
-/*                    return true;
-            }
-            return true;
-        }
-    }
-*/
+
 }

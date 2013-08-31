@@ -264,5 +264,4 @@ public class MainActivity extends FragmentActivity
         }
         return false;
     }
-    */
 }
