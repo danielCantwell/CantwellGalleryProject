@@ -5,6 +5,12 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="80dp"
+            android:id="@+id/photoPaneImageView"
+            android:layout_gravity="center"/>
+
     <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -13,19 +19,4 @@
             android:id="@+id/activeAlbumName"
             android:background="#ff000e"/>
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Slide to View Album Pane"
-            android:id="@+id/textView2"
-            android:layout_gravity="center"/>
-
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
-            android:id="@+id/textView3"
-            android:layout_gravity="left|center_vertical"/>
 </LinearLayout>
