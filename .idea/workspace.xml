@@ -36,7 +36,7 @@
     </layouts>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47ad2055-7b34-47ae-9de1-fe21829ab214" name="Default" comment="Abandoned managed data set impementation.  Added &quot;DISTINCT &quot;&#10;&#10;Implementation of managed data sets was becomming overly complicated.  After more research on Loader and SQLite I found adding the &quot;DISTINCT&quot; flag was the easiest way to get a list of unique BUCKET_IDs.  The Loader framework does not support this directly, however I found that adding the String &quot;DISTINCT &quot; to the first column in the projection array accomplished the same result.  MainActivity will support callbacks from LoaderManagerFragment to handle onLoadFinished and onLoaderReset calls.  &#10;&#10;QuickBarFragment now has a helper class called Item, a wrapper for data used for display.  MainActivity will be in charge of giving QuickBarFragment a List&lt;Item&gt; to display.  It will construct that list from data received in the LoaderManagerFragment callbacks.  A similar implementation should be used for DirectoryFragment.&#10;&#10;I also renamed some classes and removed unused ones to clean up the environment.">
+    <list default="true" id="47ad2055-7b34-47ae-9de1-fe21829ab214" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="CantwellGallery.iws" />
@@ -626,7 +626,11 @@
       <created>1377369017359</created>
       <updated>1377369017359</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Added ThumbnailAsyncTask and ThumbnailCache for performance&#10;&#10;&#10;Also cleaned up unused code and renamed some for clarity.">
+      <created>1378061112446</created>
+      <updated>1378061112446</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -643,6 +647,7 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32565284" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -657,7 +662,6 @@
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.67069894" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293011" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32565284" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -678,7 +682,8 @@
     <MESSAGE value="Working LoaderManagerFragment and initial implementation of ManagedList&#10;&#10;MainActivity still does not use these in a useful way, but a LoaderManagerFragment is initialized and used to load MediaStore.Images.Media.EXTERNAL_CONTENT_URI.  I had to implement a pendingLoad list to process LoaderManagerFragment.load() calls that are made before onAttach() is called because Loader initialization requires the getActivity() call which is not available until after onAttach().  LoaderManagerFragment.load() still returns the id of the loader to be initialized so the Main thread can continue.  LoaderManagerFragment will need to verify the load is finished before providing any data requested of it.&#10;&#10;ManagedList initial implementation is complete but untested.  All methods that modify the list are overridden to throw UnsupportedOperationException in favor of implementations that verify that a registered manager is making the modification request and subsequently notify all registered observers of modification." />
     <MESSAGE value="Began implementation of DatabaseSubset nested class for LoaderManagerFragment." />
     <MESSAGE value="Abandoned managed data set impementation.  Added &quot;DISTINCT &quot;&#10;&#10;Implementation of managed data sets was becomming overly complicated.  After more research on Loader and SQLite I found adding the &quot;DISTINCT&quot; flag was the easiest way to get a list of unique BUCKET_IDs.  The Loader framework does not support this directly, however I found that adding the String &quot;DISTINCT &quot; to the first column in the projection array accomplished the same result.  MainActivity will support callbacks from LoaderManagerFragment to handle onLoadFinished and onLoaderReset calls.  &#10;&#10;QuickBarFragment now has a helper class called Item, a wrapper for data used for display.  MainActivity will be in charge of giving QuickBarFragment a List&lt;Item&gt; to display.  It will construct that list from data received in the LoaderManagerFragment callbacks.  A similar implementation should be used for DirectoryFragment.&#10;&#10;I also renamed some classes and removed unused ones to clean up the environment." />
-    <option name="LAST_COMMIT_MESSAGE" value="Abandoned managed data set impementation.  Added &quot;DISTINCT &quot;&#10;&#10;Implementation of managed data sets was becomming overly complicated.  After more research on Loader and SQLite I found adding the &quot;DISTINCT&quot; flag was the easiest way to get a list of unique BUCKET_IDs.  The Loader framework does not support this directly, however I found that adding the String &quot;DISTINCT &quot; to the first column in the projection array accomplished the same result.  MainActivity will support callbacks from LoaderManagerFragment to handle onLoadFinished and onLoaderReset calls.  &#10;&#10;QuickBarFragment now has a helper class called Item, a wrapper for data used for display.  MainActivity will be in charge of giving QuickBarFragment a List&lt;Item&gt; to display.  It will construct that list from data received in the LoaderManagerFragment callbacks.  A similar implementation should be used for DirectoryFragment.&#10;&#10;I also renamed some classes and removed unused ones to clean up the environment." />
+    <MESSAGE value="Added ThumbnailAsyncTask and ThumbnailCache for performance&#10;&#10;&#10;Also cleaned up unused code and renamed some for clarity." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added ThumbnailAsyncTask and ThumbnailCache for performance&#10;&#10;&#10;Also cleaned up unused code and renamed some for clarity." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
