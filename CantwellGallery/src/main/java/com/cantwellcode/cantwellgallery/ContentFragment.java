@@ -10,7 +10,7 @@ import android.graphics.Color;
 /**
  * Created by Daniel on 8/13/13.
  */
-public class DirectoryContentFragment extends Fragment {
+public class ContentFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
