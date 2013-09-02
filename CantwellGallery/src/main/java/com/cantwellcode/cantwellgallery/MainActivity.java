@@ -4,21 +4,15 @@ import android.content.ClipData;
 import android.content.ClipDescription;
 import android.graphics.Color;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SlidingPaneLayout;
-import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -79,9 +73,9 @@ public class MainActivity extends FragmentActivity
             public void onPanelOpened(View view) {
 
                 switch (view.getId()) {
-                    case R.id.album_pane:
-                        getSupportFragmentManager().findFragmentById(R.id.photo_pane).setHasOptionsMenu(true);
-                        getSupportFragmentManager().findFragmentById(R.id.photo_pane).setHasOptionsMenu(false);
+                    case R.id.slidingDirectoryPane:
+                        getSupportFragmentManager().findFragmentById(R.id.slidingContentPane).setHasOptionsMenu(true);
+                        getSupportFragmentManager().findFragmentById(R.id.slidingContentPane).setHasOptionsMenu(false);
                         break;
                     default:
                         break;
@@ -92,9 +86,9 @@ public class MainActivity extends FragmentActivity
             public void onPanelClosed(View view) {
 
                 switch (view.getId()) {
-                    case R.id.album_pane:
-                        getSupportFragmentManager().findFragmentById(R.id.photo_pane).setHasOptionsMenu(false);
-                        getSupportFragmentManager().findFragmentById(R.id.album_pane).setHasOptionsMenu(true);
+                    case R.id.slidingDirectoryPane:
+                        getSupportFragmentManager().findFragmentById(R.id.slidingContentPane).setHasOptionsMenu(false);
+                        getSupportFragmentManager().findFragmentById(R.id.slidingDirectoryPane).setHasOptionsMenu(true);
                         break;
                     default:
                         break;
@@ -104,10 +98,6 @@ public class MainActivity extends FragmentActivity
 
     }
 
-    @Override
-    public void onQuickBarButtonClick() {
-
-    }
 
 /*
     private void load(int loaderID) {

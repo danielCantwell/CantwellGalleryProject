@@ -66,7 +66,6 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
     private QuickBarCursorAdapter   mQuickBarAdapter;
 
     public interface QuickBarCallbacks{
-        public void onQuickBarButtonClick();
     }
 
     /**
