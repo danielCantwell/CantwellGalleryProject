@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="80dp"
-            android:id="@+id/photoPaneImageView"
-            android:layout_gravity="center"/>
 
-    <TextView
+    <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Photo Pane"
-            android:id="@+id/activeAlbumName"
-            android:background="#ff000e"/>
+            android:id="@+id/contentPaneListView"
+            android:rotation="90"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
 
-</LinearLayout>
+
+</RelativeLayout>

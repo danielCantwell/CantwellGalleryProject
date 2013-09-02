@@ -15,7 +15,7 @@ public class DirectoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        final View root = inflater.inflate(R.layout.album_pane, container, false);
+        final View root = inflater.inflate(R.layout.directory_pane, container, false);
         root.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         root.setBackgroundColor(Color.GREEN);
 

@@ -36,7 +36,6 @@ public class MainActivity extends FragmentActivity
     private static final int    IMAGE_BUCKET_DATA       = 0x001;
     private static final int    IMAGE_THUMBNAIL_DATA    = 0x002;
 
-    private LoaderManagerFragment mLoaderManagerFragment;
     private QuickBarFragment mQuickBarFragment;
     private Map<Integer,Cursor> mCursors;
 
@@ -64,9 +63,9 @@ public class MainActivity extends FragmentActivity
         load(IMAGE_THUMBNAIL_DATA);
         load(IMAGE_BUCKET_DATA);
 */
-        imageView = (ImageView) findViewById(R.id.photoPaneImageView);
-        setupDrop(imageView);
-        setupDrag(imageView);
+//        imageView = (ImageView) findViewById(R.id.photoPaneImageView);
+//        setupDrop(imageView);
+//        setupDrag(imageView);
 
         final SlidingPaneLayout slidingPaneLayout = SlidingPaneLayout.class.cast(root.findViewById(R.id.slidingpanelayout));
 

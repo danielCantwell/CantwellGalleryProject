@@ -6,8 +6,8 @@ import android.support.v4.util.LruCache;
 /**
  * Created by Chris on 8/29/13.
  */
-public class ThumbnailCache extends LruCache<Long,Bitmap>{
-    public ThumbnailCache(int maxSize) {
+public class BitmapCache extends LruCache<Long,Bitmap>{
+    public BitmapCache(int maxSize) {
         super(maxSize);
     }
     @Override

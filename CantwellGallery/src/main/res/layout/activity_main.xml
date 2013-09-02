@@ -18,11 +18,11 @@
     <android.support.v4.widget.SlidingPaneLayout
             android:layout_height="match_parent"
             android:layout_width="match_parent"
-            android:layoutDirection="rtl"
             android:id="@+id/slidingpanelayout"
             android:layout_alignParentEnd="false"
             android:layout_alignParentLeft="false"
             android:layout_alignParentRight="false"
+
             android:layout_toRightOf="@+id/quickBarFragment">
 
         <fragment
@@ -35,7 +35,7 @@
         <fragment
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:name="com.cantwellcode.cantwellgallery.DirectoryContentFragment"
+                android:name="com.cantwellcode.cantwellgallery.ContentFragment"
                 android:id="@+id/photo_pane"
                 tools:layout="@layout/photo_pane"/>
 

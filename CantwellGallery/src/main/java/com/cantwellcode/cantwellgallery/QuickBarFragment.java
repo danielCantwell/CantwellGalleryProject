@@ -69,9 +69,6 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
         public void onQuickBarButtonClick();
     }
 
-
-
-
     /**
      * Called when the fragment is attached to the host activity.
      * Ensures the host activity implements the fragment callbacks and sets the mListener member.
@@ -102,6 +99,8 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
         return root;
     }
 
+
+
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {
         Log.d(TAG, "onCreateLoader() thread = " + Thread.currentThread().getName());
@@ -123,6 +122,19 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
         mQuickBarAdapter.changeCursor(null);
+    }
+
+    /**
+     * Construct load parameters and initialize loader
+     */
+    private void load() {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(URI,BUCKET_URI);
+        bundle.putStringArray(PROJECTION, BUCKET_PROJECTION);
+        bundle.putString(SELECTION, BUCKET_SELECTION);
+        bundle.putStringArray(SELECTION_ARGS, BUCKET_SELECTION_ARGS);
+        bundle.putString(SORT_ORDER,BUCKET_SORT_ORDER);
+        getLoaderManager().initLoader(0,bundle,this);
     }
 
     /*********************************
@@ -181,18 +193,7 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
                 }
                 return false;
             }
-    /**
-     * Construct load parameters and initialize loader
-     */
-    private void load() {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(URI,BUCKET_URI);
-        bundle.putStringArray(PROJECTION, BUCKET_PROJECTION);
-        bundle.putString(SELECTION, BUCKET_SELECTION);
-        bundle.putStringArray(SELECTION_ARGS, BUCKET_SELECTION_ARGS);
-        bundle.putString(SORT_ORDER,BUCKET_SORT_ORDER);
-        getLoaderManager().initLoader(0,bundle,this);
-    }
+
 
     /**
      * Process the drop event

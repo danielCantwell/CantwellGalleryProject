@@ -10,11 +10,11 @@ import android.widget.ImageView;
  * Created by Chris on 8/31/13.
  */
 public class ThumbnailAsyncTask extends AsyncTask<Long,Void,Bitmap> {
-    private ThumbnailCache  mCache;
+    private BitmapCache mCache;
     private Context         mContext;
     private ImageView       mTarget;
 
-    public ThumbnailAsyncTask(Context context, ImageView target, ThumbnailCache cache){
+    public ThumbnailAsyncTask(Context context, ImageView target, BitmapCache cache){
         mContext = context;
         mTarget = target;
         mCache = cache;
