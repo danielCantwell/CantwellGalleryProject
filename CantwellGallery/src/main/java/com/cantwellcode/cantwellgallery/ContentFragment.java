@@ -1,6 +1,7 @@
 package com.cantwellcode.cantwellgallery;
 
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -16,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.graphics.Color;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -83,6 +85,8 @@ public class ContentFragment extends Fragment implements LoaderManager.LoaderCal
                 R.id.contentPaneItemImage,_ID,_ID);
         mListView.setAdapter(mListAdapter);
 
+        setupDrag(mListView);
+
         return root;
     }
 
@@ -106,5 +110,22 @@ public class ContentFragment extends Fragment implements LoaderManager.LoaderCal
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
         mListAdapter.changeCursor(null);
+    }
+
+    /*********************************
+     *        DRAG  AND  DROP        *
+     *********************************/
+
+    private void setupDrag(ListView listView) {
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
+                final String title = "photoNameWillGoHere";
+                final String textData = title + ":" + position;
+                ClipData data = ClipData.newPlainText(title, textData);
+                view.startDrag(data, new MyDragShadowBuilder(view), null, 0);
+                return true;
+            }
+        });
     }
 }

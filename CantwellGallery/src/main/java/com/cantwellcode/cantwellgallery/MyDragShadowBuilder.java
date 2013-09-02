@@ -1,6 +1,7 @@
 package com.cantwellcode.cantwellgallery;
 
 import android.graphics.Canvas;
+import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 

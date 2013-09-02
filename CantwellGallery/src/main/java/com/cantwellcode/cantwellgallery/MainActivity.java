@@ -30,10 +30,8 @@ public class MainActivity extends FragmentActivity
     private static final int    IMAGE_BUCKET_DATA       = 0x001;
     private static final int    IMAGE_THUMBNAIL_DATA    = 0x002;
 
-    private QuickBarFragment mQuickBarFragment;
+    private QuickBarFragment    mQuickBarFragment;
     private Map<Integer,Cursor> mCursors;
-
-    private ImageView imageView;
 
 
     @Override
@@ -56,10 +54,7 @@ public class MainActivity extends FragmentActivity
 
         load(IMAGE_THUMBNAIL_DATA);
         load(IMAGE_BUCKET_DATA);
-*/
-//        imageView = (ImageView) findViewById(R.id.photoPaneImageView);
-//        setupDrop(imageView);
-//        setupDrag(imageView);
+        */
 
         final SlidingPaneLayout slidingPaneLayout = SlidingPaneLayout.class.cast(root.findViewById(R.id.slidingpanelayout));
 
@@ -96,6 +91,11 @@ public class MainActivity extends FragmentActivity
             }
         });
 
+    }
+
+    @Override
+    public boolean processDropOnQuickBar(Long itemID, DragEvent event) {
+        return true;
     }
 
 
@@ -155,102 +155,5 @@ public class MainActivity extends FragmentActivity
     public void onLoaderReset(int id) {
 
     }
-
-    /*********************************
-     *        DRAG  AND  DROP        *
-     *********************************/
-
-    /**
-     * Used to allow items in the listView to be dragged.
-     *
-     * @param view - used to override OnLongClickListener()
-     */
-    private void setupDrag(View view) {
-        view.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                final String title = "photoNameWillGoHere";
-                final String textData = title;
-                ClipData data = ClipData.newPlainText(title, textData);
-                view.startDrag(data, new MyDragShadowBuilder(view), null, 0);
-                return true;
-            }
-        });
-    }
-
-    private void setupDrop(View v) {
-
-        v.setOnDragListener(new View.OnDragListener() {
-            @Override
-            public boolean onDrag(View view, DragEvent dragEvent) {
-
-                switch (dragEvent.getAction()) {
-
-                    // When a view drag starts, imageView turns blue
-                    case DragEvent.ACTION_DRAG_STARTED:
-                        view.setBackgroundColor(Color.BLUE);
-                        return processDragStarted(dragEvent);
-
-                    // When the view is being held over the imageView, the imageView turns blue
-                    case DragEvent.ACTION_DRAG_ENTERED:
-                        view.setBackgroundColor(Color.MAGENTA);
-                        break;
-
-                    // When the view is exited, but not dropped on the imageView, the imageView turns yellow
-                    case DragEvent.ACTION_DRAG_EXITED:
-                        view.setBackgroundColor(Color.YELLOW);
-                        break;
-
-                    // When the view is dropped on the imageView, process the drop
-                    case DragEvent.ACTION_DROP:
-                        return processDrop(view, dragEvent);
-
-                }
-                return false;
-            }
-        });
-    }
-
-    /**
-     * Process the drop event
-     *
-     * @param event
-     * @return
-     */
-    private boolean processDrop(View view, DragEvent event) {
-
-        view.setBackground(getResources().getDrawable(R.drawable.ic_launcher));
-
-        /*
-        ClipData data = event.getClipData();
-        if (data != null) {
-            if (data.getItemCount() > 0) {
-                ClipData.Item item = data.getItemAt(0);
-                String textData = (String) item.getText();
-                String[] parts = textData.split(":");
-                int index = Integer.parseInt(parts[1]);
-                String listItem = parts[0];
-                //updateViewsAfterDropComplete(listItem, index);
-                return true;
-            }
-        }
-        */
-        return true;
-    }
-
-    /**
-     * Check if this is the drag operation you want. There might be other
-     * clients that would be generating the drag event. Here, we check the mime
-     * type of the data
-     *
-     * @param event
-     * @return
-     */
-    private boolean processDragStarted(DragEvent event) {
-        ClipDescription clipDesc = event.getClipDescription();
-        if (clipDesc != null) {
-            return clipDesc.hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN);
-        }
-        return false;
-    }
+*/
 }
