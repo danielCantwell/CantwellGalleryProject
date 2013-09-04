@@ -11,11 +11,12 @@ import android.view.View;
  * Main Activity that is first loaded when the application starts
  */
 public class MainActivity extends FragmentActivity
-        implements QuickBarFragment.QuickBarCallbacks{
+        implements QuickBarFragment.QuickBarCallbacks, DirectoryFragment.Callbacks{
 
     private static final String TAG                     = "MAIN ACTIVITY";
 
     private QuickBarFragment    mQuickBarFragment;
+    private ContentFragment     mContentFragment;
 
 
     @Override
@@ -29,6 +30,7 @@ public class MainActivity extends FragmentActivity
         FragmentManager fm = getSupportFragmentManager();
         // Initialize QuickBarFragment
         mQuickBarFragment = (QuickBarFragment) fm.findFragmentById(R.id.quickBarFragment);
+        mContentFragment = (ContentFragment) fm.findFragmentById(R.id.contentFragment);
 
 
         final SlidingPaneLayout slidingPaneLayout = SlidingPaneLayout.class.cast(root.findViewById(R.id.slidingpanelayout));
@@ -43,9 +45,9 @@ public class MainActivity extends FragmentActivity
             public void onPanelOpened(View view) {
 
                 switch (view.getId()) {
-                    case R.id.slidingDirectoryPane:
-                        getSupportFragmentManager().findFragmentById(R.id.slidingContentPane).setHasOptionsMenu(true);
-                        getSupportFragmentManager().findFragmentById(R.id.slidingContentPane).setHasOptionsMenu(false);
+                    case R.id.directoryFragment:
+                        getSupportFragmentManager().findFragmentById(R.id.contentFragment).setHasOptionsMenu(true);
+                        getSupportFragmentManager().findFragmentById(R.id.contentFragment).setHasOptionsMenu(false);
                         break;
                     default:
                         break;
@@ -56,9 +58,9 @@ public class MainActivity extends FragmentActivity
             public void onPanelClosed(View view) {
 
                 switch (view.getId()) {
-                    case R.id.slidingDirectoryPane:
-                        getSupportFragmentManager().findFragmentById(R.id.slidingContentPane).setHasOptionsMenu(false);
-                        getSupportFragmentManager().findFragmentById(R.id.slidingDirectoryPane).setHasOptionsMenu(true);
+                    case R.id.directoryFragment:
+                        getSupportFragmentManager().findFragmentById(R.id.contentFragment).setHasOptionsMenu(false);
+                        getSupportFragmentManager().findFragmentById(R.id.directoryFragment).setHasOptionsMenu(true);
                         break;
                     default:
                         break;
@@ -74,4 +76,9 @@ public class MainActivity extends FragmentActivity
     }
 
 
+    @Override
+    public boolean onDirectoryPaneItemSelected(long id, String name) {
+        mContentFragment.changeDirectory(name);
+        return true;
+    }
 }

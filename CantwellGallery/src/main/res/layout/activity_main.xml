@@ -29,14 +29,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:name="com.cantwellcode.cantwellgallery.DirectoryFragment"
-                android:id="@+id/slidingDirectoryPane"
+                android:id="@+id/directoryFragment"
                 tools:layout="@layout/directory_pane"/>
 
         <fragment
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:name="com.cantwellcode.cantwellgallery.ContentFragment"
-                android:id="@+id/slidingContentPane"
+                android:id="@+id/contentFragment"
                 tools:layout="@layout/content_pane"/>
 
     </android.support.v4.widget.SlidingPaneLayout>

@@ -5,12 +5,27 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/directory_pane_header"
+            android:id="@+id/textView"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"/>
+
     <GridView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/directoryPaneGridView"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:numColumns="auto_fit"/>
+            android:numColumns="auto_fit"
+            android:drawSelectorOnTop="true"
+            android:stretchMode="spacingWidthUniform"
+            android:clickable="true"
+            android:choiceMode="singleChoice"
+            android:columnWidth="@android:dimen/thumbnail_width"
+            android:gravity="center_horizontal"
+            android:layout_below="@+id/textView"/>
 
 </RelativeLayout>

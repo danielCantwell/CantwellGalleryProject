@@ -14,8 +14,10 @@ import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 /**
  * Created by Daniel on 8/13/13.
@@ -57,11 +59,12 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
     private static final int        DEFAULT_LOADER          = 0x001;
 
     // Private member variables
-    private GridView mGridView;
+    private GridView                mGridView;
     private QuickBarCursorAdapter   mAdapter;
+    private Callbacks               mListener;
 
-    public interface QuickBarCallbacks{
-        boolean processDropOnQuickBar(Long itemID, DragEvent event);
+    public interface Callbacks{
+        boolean onDirectoryPaneItemSelected(long id, String name);
     }
 
     /**
@@ -72,6 +75,11 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
     @Override
     public void onAttach(Activity activity){
         super.onAttach(activity);
+        try {
+            mListener = (Callbacks) activity;
+        }catch (ClassCastException e){
+            throw new ClassCastException(activity.toString() + " must implement QuickBarCallbacks");
+        }
         load();
     }
     /**
@@ -94,9 +102,10 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
         mGridView = (GridView) root.findViewById(R.id.directoryPaneGridView);
         mGridView.setAdapter(mAdapter);
 
+        setupListItemSelect(mGridView);
+
         return root;
     }
-
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -158,6 +167,21 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
         mAdapter.changeCursor(null);
+    }
+
+
+    private void setupListItemSelect(GridView gridView) {
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Cursor cursor = (Cursor) mAdapter.getItem(position);
+                int index = cursor.getColumnIndexOrThrow(BUCKET_DISPLAY_NAME);
+                String name = cursor.getString(index);
+                Toast directorySelectedToast = Toast.makeText(getActivity(),"Album " + name + " selected", Toast.LENGTH_SHORT);
+                directorySelectedToast.show();
+                mListener.onDirectoryPaneItemSelected(id,name);
+            }
+        });
     }
 
 }

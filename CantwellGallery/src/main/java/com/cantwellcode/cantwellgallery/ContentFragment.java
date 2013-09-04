@@ -60,7 +60,7 @@ public class ContentFragment extends Fragment implements LoaderManager.LoaderCal
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        load();
+        load(DEFAULT_BUCKET_NAME);
     }
 
     @Override
@@ -90,15 +90,29 @@ public class ContentFragment extends Fragment implements LoaderManager.LoaderCal
     }
 
 
-    private void load() {
-        Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+    /**
+     * Constructs load parameters to load a cursor from the static IMAGES_URI
+     * with data for images in the supplied directory name
+     * @param name : name of directory being loaded
+     */
+    private void load(String name) {
+        String[] selectionArgs = {name};
         Bundle bundle = new Bundle();
+
         bundle.putParcelable(URI,IMAGES_URI);
         bundle.putStringArray(PROJECTION, IMAGES_PROJECTION);
         bundle.putString(SELECTION, IMAGES_SELECTION);
-        bundle.putStringArray(SELECTION_ARGS, IMAGES_SELECTION_ARGS);
+        bundle.putStringArray(SELECTION_ARGS, selectionArgs);
         bundle.putString(SORT_ORDER,IMAGES_SORT_ORDER);
-        getLoaderManager().initLoader(0,bundle,this);
+        LoaderManager manager = getLoaderManager();
+        // If this is the first load, call initLoader.
+        // Otherwise restartLoader.  Old data will be discarded.
+        if (manager.getLoader(0) == null) manager.initLoader(0,bundle,this);
+        else manager.restartLoader(0,bundle,this);
+    }
+
+    public void changeDirectory(String name){
+        load(name);
     }
 
     @Override
@@ -122,6 +136,7 @@ public class ContentFragment extends Fragment implements LoaderManager.LoaderCal
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
         mListAdapter.changeCursor(null);
     }
+
 
     /*********************************
      *        DRAG  AND  DROP        *
