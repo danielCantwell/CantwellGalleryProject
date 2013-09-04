@@ -2,6 +2,7 @@ package com.cantwellcode.cantwellgallery;
 
 import android.app.Activity;
 import android.content.ClipData;
+import android.content.ClipDescription;
 import android.database.Cursor;
 import android.net.Uri;
 import android.graphics.Color;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by Chris on 8/16/13.
@@ -70,6 +72,7 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
     private QuickBarCursorAdapter   mQuickBarAdapter;
 
     public interface QuickBarCallbacks{
+        boolean processDropOnQuickBar(Long itemID, DragEvent event);
     }
 
     /**
@@ -109,7 +112,7 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
         mListView.setAdapter(mQuickBarAdapter);
 
         setupDrag(mListView);
-        //setupDrop(mListView);
+        setupDrop(mListView);
 
         return root;
     }
@@ -201,54 +204,62 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
             }
         });
     }
-/*
-    private void setupDrop(ListView v) {
+
+    private void setupDrop(final ListView v) {
 
         v.setOnDragListener(new View.OnDragListener() {
             @Override
             public boolean onDrag(View view, DragEvent dragEvent) {
 
-                int itemPosition = v.pointToPosition((int) dragEvent.getX(), (int) dragEvent.getY());
-                View itemView = v.findViewById(itemPosition);
-
                 switch (dragEvent.getAction()) {
 
                     // When a view drag starts, imageView turns blue
                     case DragEvent.ACTION_DRAG_STARTED:
-                        view.setBackgroundColor(Color.BLUE);
-                        //return processDragStarted(dragEvent);
-                        break;
+                        Toast dragStartedToast = Toast.makeText(getActivity(), "Drag Started", Toast.LENGTH_SHORT);
+                        dragStartedToast.show();
+                        return processDragStarted(dragEvent);
 
                     // When the view is being held over the imageView, the imageView turns blue
                     case DragEvent.ACTION_DRAG_ENTERED:
-                        view.setBackgroundColor(Color.MAGENTA);
+                        Toast dragEnteredToast = Toast.makeText(getActivity(), "Drag Entered", Toast.LENGTH_SHORT);
+                        dragEnteredToast.show();
                         break;
 
                     // When the view is exited, but not dropped on the imageView, the imageView turns yellow
                     case DragEvent.ACTION_DRAG_EXITED:
-                        view.setBackgroundColor(Color.YELLOW);
+                        Toast dragExitedToast = Toast.makeText(getActivity(), "Drag Exited", Toast.LENGTH_SHORT);
+                        dragExitedToast.show();
                         break;
 
                     // When the view is dropped on the imageView, process the drop
                     case DragEvent.ACTION_DROP:
-                        return processDrop(view, dragEvent);
+                        Toast dropToast = Toast.makeText(getActivity(), "Drop", Toast.LENGTH_SHORT);
+                        dropToast.show();
 
+                        int itemPosition = v.pointToPosition((int) dragEvent.getX(), (int) dragEvent.getY());
+                        long itemID = v.getAdapter().getItemId(itemPosition);
+
+                        return mListener.processDropOnQuickBar(itemID, dragEvent);
                 }
                 return false;
             }
-
+        });
+    }
 
     /**
-     * Process the drop event
+     * Check if this is the drag operation you want. There might be other
+     * clients that would be generating the drag event. Here, we check the mime
+     * type of the data
      *
      * @param event
-     * @return
+     * @return : true if the item has mimetype = plain text
      */
-    private boolean processDrop(View view, DragEvent event) {
-
-        view.setBackground(getResources().getDrawable(R.drawable.ic_launcher));
-
-        return true;
+    private boolean processDragStarted(DragEvent event) {
+        ClipDescription clipDesc = event.getClipDescription();
+        if (clipDesc != null) {
+            return clipDesc.hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN);
+        }
+        return false;
     }
 
 }

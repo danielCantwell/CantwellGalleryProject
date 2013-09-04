@@ -1,8 +1,11 @@
 package com.cantwellcode.cantwellgallery;
 
 import android.app.Activity;
+<<<<<<< HEAD
 import android.content.ContentProvider;
+=======
 import android.content.ClipData;
+>>>>>>> origin/Danny
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
