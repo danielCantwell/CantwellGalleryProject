@@ -1,15 +1,11 @@
 package com.cantwellcode.cantwellgallery;
 
-import android.content.ClipData;
-import android.content.ClipDescription;
-import android.graphics.Color;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.view.DragEvent;
 import android.view.View;
-import android.widget.ImageView;
 
 /**
  * Main Activity that is first loaded when the application starts
@@ -77,5 +73,5 @@ public class MainActivity extends FragmentActivity
         return true;
     }
 
-*/
+
 }
