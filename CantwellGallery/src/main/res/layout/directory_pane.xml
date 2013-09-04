@@ -9,7 +9,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/directory_pane_header"
-            android:id="@+id/textView"
+            android:id="@+id/contentPaneTextView"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"/>
 
@@ -26,6 +26,6 @@
             android:choiceMode="singleChoice"
             android:columnWidth="@android:dimen/thumbnail_width"
             android:gravity="center_horizontal"
-            android:layout_below="@+id/textView"/>
+            android:layout_below="@+id/contentPaneTextView"/>
 
 </RelativeLayout>

@@ -1,9 +1,7 @@
 package com.cantwellcode.cantwellgallery;
 
 import android.app.Activity;
-import android.content.ContentProvider;
 import android.content.ClipData;
-import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,15 +10,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.SimpleCursorAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.graphics.Color;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 /**
  * Created by Daniel on 8/13/13.
@@ -28,6 +23,10 @@ import android.widget.ListView;
 public class ContentFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
 
     private static final String TAG = "ContentFragment";
+
+    // Default values
+    private static final String EMPTY_NAME              = "No Album Selected";
+    private static final String DEFAULT_BUCKET_NAME     = "Camera";
 
     // Bundle tags
     private static final String URI             = "URI";
@@ -45,7 +44,6 @@ public class ContentFragment extends Fragment implements LoaderManager.LoaderCal
     private static final String BUCKET_DISPLAY_NAME     = MediaStore.Images.Media.BUCKET_DISPLAY_NAME;
     private static final String IMAGE_DATA              = MediaStore.Images.Media.DATA;
     private static final String DEFAULT_SORT_ORDER      = MediaStore.Images.Media.DEFAULT_SORT_ORDER;
-    private static final String DEFAULT_BUCKET_NAME     = "Camera";
 
     // Bucket Images loader args
     private static final Uri        IMAGES_URI              = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
@@ -54,8 +52,10 @@ public class ContentFragment extends Fragment implements LoaderManager.LoaderCal
     private static final String[]   IMAGES_SELECTION_ARGS   = {DEFAULT_BUCKET_NAME};
     private static final String     IMAGES_SORT_ORDER       = DEFAULT_SORT_ORDER;
 
-    private ListView mListView;
-    private ImageCursorAdapter mListAdapter;
+    private ListView                mListView;
+    private ImageCursorAdapter      mListAdapter;
+    private TextView                mTextView;
+    private String                  mName;
 
     @Override
     public void onAttach(Activity activity) {
@@ -81,9 +81,12 @@ public class ContentFragment extends Fragment implements LoaderManager.LoaderCal
 
         final View root = inflater.inflate(R.layout.content_pane, container, false);
 
+        mTextView = (TextView) root.findViewById(R.id.contentPaneTextView);
+        if (mName == null) mTextView.setText(EMPTY_NAME);
+        else mTextView.setText(mName);
+
         mListView = (ListView) root.findViewById(R.id.contentPaneListView);
         mListView.setAdapter(mListAdapter);
-
         setupDrag(mListView);
 
         return root;
@@ -96,6 +99,8 @@ public class ContentFragment extends Fragment implements LoaderManager.LoaderCal
      * @param name : name of directory being loaded
      */
     private void load(String name) {
+        mName = name;
+
         String[] selectionArgs = {name};
         Bundle bundle = new Bundle();
 
@@ -129,11 +134,13 @@ public class ContentFragment extends Fragment implements LoaderManager.LoaderCal
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+        if (mTextView != null)mTextView.setText(mName);
         mListAdapter.changeCursor(cursor);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
+        if (mTextView != null)mTextView.setText(EMPTY_NAME);
         mListAdapter.changeCursor(null);
     }
 
