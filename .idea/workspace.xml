@@ -25,11 +25,22 @@
         <target>android-17</target>
       </config>
     </shared>
+    <layouts>
+      <layout url="file://$PROJECT_DIR$/CantwellGallery/src/main/res/layout/directory_pane.xml">
+        <config>
+          <device>Nexus 4</device>
+          <state>Landscape</state>
+          <theme>@style/AppTheme</theme>
+        </config>
+      </layout>
+    </layouts>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="47ad2055-7b34-47ae-9de1-fe21829ab214" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/CantwellGallery.iml" afterPath="$PROJECT_DIR$/CantwellGallery/CantwellGallery.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java" />
+      <change type="DELETED" beforePath="C:\Users\Chris\Documents\GitHub\CantwellGalleryProject\CantwellGallery\src\main\java\com\cantwellcode\cantwellgallery\ContentFragment.java.orig" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Chris\Documents\GitHub\CantwellGalleryProject\CantwellGallery\src\main\java\com\cantwellcode\cantwellgallery\MainActivity.java.orig" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DirectoryFragment.java" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DirectoryFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/directory_pane.xml" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/directory_pane.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="CantwellGallery.iws" />
@@ -106,23 +117,34 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="QuickBarFragment.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="QuickBarFragment.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/QuickBarFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="54" column="37" selection-start="2425" selection-end="2442" vertical-scroll-proportion="-3.28" vertical-offset="1972" max-vertical-offset="4165">
+            <state line="183" column="0" selection-start="1236" selection-end="7121" vertical-scroll-proportion="0.0" vertical-offset="2490" max-vertical-offset="4165">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="activity_main.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/res/layout/activity_main.xml">
+      <file leaf-file-name="directory_pane.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/res/layout/directory_pane.xml">
           <provider editor-type-id="android-designer">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="52" selection-start="242" selection-end="242" vertical-scroll-proportion="-2.04" vertical-offset="0" max-vertical-offset="850">
+            <state line="10" column="50" selection-start="424" selection-end="424" vertical-scroll-proportion="-6.8" vertical-offset="0" max-vertical-offset="357">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DirectoryFragment.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DirectoryFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="85" column="102" selection-start="3734" selection-end="3734" vertical-scroll-proportion="0.117154814" vertical-offset="1389" max-vertical-offset="2873">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -221,12 +243,10 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/QuickBarFragment.java" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/res/layout-port/content_pane_item.xml" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/res/layout-port/content_pane.xml" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/res/layout-port/directory_pane.xml" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/res/layout-port/quick_bar_item.xml" />
-        <option value="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/directory_pane.xml" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/content_pane_item.xml" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/res/layout-port/activity_main.xml" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/activity_main.xml" />
@@ -235,8 +255,10 @@
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/quick_bar_item.xml" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ContentFragment.java" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DirectoryFragment.java" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java" />
+        <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/QuickBarFragment.java" />
+        <option value="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/directory_pane.xml" />
+        <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DirectoryFragment.java" />
       </list>
     </option>
   </component>
@@ -645,7 +667,11 @@
       <created>1378264626422</created>
       <updated>1378264626422</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="[Working] Cleaned up unused imports.&#10;&#10;&#10;Drag and drop seems to work great!  Now we just need to figure out the best way to handle database changes.  Whether it is saving and deleting old versions, or modifying MediaStore values directly.">
+      <created>1378268508330</created>
+      <updated>1378268508330</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -658,8 +684,8 @@
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.67069894" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39381722" sideWeight="0.6375" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39381722" sideWeight="0.3625" order="12" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39381722" sideWeight="0.6375" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32258064" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -670,8 +696,8 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24625" sideWeight="0.6061828" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32258064" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24625" sideWeight="0.67741936" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32258064" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -699,7 +725,8 @@
     <MESSAGE value="Abandoned managed data set impementation.  Added &quot;DISTINCT &quot;&#10;&#10;Implementation of managed data sets was becomming overly complicated.  After more research on Loader and SQLite I found adding the &quot;DISTINCT&quot; flag was the easiest way to get a list of unique BUCKET_IDs.  The Loader framework does not support this directly, however I found that adding the String &quot;DISTINCT &quot; to the first column in the projection array accomplished the same result.  MainActivity will support callbacks from LoaderManagerFragment to handle onLoadFinished and onLoaderReset calls.  &#10;&#10;QuickBarFragment now has a helper class called Item, a wrapper for data used for display.  MainActivity will be in charge of giving QuickBarFragment a List&lt;Item&gt; to display.  It will construct that list from data received in the LoaderManagerFragment callbacks.  A similar implementation should be used for DirectoryFragment.&#10;&#10;I also renamed some classes and removed unused ones to clean up the environment." />
     <MESSAGE value="Added ThumbnailAsyncTask and ThumbnailCache for performance&#10;&#10;&#10;Also cleaned up unused code and renamed some for clarity." />
     <MESSAGE value="[Working] Locked screen orientation and reduced overdraw." />
-    <option name="LAST_COMMIT_MESSAGE" value="[Working] Locked screen orientation and reduced overdraw." />
+    <MESSAGE value="[Working] Cleaned up unused imports.&#10;&#10;&#10;Drag and drop seems to work great!  Now we just need to figure out the best way to handle database changes.  Whether it is saving and deleting old versions, or modifying MediaStore values directly." />
+    <option name="LAST_COMMIT_MESSAGE" value="[Working] Cleaned up unused imports.&#10;&#10;&#10;Drag and drop seems to work great!  Now we just need to figure out the best way to handle database changes.  Whether it is saving and deleting old versions, or modifying MediaStore values directly." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -780,23 +807,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/res/layout/directory_pane.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="221">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DirectoryFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="8" selection-start="540" selection-end="540" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="391">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ImageCursorAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="58" column="0" selection-start="2017" selection-end="2017" vertical-scroll-proportion="0.0" vertical-offset="833" max-vertical-offset="2057">
@@ -832,8 +842,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/QuickBarFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="37" selection-start="2425" selection-end="2442" vertical-scroll-proportion="-3.28" vertical-offset="1972" max-vertical-offset="4165">
+        <state line="183" column="0" selection-start="1236" selection-end="7121" vertical-scroll-proportion="0.0" vertical-offset="2490" max-vertical-offset="4165">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/res/layout/directory_pane.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="50" selection-start="424" selection-end="424" vertical-scroll-proportion="-6.8" vertical-offset="0" max-vertical-offset="357">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DirectoryFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="85" column="102" selection-start="3734" selection-end="3734" vertical-scroll-proportion="0.117154814" vertical-offset="1389" max-vertical-offset="2873">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
