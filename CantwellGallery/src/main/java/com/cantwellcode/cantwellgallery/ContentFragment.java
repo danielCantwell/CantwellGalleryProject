@@ -1,6 +1,7 @@
 package com.cantwellcode.cantwellgallery;
 
 import android.app.Activity;
+import android.content.ContentProvider;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -60,6 +61,31 @@ public class ContentFragment extends Fragment implements LoaderManager.LoaderCal
         load();
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+        mListAdapter = new ImageCursorAdapter(getActivity(),null,R.layout.content_pane_item,
+                R.id.contentPaneItemImage,_ID,_ID);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        final View root = inflater.inflate(R.layout.content_pane, container, false);
+
+        mListView = (ListView) root.findViewById(R.id.contentPaneListView);
+        mListView.setAdapter(mListAdapter);
+
+        return root;
+    }
+
+
     private void load() {
         Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
         Bundle bundle = new Bundle();
@@ -69,21 +95,6 @@ public class ContentFragment extends Fragment implements LoaderManager.LoaderCal
         bundle.putStringArray(SELECTION_ARGS, IMAGES_SELECTION_ARGS);
         bundle.putString(SORT_ORDER,IMAGES_SORT_ORDER);
         getLoaderManager().initLoader(0,bundle,this);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        final View root = inflater.inflate(R.layout.content_pane, container, false);
-
-        mListView = (ListView) root.findViewById(R.id.contentPaneListView);
-        final String[] from = new String[]{MediaStore.Images.Media.DATA};
-        final int[] to = new int[]{R.id.contentPaneItemImage};
-        mListAdapter = new ImageCursorAdapter(getActivity(),null,R.layout.content_pane_item,
-                R.id.contentPaneItemImage,_ID,_ID);
-        mListView.setAdapter(mListAdapter);
-
-        return root;
     }
 
     @Override
