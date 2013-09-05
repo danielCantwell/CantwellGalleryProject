@@ -37,6 +37,7 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
     private static final String SELECTION       = "SELECTION";
     private static final String SELECTION_ARGS  = "SELECTION_ARGS";
     private static final String SORT_ORDER      = "SORT_ORDER";
+    private static final String LIST_POSITION   = "LIST_POSITION";
 
     // Exception Strings
     private static final String INVALID_LOADER_ID       = "Invalid Loader ID.";
@@ -59,6 +60,9 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
     private static final String     BUCKET_SELECTION        = "1) GROUP BY (" + BUCKET_ID;
     private static final String[]   BUCKET_SELECTION_ARGS   = null;
     private static final String     BUCKET_SORT_ORDER       = DEFAULT_SORT_ORDER;
+
+    // Loader IDs
+    private static final int        DEFAULT_LOADER          = 0x001;
 
     // Private member variables
     private QuickBarCallbacks       mListener;
@@ -84,6 +88,19 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
         }
         load();
     }
+    /**
+     * Place all initialization that should be retained across config changes in here.
+     * This will not be called again because we use setRetainInstance(true).
+     * @param savedInstanceState
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+        mQuickBarAdapter = new QuickBarCursorAdapter(getActivity(),null,BUCKET_ID,BUCKET_DISPLAY_NAME,MIN_ID);
+
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -91,7 +108,6 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
         final View root = inflater.inflate(R.layout.quick_bar, container, false);
 
         mListView = (ListView) root.findViewById(R.id.quickBarListView);
-        mQuickBarAdapter = new QuickBarCursorAdapter(getActivity(),null,BUCKET_ID,BUCKET_DISPLAY_NAME,MIN_ID);
         mListView.setAdapter(mQuickBarAdapter);
 
         //setupDrag(mListView);
@@ -101,6 +117,46 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onDetach() {
+        mListener = null;
+        super.onDetach();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(LIST_POSITION,mListView.getFirstVisiblePosition());
+        super.onSaveInstanceState(outState);
+    }
+
+
+    /**
+     * Construct load parameters and initialize loader
+     */
+    private void load() {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(URI,BUCKET_URI);
+        bundle.putStringArray(PROJECTION, BUCKET_PROJECTION);
+        bundle.putString(SELECTION, BUCKET_SELECTION);
+        bundle.putStringArray(SELECTION_ARGS, BUCKET_SELECTION_ARGS);
+        bundle.putString(SORT_ORDER,BUCKET_SORT_ORDER);
+        getLoaderManager().initLoader(DEFAULT_LOADER,bundle,this);
+    }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {
@@ -128,18 +184,6 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
         mQuickBarAdapter.changeCursor(null);
     }
 
-    /**
-     * Construct load parameters and initialize loader
-     */
-    private void load() {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(URI,BUCKET_URI);
-        bundle.putStringArray(PROJECTION, BUCKET_PROJECTION);
-        bundle.putString(SELECTION, BUCKET_SELECTION);
-        bundle.putStringArray(SELECTION_ARGS, BUCKET_SELECTION_ARGS);
-        bundle.putString(SORT_ORDER,BUCKET_SORT_ORDER);
-        getLoaderManager().initLoader(0,bundle,this);
-    }
 
     /*********************************
      *        DRAG  AND  DROP        *

@@ -4,6 +4,7 @@
               android:orientation="vertical"
               android:layout_width="@dimen/quick_bar_width"
               android:layout_height="wrap_content"
+              android:foreground="?android:selectableItemBackground"
               android:focusable="false">
 
     <ImageView
@@ -16,7 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Text"
             android:id="@+id/quickBarItemTextView"
             android:layout_gravity="center|left"
             android:textAlignment="center"
