@@ -26,10 +26,10 @@ public class ImageCursorAdapter extends BaseAdapter{
     private int                 mIDIndex;
     private int                 mImageIDIndex;
 
-    private Context mContext;
-    private Cursor mCursor;
-    private LayoutInflater mInflater;
-    private BitmapCache mCache;
+    private Context             mContext;
+    private Cursor              mCursor;
+    private LayoutInflater      mInflater;
+    private BitmapCache         mCache;
 
     private static class ViewHolder{
         ImageView imageView;
@@ -41,7 +41,7 @@ public class ImageCursorAdapter extends BaseAdapter{
 
         mCursor = cursor;
 
-        mItemLayoutID = itemLayoutID;
+        mItemLayoutID    = itemLayoutID;
         mImageResourceID = imageResourceID;
 
         if(idColumn!=null && imageIDColumn!= null){

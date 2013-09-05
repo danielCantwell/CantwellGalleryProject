@@ -3,6 +3,7 @@ package com.cantwellcode.cantwellgallery;
 import android.content.ClipData;
 import android.content.ClipDescription;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -10,9 +11,13 @@ import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.view.DragEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+import java.net.URI;
 import java.util.Map;
 
 /**
@@ -58,10 +63,12 @@ public class MainActivity extends FragmentActivity
 
         final SlidingPaneLayout slidingPaneLayout = SlidingPaneLayout.class.cast(root.findViewById(R.id.slidingpanelayout));
 
+
         slidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
 
             @Override
             public void onPanelSlide(View view, float v) {
+
             }
 
             @Override
@@ -94,7 +101,43 @@ public class MainActivity extends FragmentActivity
     }
 
     @Override
-    public boolean processDropOnQuickBar(Long itemID, DragEvent event) {
+    public boolean processDropOnQuickBar(Cursor directoryItem, DragEvent event) {
+
+        ClipData data = event.getClipData();
+
+        Cursor imageItem    = (Cursor) event.getLocalState();
+        Cursor quickbarItem = directoryItem;
+
+        int    quickbarIndex     = quickbarItem.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME);
+        String quickbarDirectory = quickbarItem.getString(quickbarIndex);
+/*
+        int    imageDataIndex   = imageItem.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        int    imageNameIndex   = imageItem.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME);
+        int    imageDescIndex   = imageItem.getColumnIndexOrThrow(MediaStore.Images.Media.DESCRIPTION);
+        String imageDirectory   = imageItem.getString(imageDataIndex);
+        String imageName        = imageItem.getString(imageNameIndex);
+        String imageDescription = imageItem.getString(imageDescIndex);
+*/
+/*
+        try {
+            MediaStore.Images.Media.insertImage(getContentResolver(), imageDirectory, imageName, imageDescription);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+*/
+/*
+        Toast t1 = Toast.makeText(this, "Quickbar Display Name: " + quickbarDirectory, Toast.LENGTH_SHORT);
+        t1.show();
+        Toast t2 = Toast.makeText(this, "Image Directory: " + imageDirectory, Toast.LENGTH_SHORT);
+        t2.show();
+        Toast t3 = Toast.makeText(this, "Image Name: " + imageName, Toast.LENGTH_SHORT);
+        t3.show();
+        Toast t4 = Toast.makeText(this, "Image Description: " + imageDescription, Toast.LENGTH_SHORT);
+        t4.show();
+*/
+        //String contentIDString = data.getDescription().getLabel().toString();
+        //Long contentID = Long.parseLong(contentIDString);
+
         return true;
     }
 

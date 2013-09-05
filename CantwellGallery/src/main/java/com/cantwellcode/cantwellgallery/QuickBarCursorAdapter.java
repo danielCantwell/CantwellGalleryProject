@@ -16,7 +16,7 @@ import android.widget.TextView;
 public class QuickBarCursorAdapter extends BaseAdapter {
     private static final String TAG = "QUICK_BAR_CURSOR_ADAPTER";
 
-    private static final String NULL_CONTEXT = "Must supply a valid context.";
+    private static final String NULL_CONTEXT      = "Must supply a valid context.";
     private static final String NULL_COLUMN_NAMES = "Must supply non-null column names";
 
     private String              mIDColumnName;
@@ -29,7 +29,7 @@ public class QuickBarCursorAdapter extends BaseAdapter {
     private Context             mContext;
     private Cursor              mCursor;
     private LayoutInflater      mInflater;
-    private BitmapCache mCache;
+    private BitmapCache         mCache;
 
     private static class ViewHolder{
         TextView textView;
@@ -102,6 +102,7 @@ public class QuickBarCursorAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
+        
         if (convertView==null){
             convertView = mInflater.inflate(R.layout.quick_bar_item,parent,false);
             holder = new ViewHolder();
@@ -112,10 +113,12 @@ public class QuickBarCursorAdapter extends BaseAdapter {
         }else{
             holder = (ViewHolder) convertView.getTag();
         }
+
         mCursor.moveToPosition(position);
         holder.textView.setText(mCursor.getString(mTextIndex));
         long imageID = mCursor.getLong(mImageIDIndex);
         new ThumbnailAsyncTask(mContext,holder.imageView,mCache).execute(imageID);
+
         return convertView;
     }
 

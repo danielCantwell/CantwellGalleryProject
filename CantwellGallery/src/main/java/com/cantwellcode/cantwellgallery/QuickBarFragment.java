@@ -5,7 +5,6 @@ import android.content.ClipData;
 import android.content.ClipDescription;
 import android.database.Cursor;
 import android.net.Uri;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -19,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -30,7 +28,7 @@ import android.widget.Toast;
  * associated bindings.
  * This fragment will then keep a modifiable list of directories to display
  */
-public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
+public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final String TAG = "QuickBarFragment";
 
     // Bundle tags
@@ -68,7 +66,7 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
     private QuickBarCursorAdapter   mQuickBarAdapter;
 
     public interface QuickBarCallbacks{
-        boolean processDropOnQuickBar(Long itemID, DragEvent event);
+        boolean processDropOnQuickBar(Cursor directoryItem, DragEvent event);
     }
 
     /**
@@ -91,11 +89,12 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the view for this fragment from the associated xml file.
         final View root = inflater.inflate(R.layout.quick_bar, container, false);
+
         mListView = (ListView) root.findViewById(R.id.quickBarListView);
         mQuickBarAdapter = new QuickBarCursorAdapter(getActivity(),null,BUCKET_ID,BUCKET_DISPLAY_NAME,MIN_ID);
         mListView.setAdapter(mQuickBarAdapter);
 
-        setupDrag(mListView);
+        //setupDrag(mListView);
         setupDrop(mListView);
 
         return root;
@@ -106,12 +105,15 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {
         Log.d(TAG, "onCreateLoader() thread = " + Thread.currentThread().getName());
-        Uri uri = bundle.getParcelable(URI);
-        String[] projection = bundle.getStringArray(PROJECTION);
-        String selection = bundle.getString(SELECTION);
-        String[] selectionArgs = bundle.getStringArray(SELECTION_ARGS);
-        String sortOrder = bundle.getString(SORT_ORDER);
-        CursorLoader loader = new CursorLoader(this.getActivity(),uri,projection,selection,selectionArgs,sortOrder);
+
+        Uri          uri           = bundle.getParcelable(URI);
+        String[]     projection    = bundle.getStringArray(PROJECTION);
+        String       selection     = bundle.getString(SELECTION);
+        String[]     selectionArgs = bundle.getStringArray(SELECTION_ARGS);
+        String       sortOrder     = bundle.getString(SORT_ORDER);
+
+        CursorLoader loader        = new CursorLoader(this.getActivity(),uri,projection,selection,selectionArgs,sortOrder);
+
         return loader;
     }
 
@@ -148,6 +150,7 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
      *
      * @param listView - used to override OnItemLongClickListener()
      */
+
     private void setupDrag(ListView listView) {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -193,9 +196,10 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
                         dropToast.show();
 
                         int itemPosition = v.pointToPosition((int) dragEvent.getX(), (int) dragEvent.getY());
-                        long itemID = v.getAdapter().getItemId(itemPosition);
 
-                        return mListener.processDropOnQuickBar(itemID, dragEvent);
+                        Cursor directoryItem = (Cursor) v.getItemAtPosition(itemPosition);
+
+                        return mListener.processDropOnQuickBar(directoryItem, dragEvent);
                 }
                 return false;
             }
