@@ -43,8 +43,8 @@ public class QuickBarCursorAdapter extends BaseAdapter {
         mCursor = cursor;
 
         if(idColumn!=null && textColumn!=null && imageIDColumn!= null){
-            mIDColumnName = idColumn;
-            mTextColumnName = textColumn;
+            mIDColumnName      = idColumn;
+            mTextColumnName    = textColumn;
             mImageIDColumnName = imageIDColumn;
             findColumns();
         }
@@ -67,12 +67,12 @@ public class QuickBarCursorAdapter extends BaseAdapter {
 
     private void findColumns() {
         if (mCursor == null){
-            mIDIndex = -1;
-            mTextIndex = -1;
+            mIDIndex      = -1;
+            mTextIndex    = -1;
             mImageIDIndex = -1;
         }else{
-            mIDIndex = (mIDColumnName!= null) ? mCursor.getColumnIndexOrThrow(mIDColumnName) : -1;
-            mTextIndex = (mTextColumnName!= null) ? mCursor.getColumnIndexOrThrow(mTextColumnName) : -1;
+            mIDIndex      = (mIDColumnName!= null)      ? mCursor.getColumnIndexOrThrow(mIDColumnName)      : -1;
+            mTextIndex    = (mTextColumnName!= null)    ? mCursor.getColumnIndexOrThrow(mTextColumnName)    : -1;
             mImageIDIndex = (mImageIDColumnName!= null) ? mCursor.getColumnIndexOrThrow(mImageIDColumnName) : -1;
         }
     }
@@ -106,7 +106,7 @@ public class QuickBarCursorAdapter extends BaseAdapter {
         if (convertView==null){
             convertView = mInflater.inflate(R.layout.quick_bar_item,parent,false);
             holder = new ViewHolder();
-            holder.textView = (TextView) convertView.findViewById(R.id.quickBarItemTextView);
+            holder.textView  = (TextView)  convertView.findViewById(R.id.quickBarItemTextView);
             holder.imageView = (ImageView) convertView.findViewById(R.id.quickBarItemImageView);
 
             convertView.setTag(holder);

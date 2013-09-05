@@ -45,7 +45,7 @@ public class ImageCursorAdapter extends BaseAdapter{
         mImageResourceID = imageResourceID;
 
         if(idColumn!=null && imageIDColumn!= null){
-            mIDColumnName = idColumn;
+            mIDColumnName      = idColumn;
             mImageIDColumnName = imageIDColumn;
             findColumns();
         } else throw new IllegalArgumentException(NULL_COLUMN_NAMES);
@@ -70,7 +70,7 @@ public class ImageCursorAdapter extends BaseAdapter{
             mIDIndex = -1;
             mImageIDIndex = -1;
         }else{
-            mIDIndex = (mIDColumnName!= null) ? mCursor.getColumnIndexOrThrow(mIDColumnName) : -1;
+            mIDIndex      = (mIDColumnName!= null)      ? mCursor.getColumnIndexOrThrow(mIDColumnName)      : -1;
             mImageIDIndex = (mImageIDColumnName!= null) ? mCursor.getColumnIndexOrThrow(mImageIDColumnName) : -1;
         }
     }

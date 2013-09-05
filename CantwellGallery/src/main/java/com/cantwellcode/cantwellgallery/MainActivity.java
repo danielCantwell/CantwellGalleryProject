@@ -40,11 +40,10 @@ public class MainActivity extends FragmentActivity
         FragmentManager fm = getSupportFragmentManager();
         // Initialize QuickBarFragment
         mQuickBarFragment = (QuickBarFragment) fm.findFragmentById(R.id.quickBarFragment);
-        mContentFragment = (ContentFragment) fm.findFragmentById(R.id.contentFragment);
+        mContentFragment  = (ContentFragment)  fm.findFragmentById(R.id.contentFragment);
 
 
         final SlidingPaneLayout slidingPaneLayout = SlidingPaneLayout.class.cast(root.findViewById(R.id.slidingpanelayout));
-
 
         slidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
 
@@ -58,8 +57,8 @@ public class MainActivity extends FragmentActivity
 
                 switch (view.getId()) {
                     case R.id.directoryFragment:
-                        getSupportFragmentManager().findFragmentById(R.id.contentFragment).setHasOptionsMenu(true);
-                        getSupportFragmentManager().findFragmentById(R.id.contentFragment).setHasOptionsMenu(false);
+                        //getSupportFragmentManager().findFragmentById(R.id.contentFragment).setHasOptionsMenu(true);
+                        //getSupportFragmentManager().findFragmentById(R.id.contentFragment).setHasOptionsMenu(false);
                         break;
                     default:
                         break;
@@ -71,8 +70,8 @@ public class MainActivity extends FragmentActivity
 
                 switch (view.getId()) {
                     case R.id.directoryFragment:
-                        getSupportFragmentManager().findFragmentById(R.id.contentFragment).setHasOptionsMenu(false);
-                        getSupportFragmentManager().findFragmentById(R.id.directoryFragment).setHasOptionsMenu(true);
+                        //getSupportFragmentManager().findFragmentById(R.id.contentFragment).setHasOptionsMenu(false);
+                        //getSupportFragmentManager().findFragmentById(R.id.directoryFragment).setHasOptionsMenu(true);
                         break;
                     default:
                         break;
