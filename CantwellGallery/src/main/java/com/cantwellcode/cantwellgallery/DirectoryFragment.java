@@ -151,10 +151,10 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
     public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {
         Log.d(TAG, "onCreateLoader() thread = " + Thread.currentThread().getName());
         Uri uri = bundle.getParcelable(URI);
-        String[] projection = bundle.getStringArray(PROJECTION);
-        String selection = bundle.getString(SELECTION);
+        String[] projection    = bundle.getStringArray(PROJECTION);
+        String   selection     = bundle.getString(SELECTION);
         String[] selectionArgs = bundle.getStringArray(SELECTION_ARGS);
-        String sortOrder = bundle.getString(SORT_ORDER);
+        String   sortOrder     = bundle.getString(SORT_ORDER);
         CursorLoader loader = new CursorLoader(this.getActivity(),uri,projection,selection,selectionArgs,sortOrder);
         return loader;
     }
@@ -175,8 +175,9 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Cursor cursor = (Cursor) mAdapter.getItem(position);
-                int index = cursor.getColumnIndexOrThrow(BUCKET_DISPLAY_NAME);
-                String name = cursor.getString(index);
+                int index     = cursor.getColumnIndexOrThrow(BUCKET_DISPLAY_NAME);
+                String name   = cursor.getString(index);
+
                 Toast directorySelectedToast = Toast.makeText(getActivity(),"Album " + name + " selected", Toast.LENGTH_SHORT);
                 directorySelectedToast.show();
                 mListener.onDirectoryPaneItemSelected(id,name);

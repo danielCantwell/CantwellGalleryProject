@@ -10,17 +10,20 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by Daniel on 8/13/13.
  */
-public class ContentFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
+public class ContentFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String TAG = "ContentFragment";
 
@@ -122,12 +125,14 @@ public class ContentFragment extends Fragment implements LoaderManager.LoaderCal
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        Uri uri = bundle.getParcelable(URI);
-        String[] projection = bundle.getStringArray(PROJECTION);
-        String selection = bundle.getString(SELECTION);
-        String[] selectionArgs = bundle.getStringArray(SELECTION_ARGS);
-        String sortOrder = bundle.getString(SORT_ORDER);
-        CursorLoader loader = new CursorLoader(this.getActivity(),uri,projection,selection,selectionArgs,sortOrder);
+        Uri          uri           = bundle.getParcelable(URI);
+        String[]     projection    = bundle.getStringArray(PROJECTION);
+        String       selection     = bundle.getString(SELECTION);
+        String[]     selectionArgs = bundle.getStringArray(SELECTION_ARGS);
+        String       sortOrder     = bundle.getString(SORT_ORDER);
+
+        CursorLoader loader        = new CursorLoader(this.getActivity(),uri,projection,selection,selectionArgs,sortOrder);
+
         return loader;
 
     }
@@ -149,15 +154,29 @@ public class ContentFragment extends Fragment implements LoaderManager.LoaderCal
      *        DRAG  AND  DROP        *
      *********************************/
 
-    private void setupDrag(ListView listView) {
+    private void setupDrag(final ListView listView) {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
-                final String title = "photoNameWillGoHere";
-                final String textData = title + ":" + position;
-                ClipData data = ClipData.newPlainText(title, textData);
-                view.startDrag(data, new MyDragShadowBuilder(view), null, 0);
+
+                long id               = listView.getAdapter().getItemId(position);
+                final String label    = Long.toString(id);
+                final String textData = label + ":" + position;
+                ClipData data         = ClipData.newPlainText(label, textData);
+
+                view.startDrag(data, new MyDragShadowBuilder(view), mListAdapter.getItem(position), 0);
+
                 return true;
+            }
+        });
+    }
+
+    private void setupFling(final ListView listView) {
+        listView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                return false;
             }
         });
     }
