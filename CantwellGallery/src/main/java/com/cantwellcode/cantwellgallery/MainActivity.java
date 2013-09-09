@@ -13,6 +13,7 @@ import android.support.v4.widget.SlidingPaneLayout;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 import java.io.FileNotFoundException;
 import java.net.URI;
@@ -27,6 +28,7 @@ public class MainActivity extends FragmentActivity
 
     private QuickBarFragment    mQuickBarFragment;
     private ContentFragment     mContentFragment;
+    private ImageView           mUtilityBarDeleteView;
 
 
     @Override
@@ -39,13 +41,14 @@ public class MainActivity extends FragmentActivity
 
         FragmentManager fm = getSupportFragmentManager();
         // Initialize QuickBarFragment
-        //mQuickBarFragment = (QuickBarFragment) fm.findFragmentById(R.id.quickBarFragment);
-        mContentFragment  = (ContentFragment)  fm.findFragmentById(R.id.contentFragment);
+        //mQuickBarFragment   = (QuickBarFragment) fm.findFragmentById(R.id.quickBarFragment);
+        mContentFragment      = (ContentFragment)  fm.findFragmentById(R.id.contentFragment);
+
+        mUtilityBarDeleteView = (ImageView) findViewById(R.id.utilityBarDeleteView);
+        setupDrop(mUtilityBarDeleteView);
 
 
         final SlidingPaneLayout slidingPaneLayout = SlidingPaneLayout.class.cast(root.findViewById(R.id.slidingpanelayout));
-
-
 
         slidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
 
@@ -84,50 +87,84 @@ public class MainActivity extends FragmentActivity
     }
 
     @Override
-    public boolean processDropOnQuickBar(Cursor directoryItem, DragEvent event) {
-
-        ClipData data = event.getClipData();
-
-        Cursor imageItem    = (Cursor) event.getLocalState();
-        Cursor quickbarItem = directoryItem;
-
-        int    quickbarIndex     = quickbarItem.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME);
-        String quickbarDirectory = quickbarItem.getString(quickbarIndex);
-/*
-        int    imageDataIndex   = imageItem.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        int    imageNameIndex   = imageItem.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME);
-        int    imageDescIndex   = imageItem.getColumnIndexOrThrow(MediaStore.Images.Media.DESCRIPTION);
-        String imageDirectory   = imageItem.getString(imageDataIndex);
-        String imageName        = imageItem.getString(imageNameIndex);
-        String imageDescription = imageItem.getString(imageDescIndex);
-*/
-/*
-        try {
-            MediaStore.Images.Media.insertImage(getContentResolver(), imageDirectory, imageName, imageDescription);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-*/
-/*
-        Toast t1 = Toast.makeText(this, "Quickbar Display Name: " + quickbarDirectory, Toast.LENGTH_SHORT);
-        t1.show();
-        Toast t2 = Toast.makeText(this, "Image Directory: " + imageDirectory, Toast.LENGTH_SHORT);
-        t2.show();
-        Toast t3 = Toast.makeText(this, "Image Name: " + imageName, Toast.LENGTH_SHORT);
-        t3.show();
-        Toast t4 = Toast.makeText(this, "Image Description: " + imageDescription, Toast.LENGTH_SHORT);
-        t4.show();
-*/
-        //String contentIDString = data.getDescription().getLabel().toString();
-        //Long contentID = Long.parseLong(contentIDString);
-
-        return true;
-    }
-
-
-    @Override
     public boolean onDirectoryPaneItemSelected(long id, String name) {
         mContentFragment.changeDirectory(name);
         return true;
+    }
+
+    private void setupDrop(final View v) {
+
+        v.setOnDragListener(new View.OnDragListener() {
+            @Override
+            public boolean onDrag(View view, DragEvent dragEvent) {
+
+                switch (dragEvent.getAction()) {
+
+                    // When a view drag starts
+                    case DragEvent.ACTION_DRAG_STARTED:
+                        Toast dragStartedToast = Toast.makeText(MainActivity.this, "Trash Can recognized: Drag Started", Toast.LENGTH_SHORT);
+                        dragStartedToast.show();
+                        return processDragStarted(dragEvent);
+
+                    // When the view is being held over the imageView
+                    case DragEvent.ACTION_DRAG_ENTERED:
+                        Toast dragEnteredToast = Toast.makeText(MainActivity.this, "Trash Can recognized: Drag Entered", Toast.LENGTH_SHORT);
+                        dragEnteredToast.show();
+                        break;
+
+                    // When the view is exited
+                    case DragEvent.ACTION_DRAG_EXITED:
+                        Toast dragExitedToast = Toast.makeText(MainActivity.this, "Trash Can recognized: Drag Exited", Toast.LENGTH_SHORT);
+                        dragExitedToast.show();
+                        break;
+
+                    // When the view is dropped on the quickbar
+                    case DragEvent.ACTION_DROP:
+                        Toast dropToast = Toast.makeText(MainActivity.this, "Trash Can recognized: Drop", Toast.LENGTH_SHORT);
+                        dropToast.show();
+                        return processDrop(dragEvent, v);
+                }
+                return false;
+            }
+        });
+    }
+
+    /**
+     * Check if this is the drag operation you want. There might be other
+     * clients that would be generating the drag event. Here, we check the mime
+     * type of the data
+     *
+     * @param event
+     * @return : true if the item has mimetype = plain text
+     */
+    private boolean processDragStarted(DragEvent event) {
+        ClipDescription clipDesc = event.getClipDescription();
+        if (clipDesc != null) {
+            return clipDesc.hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN);
+        }
+        return false;
+    }
+
+    /**
+     * Handle drop events on small quickbar
+     *
+     * @param dragEvent - the drag event from the view that is being dragged
+     * @param v - the view that is receiving the drop event
+     * @return true if the drop is processed and handled, otherwise return false
+     */
+    private boolean processDrop(DragEvent dragEvent, View v) {
+        switch (v.getId()) {
+            // If the item is dropped on the view "quickBarCurrentItemImage"
+            case R.id.quickBarCurrentItemImage:
+                Toast t = Toast.makeText(this, "Dropped on : quickBarCurrentItemImage", Toast.LENGTH_SHORT);
+                t.show();
+                return true;
+            // If the item is dropped on the view "quickBarNewItemImage"
+            case R.id.quickBarNewItemImage:
+                Toast t1 = Toast.makeText(this, "Dropped on : quickBarNewItemImage", Toast.LENGTH_SHORT);
+                t1.show();
+                return true;
+        }
+        return false;
     }
 }

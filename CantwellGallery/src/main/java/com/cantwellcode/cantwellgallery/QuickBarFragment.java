@@ -70,7 +70,6 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
     private QuickBarCursorAdapter   mQuickBarAdapter;
 
     public interface QuickBarCallbacks{
-        boolean processDropOnQuickBar(Cursor directoryItem, DragEvent event);
     }
 
     /**
@@ -217,34 +216,34 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
 
                 switch (dragEvent.getAction()) {
 
-                    // When a view drag starts, imageView turns blue
+                    // When a view drag starts
                     case DragEvent.ACTION_DRAG_STARTED:
-                        Toast dragStartedToast = Toast.makeText(getActivity(), "Drag Started", Toast.LENGTH_SHORT);
+                        Toast dragStartedToast = Toast.makeText(getActivity(), "QuickBar Fragment Recognized : Drag Started", Toast.LENGTH_SHORT);
                         dragStartedToast.show();
                         return processDragStarted(dragEvent);
 
-                    // When the view is being held over the imageView, the imageView turns blue
+                    // When the view is being held over the imageView
                     case DragEvent.ACTION_DRAG_ENTERED:
-                        Toast dragEnteredToast = Toast.makeText(getActivity(), "Drag Entered", Toast.LENGTH_SHORT);
+                        Toast dragEnteredToast = Toast.makeText(getActivity(), "QuickBar Fragment Recognized : Drag Entered", Toast.LENGTH_SHORT);
                         dragEnteredToast.show();
                         break;
 
-                    // When the view is exited, but not dropped on the imageView, the imageView turns yellow
+                    // When the view is exited, but not dropped on the imageView
                     case DragEvent.ACTION_DRAG_EXITED:
-                        Toast dragExitedToast = Toast.makeText(getActivity(), "Drag Exited", Toast.LENGTH_SHORT);
+                        Toast dragExitedToast = Toast.makeText(getActivity(), "QuickBar Fragment Recognized : Drag Exited", Toast.LENGTH_SHORT);
                         dragExitedToast.show();
                         break;
 
                     // When the view is dropped on the imageView, process the drop
                     case DragEvent.ACTION_DROP:
-                        Toast dropToast = Toast.makeText(getActivity(), "Drop", Toast.LENGTH_SHORT);
+                        Toast dropToast = Toast.makeText(getActivity(), "QuickBar Fragment Recognized : Drop", Toast.LENGTH_SHORT);
                         dropToast.show();
 
                         int itemPosition = v.pointToPosition((int) dragEvent.getX(), (int) dragEvent.getY());
 
                         Cursor directoryItem = (Cursor) v.getItemAtPosition(itemPosition);
 
-                        return mListener.processDropOnQuickBar(directoryItem, dragEvent);
+                        return processDropOnQuickBar(directoryItem, dragEvent);
                 }
                 return false;
             }
@@ -265,6 +264,46 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
             return clipDesc.hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN);
         }
         return false;
+    }
+
+    public boolean processDropOnQuickBar(Cursor directoryItem, DragEvent event) {
+
+        ClipData data = event.getClipData();
+
+        Cursor imageItem    = (Cursor) event.getLocalState();
+        Cursor quickbarItem = directoryItem;
+
+        int    quickbarIndex     = quickbarItem.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME);
+        String quickbarDirectory = quickbarItem.getString(quickbarIndex);
+/*
+        int    imageDataIndex   = imageItem.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        int    imageNameIndex   = imageItem.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME);
+        int    imageDescIndex   = imageItem.getColumnIndexOrThrow(MediaStore.Images.Media.DESCRIPTION);
+        String imageDirectory   = imageItem.getString(imageDataIndex);
+        String imageName        = imageItem.getString(imageNameIndex);
+        String imageDescription = imageItem.getString(imageDescIndex);
+*/
+/*
+        try {
+            MediaStore.Images.Media.insertImage(getContentResolver(), imageDirectory, imageName, imageDescription);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+*/
+/*
+        Toast t1 = Toast.makeText(this, "Quickbar Display Name: " + quickbarDirectory, Toast.LENGTH_SHORT);
+        t1.show();
+        Toast t2 = Toast.makeText(this, "Image Directory: " + imageDirectory, Toast.LENGTH_SHORT);
+        t2.show();
+        Toast t3 = Toast.makeText(this, "Image Name: " + imageName, Toast.LENGTH_SHORT);
+        t3.show();
+        Toast t4 = Toast.makeText(this, "Image Description: " + imageDescription, Toast.LENGTH_SHORT);
+        t4.show();
+*/
+        //String contentIDString = data.getDescription().getLabel().toString();
+        //Long contentID = Long.parseLong(contentIDString);
+
+        return true;
     }
 
 }
