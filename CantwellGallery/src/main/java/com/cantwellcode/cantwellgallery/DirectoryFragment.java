@@ -1,6 +1,7 @@
 package com.cantwellcode.cantwellgallery;
 
 import android.app.Activity;
+import android.content.ClipData;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -169,7 +170,6 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
         mAdapter.changeCursor(null);
     }
 
-
     private void setupListItemSelect(GridView gridView) {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -183,5 +183,29 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
             }
         });
     }
+
+
+    /*********************************
+     *        DRAG  AND  DROP        *
+     *********************************/
+
+    /**
+     * Used to allow items in the listView to be dragged.
+     *
+     * @param gridView - used to override OnItemLongClickListener()
+     */
+    private void setupDrag(GridView gridView) {
+        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
+                final String title = "albumNameWillGoHere";
+                final String textData = title + ":" + position;
+                ClipData data = ClipData.newPlainText(title, textData);
+                view.startDrag(data, new MyDragShadowBuilder(view), null, 0);
+                return true;
+            }
+        });
+    }
+
 
 }

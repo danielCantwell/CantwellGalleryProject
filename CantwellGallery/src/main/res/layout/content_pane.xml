@@ -5,10 +5,19 @@
               android:layout_height="match_parent">
 
 
+    <ImageView
+            android:layout_width="36dp"
+            android:layout_height="match_parent"
+            android:id="@+id/conentPaneDragArea"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/contentPaneHeader"
+            android:background="#98aaed"/>
+
     <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/contentPaneTextView"
+            android:layout_height="@dimen/header_height"
+            android:id="@+id/contentPaneHeader"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"/>
 
@@ -16,8 +25,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/contentPaneListView"
-            android:layout_below="@+id/contentPaneTextView"
-            android:layout_centerInParent="true"/>
+            android:layout_below="@+id/contentPaneHeader"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/conentPaneDragArea"/>
 
 
 </RelativeLayout>

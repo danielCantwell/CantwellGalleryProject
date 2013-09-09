@@ -81,7 +81,7 @@ public class ContentFragment extends Fragment implements LoaderManager.LoaderCal
 
         final View root = inflater.inflate(R.layout.content_pane, container, false);
 
-        mTextView = (TextView) root.findViewById(R.id.contentPaneTextView);
+        mTextView = (TextView) root.findViewById(R.id.contentPaneHeader);
         if (mName == null) mTextView.setText(EMPTY_NAME);
         else mTextView.setText(mName);
 

@@ -2,6 +2,7 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="quick_bar_width">100dp</dimen>
+    <dimen name="quick_bar_width">125dp</dimen>
     <dimen name="directory_pane_header_height">20dp</dimen>
+    <dimen name="new_item_height">60dp</dimen><dimen name="content_item_vertical_padding">20dp</dimen><dimen name="header_height">30dp</dimen><dimen name="utility_bar_width">50dp</dimen>
 </resources>

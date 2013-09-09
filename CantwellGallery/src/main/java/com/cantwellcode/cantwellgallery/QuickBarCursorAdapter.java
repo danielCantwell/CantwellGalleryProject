@@ -3,6 +3,7 @@ package com.cantwellcode.cantwellgallery;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +27,11 @@ public class QuickBarCursorAdapter extends BaseAdapter {
     private int                 mTextIndex;
     private int                 mImageIDIndex;
 
+    private BitmapCache         mCache;
     private Context             mContext;
     private Cursor              mCursor;
     private LayoutInflater      mInflater;
-    private BitmapCache mCache;
+    private long                mSelectedID;
 
     private static class ViewHolder{
         TextView textView;
@@ -37,11 +39,19 @@ public class QuickBarCursorAdapter extends BaseAdapter {
     }
 
     public QuickBarCursorAdapter(Context context, Cursor cursor, String idColumn, String textColumn, String imageIDColumn){
+        // Initialize thumbnail cache
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        int memoryClassBytes = am.getMemoryClass()*1024*1024;
+        mCache = new BitmapCache(memoryClassBytes/16);
+
+        // Initialize context
         if(context != null)mContext = context;
         else throw new IllegalArgumentException(NULL_CONTEXT);
 
+        // Initialize cursor
         mCursor = cursor;
 
+        // Initialize column indices
         if(idColumn!=null && textColumn!=null && imageIDColumn!= null){
             mIDColumnName = idColumn;
             mTextColumnName = textColumn;
@@ -50,11 +60,8 @@ public class QuickBarCursorAdapter extends BaseAdapter {
         }
         else throw new IllegalArgumentException(NULL_COLUMN_NAMES);
 
+        // Initialize layout inflater
         mInflater = LayoutInflater.from(context);
-
-        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        int memoryClassBytes = am.getMemoryClass()*1024*1024;
-        mCache = new BitmapCache(memoryClassBytes/16);
     }
 
     public void changeCursor(Cursor cursor) {
@@ -63,6 +70,10 @@ public class QuickBarCursorAdapter extends BaseAdapter {
             findColumns();
             notifyDataSetChanged();
         } else notifyDataSetInvalidated();
+    }
+
+    public void select(int listPosition){
+
     }
 
     private void findColumns() {

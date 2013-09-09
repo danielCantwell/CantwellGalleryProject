@@ -29,11 +29,13 @@ public class MainActivity extends FragmentActivity
 
         FragmentManager fm = getSupportFragmentManager();
         // Initialize QuickBarFragment
-        mQuickBarFragment = (QuickBarFragment) fm.findFragmentById(R.id.quickBarFragment);
+        //mQuickBarFragment = (QuickBarFragment) fm.findFragmentById(R.id.quickBarFragment);
         mContentFragment = (ContentFragment) fm.findFragmentById(R.id.contentFragment);
 
 
         final SlidingPaneLayout slidingPaneLayout = SlidingPaneLayout.class.cast(root.findViewById(R.id.slidingpanelayout));
+
+
 
         slidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
 

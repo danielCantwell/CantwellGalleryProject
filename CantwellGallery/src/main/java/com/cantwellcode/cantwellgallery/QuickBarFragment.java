@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -110,6 +111,9 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
         final View root = inflater.inflate(R.layout.quick_bar, container, false);
         mListView = (ListView) root.findViewById(R.id.quickBarListView);
         mListView.setAdapter(mQuickBarAdapter);
+
+        mListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+
 
         setupDrag(mListView);
         setupDrop(mListView);
