@@ -110,8 +110,6 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
         mListView = (ListView) root.findViewById(R.id.quickBarListView);
         mListView.setAdapter(mQuickBarAdapter);
 
-        mListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-
 
         //setupDrag(mListView);
         setupDrop(mListView);
