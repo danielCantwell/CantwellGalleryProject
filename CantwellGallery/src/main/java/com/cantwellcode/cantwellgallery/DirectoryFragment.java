@@ -103,6 +103,7 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
         mGridView = (GridView) root.findViewById(R.id.directoryPaneGridView);
         mGridView.setAdapter(mAdapter);
 
+        setupDrag(mGridView);
         setupListItemSelect(mGridView);
 
         return root;
@@ -199,9 +200,7 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
-                final String title = "albumNameWillGoHere";
-                final String textData = title + ":" + position;
-                ClipData data = ClipData.newPlainText(title, textData);
+                ClipData data = ClipData.newPlainText(ClipDataLabels.BUCKET.toString(),String.valueOf(l));
                 view.startDrag(data, new MyDragShadowBuilder(view), null, 0);
                 return true;
             }

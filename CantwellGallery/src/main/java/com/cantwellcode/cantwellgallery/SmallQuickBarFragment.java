@@ -2,8 +2,11 @@ package com.cantwellcode.cantwellgallery;
 
 import android.content.ClipDescription;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +19,7 @@ import android.widget.Toast;
 /**
  * Created by Chris on 9/6/13.
  */
-public class SmallQuickBarFragment extends Fragment {
+public class SmallQuickBarFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
 
 
     private ImageView mCurrentItemImage;
@@ -35,6 +38,22 @@ public class SmallQuickBarFragment extends Fragment {
         setupDrop(mNewItemImage);
 
         return root;
+    }
+
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> cursorLoader) {
+
     }
 
     private void setupDrop(final View v) {
@@ -85,7 +104,7 @@ public class SmallQuickBarFragment extends Fragment {
     private boolean processDragStarted(DragEvent event) {
         ClipDescription clipDesc = event.getClipDescription();
         if (clipDesc != null) {
-            return clipDesc.hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN);
+            return(clipDesc.getLabel()==ClipDataLabels.BUCKET.toString());
         }
         return false;
     }
