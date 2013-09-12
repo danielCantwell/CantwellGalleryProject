@@ -22,7 +22,7 @@ import java.net.URI;
  * Main Activity that is first loaded when the application starts
  */
 public class MainActivity extends FragmentActivity
-        implements QuickBarFragment.QuickBarCallbacks, DirectoryFragment.Callbacks{
+        implements QuickBarFragment.QuickBarCallbacks, DirectoryFragment.Callbacks {
 
     private static final String TAG                     = "MAIN ACTIVITY";
 
@@ -47,8 +47,7 @@ public class MainActivity extends FragmentActivity
         mUtilityBarDeleteView = (ImageView) findViewById(R.id.utilityBarDeleteView);
         setupDrop(mUtilityBarDeleteView);
 
-
-        final SlidingPaneLayout slidingPaneLayout = SlidingPaneLayout.class.cast(root.findViewById(R.id.slidingpanelayout));
+        final SlidingPane slidingPaneLayout = SlidingPane.class.cast(root.findViewById(R.id.slidingpanelayout));
 
         slidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
 

@@ -12,7 +12,7 @@
             android:id="@+id/quickBarFragment"
             tools:layout="@layout/small_quick_bar"/>
 
-    <android.support.v4.widget.SlidingPaneLayout
+    <com.cantwellcode.cantwellgallery.SlidingPane
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:id="@+id/slidingpanelayout"
@@ -36,7 +36,7 @@
                 android:id="@+id/contentFragment"
                 tools:layout="@layout/content_pane"/>
 
-    </android.support.v4.widget.SlidingPaneLayout>
+    </com.cantwellcode.cantwellgallery.SlidingPane>
 
     <RelativeLayout
             android:layout_width="@dimen/utility_bar_width"
