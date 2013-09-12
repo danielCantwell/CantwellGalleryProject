@@ -12,25 +12,30 @@ import android.widget.Toast;
  */
 public class SlidingPane extends SlidingPaneLayout {
 
+    // X Coordinate bounds for the panel slide area
     private float xLeftSlideArea;
     private float xRightSlideArea;
-
+    // Y Coordinate bounds for the panel slide area
     private float yTopSlideArea;
     private float yBotSlideArea;
 
+    // used to compute the bounds for the panel slide area
     private float wSlideArea;
     private float hSlideArea;
 
+    // used to designate the panel slide area
     private ImageView slideArea;
 
+
+    // Nothing special is done with the constuctors
     public SlidingPane(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
-
+    // Nothing special is done with the constructors
     public SlidingPane(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
-
+    // Nothing special is done with the constructors
     public SlidingPane(Context context) {
         super(context);
     }
@@ -44,7 +49,7 @@ public class SlidingPane extends SlidingPaneLayout {
         float xTouch = ev.getX();
         float yTouch = ev.getY();
 
-        // If the touch event is within the designated drag area, allow panel sliding
+        // If the touch event is within the designated slide area, allow panel sliding
         if ( (xTouch >= xLeftSlideArea)  && (yTouch >= yTopSlideArea) &&
              (xTouch <= xRightSlideArea) && (yTouch <= yBotSlideArea)) {
 
@@ -54,6 +59,9 @@ public class SlidingPane extends SlidingPaneLayout {
         return false;
     }
 
+    /*
+     * Initialize the coordinate bounds for the slide area
+     */
     private void init() {
 
         slideArea = (ImageView) findViewById(R.id.contentPaneDragArea);

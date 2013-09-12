@@ -61,9 +61,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="47ad2055-7b34-47ae-9de1-fe21829ab214" name="Default" comment="[Working] Corrected one error after merge. &#10;&#10;&#10;We need to set up drag and drop functionality for SmallQuickBarFragment so we can drag a directory onto the current item location.  Also I think we should">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SlidingPane.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/activity_main.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SlidingPane.java" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SlidingPane.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/content_pane.xml" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/content_pane.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -206,37 +204,43 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MainActivity.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="MainActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="41" selection-start="1777" selection-end="1777" vertical-scroll-proportion="-0.3888889" vertical-offset="765" max-vertical-offset="2703">
-              <folding>
-                <element signature="e#3386#4993#0" expanded="true" />
-                <element signature="e#4982#4983#0" expanded="true" />
-              </folding>
+            <state line="71" column="21" selection-start="2629" selection-end="2629" vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="2652">
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="activity_main.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/res/layout/activity_main.xml">
-          <provider editor-type-id="android-designer">
+          <provider selected="true" editor-type-id="android-designer">
             <state />
           </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="38" column="51" selection-start="1772" selection-end="1772" vertical-scroll-proportion="-19.24" vertical-offset="165" max-vertical-offset="1088">
+          <provider editor-type-id="text-editor">
+            <state line="38" column="51" selection-start="1772" selection-end="1772" vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="1088">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="content_pane.xml" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="content_pane.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/res/layout/content_pane.xml">
-          <provider selected="true" editor-type-id="android-designer">
+          <provider editor-type-id="android-designer">
             <state />
           </provider>
-          <provider editor-type-id="text-editor">
-            <state line="10" column="32" selection-start="355" selection-end="355" vertical-scroll-proportion="0.0" vertical-offset="46" max-vertical-offset="646">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="10" column="32" selection-start="355" selection-end="355" vertical-scroll-proportion="0.28333333" vertical-offset="0" max-vertical-offset="663">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MyDragShadowBuilder.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MyDragShadowBuilder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="22" column="13" selection-start="612" selection-end="612" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="544">
               <folding />
             </state>
           </provider>
@@ -245,10 +249,8 @@
       <file leaf-file-name="SlidingPane.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SlidingPane.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="28" selection-start="674" selection-end="674" vertical-scroll-proportion="0.0" vertical-offset="309" max-vertical-offset="1292">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="62" column="32" selection-start="1786" selection-end="1786" vertical-scroll-proportion="0.0" vertical-offset="560" max-vertical-offset="1343">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -256,7 +258,7 @@
       <file leaf-file-name="ContentFragment.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ContentFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="144" column="0" selection-start="5533" selection-end="5533" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2805">
+            <state line="144" column="0" selection-start="5533" selection-end="5533" vertical-scroll-proportion="0.0" vertical-offset="2448" max-vertical-offset="3213">
               <folding />
             </state>
           </provider>
@@ -289,7 +291,7 @@
           <key>
             <ExternalProjectPojo>
               <option name="name" value="CantwellGalleryProject" />
-              <option name="path" value="C:\Users" />
+              <option name="path" value="$PROJECT_DIR$" />
             </ExternalProjectPojo>
           </key>
           <value>
@@ -309,7 +311,7 @@
           <key>
             <ExternalProjectPojo>
               <option name="name" value="CantwellGalleryProject" />
-              <option name="path" value="$PROJECT_DIR$" />
+              <option name="path" value="C:\Users" />
             </ExternalProjectPojo>
           </key>
           <value>
@@ -596,7 +598,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/content_pane_item.xml" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/directory_pane.xml" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/quick_bar.xml" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/quick_bar_item.xml" />
@@ -608,10 +609,11 @@
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/QuickBarFragment.java" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ContentFragment.java" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SmallQuickBarFragment.java" />
-        <option value="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/content_pane.xml" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SlidingPane.java" />
+        <option value="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/content_pane.xml" />
+        <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MyDragShadowBuilder.java" />
       </list>
     </option>
   </component>
@@ -647,6 +649,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -849,8 +853,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -870,11 +872,11 @@
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Droid" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
-    <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
+    <property name="FullScreen" value="false" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -1111,7 +1113,6 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32392472" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1125,6 +1126,7 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293011" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32392472" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -1156,13 +1158,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MyDragShadowBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="13" selection-start="277" selection-end="277" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="544">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/res/layout/quick_bar_item.xml">
       <provider selected="true" editor-type-id="android-designer">
         <state />
@@ -1252,42 +1247,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/res/layout/activity_main.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="51" selection-start="1772" selection-end="1772" vertical-scroll-proportion="-19.24" vertical-offset="165" max-vertical-offset="1088">
+        <state line="71" column="21" selection-start="2629" selection-end="2629" vertical-scroll-proportion="0.0" vertical-offset="391" max-vertical-offset="2652">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/res/layout/content_pane.xml">
+    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/res/layout/activity_main.xml">
       <provider selected="true" editor-type-id="android-designer">
         <state />
       </provider>
       <provider editor-type-id="text-editor">
-        <state line="10" column="32" selection-start="355" selection-end="355" vertical-scroll-proportion="0.0" vertical-offset="46" max-vertical-offset="646">
+        <state line="38" column="51" selection-start="1772" selection-end="1772" vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="1088">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MyDragShadowBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="13" selection-start="612" selection-end="612" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="544">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SlidingPane.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="28" selection-start="674" selection-end="674" vertical-scroll-proportion="0.0" vertical-offset="309" max-vertical-offset="1292">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="62" column="32" selection-start="1786" selection-end="1786" vertical-scroll-proportion="0.0" vertical-offset="560" max-vertical-offset="1343">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java">
+    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/res/layout/content_pane.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="41" selection-start="1777" selection-end="1777" vertical-scroll-proportion="-0.3888889" vertical-offset="765" max-vertical-offset="2703">
-          <folding>
-            <element signature="e#3386#4993#0" expanded="true" />
-            <element signature="e#4982#4983#0" expanded="true" />
-          </folding>
+        <state line="10" column="32" selection-start="355" selection-end="355" vertical-scroll-proportion="0.28333333" vertical-offset="0" max-vertical-offset="663">
+          <folding />
         </state>
       </provider>
     </entry>
