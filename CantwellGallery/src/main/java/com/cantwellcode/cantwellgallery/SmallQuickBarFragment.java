@@ -1,5 +1,6 @@
 package com.cantwellcode.cantwellgallery;
 
+import android.content.ClipData;
 import android.content.ClipDescription;
 import android.database.Cursor;
 import android.net.Uri;
@@ -104,7 +105,14 @@ public class SmallQuickBarFragment extends Fragment implements LoaderManager.Loa
     private boolean processDragStarted(DragEvent event) {
         ClipDescription clipDesc = event.getClipDescription();
         if (clipDesc != null) {
-            return(clipDesc.getLabel()==ClipDataLabels.BUCKET.toString());
+            switch (ClipDataLabels.valueOf(clipDesc.getLabel().toString())){
+                case BUCKET:
+                    return true;
+                case IMAGE:
+                    break;
+                default:
+                    break;
+            }
         }
         return false;
     }
@@ -122,6 +130,17 @@ public class SmallQuickBarFragment extends Fragment implements LoaderManager.Loa
             case R.id.quickBarCurrentItemImage:
                 Toast t = Toast.makeText(getActivity(), "Dropped on : quickBarCurrentItemImage", Toast.LENGTH_SHORT);
                 t.show();
+                ClipDescription clipDescription = dragEvent.getClipDescription();
+                if (clipDescription!=null){
+                    switch (ClipDataLabels.valueOf(clipDescription.getLabel().toString())){
+                        case BUCKET:
+                            processBucketDrop(dragEvent,v);
+                            break;
+                        case IMAGE:
+                            break;
+                        default:
+                    }
+                }
                 //long draggedViewID = Long.parseLong(dragEvent.getClipData().getDescription().getLabel().toString());
                 return true;
             // If the item is dropped on the view "quickBarNewItemImage"
@@ -131,6 +150,12 @@ public class SmallQuickBarFragment extends Fragment implements LoaderManager.Loa
                 return true;
         }
         return false;
+    }
+
+    private void processBucketDrop(DragEvent dragEvent, View v) {
+        String data = (String) dragEvent.getClipData().getItemAt(0).coerceToText(getActivity());
+        Toast t = Toast.makeText(getActivity(),"Detected bucket drop.  Data: " + data, Toast.LENGTH_SHORT);
+        t.show();
     }
 
 }
