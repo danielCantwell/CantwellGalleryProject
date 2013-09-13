@@ -102,25 +102,25 @@ public class MainActivity extends FragmentActivity
                     // When a view drag starts
                     case DragEvent.ACTION_DRAG_STARTED:
                         Toast dragStartedToast = Toast.makeText(MainActivity.this, "Trash Can recognized: Drag Started", Toast.LENGTH_SHORT);
-                        dragStartedToast.show();
+//                        dragStartedToast.show();
                         return processDragStarted(dragEvent);
 
                     // When the view is being held over the imageView
                     case DragEvent.ACTION_DRAG_ENTERED:
                         Toast dragEnteredToast = Toast.makeText(MainActivity.this, "Trash Can recognized: Drag Entered", Toast.LENGTH_SHORT);
-                        dragEnteredToast.show();
+//                        dragEnteredToast.show();
                         break;
 
                     // When the view is exited
                     case DragEvent.ACTION_DRAG_EXITED:
                         Toast dragExitedToast = Toast.makeText(MainActivity.this, "Trash Can recognized: Drag Exited", Toast.LENGTH_SHORT);
-                        dragExitedToast.show();
+//                        dragExitedToast.show();
                         break;
 
                     // When the view is dropped on the quickbar
                     case DragEvent.ACTION_DROP:
                         Toast dropToast = Toast.makeText(MainActivity.this, "Trash Can recognized: Drop", Toast.LENGTH_SHORT);
-                        dropToast.show();
+//                        dropToast.show();
                         return processDrop(dragEvent, v);
                 }
                 return false;

@@ -3,6 +3,9 @@ package com.cantwellcode.cantwellgallery;
 import android.content.ClipData;
 import android.content.ClipDescription;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,12 +23,14 @@ import android.widget.Toast;
 /**
  * Created by Chris on 9/6/13.
  */
-public class SmallQuickBarFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
+public class SmallQuickBarFragment extends Fragment {
 
 
-    private ImageView mCurrentItemImage;
-    private ImageView mNewItemImage;
-    private TextView  mCurrentItemText;
+    private ImageView   mCurrentItemImage;
+    private ImageView   mNewItemImage;
+    private TextView    mCurrentItemText;
+
+    private long        mCurrentBucketID;
 
 
     @Override
@@ -43,21 +48,6 @@ public class SmallQuickBarFragment extends Fragment implements LoaderManager.Loa
         return root;
     }
 
-
-    @Override
-    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        return null;
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> cursorLoader) {
-
-    }
 
     /*********************************
      *        DRAG  AND  DROP        *
@@ -99,19 +89,19 @@ public class SmallQuickBarFragment extends Fragment implements LoaderManager.Loa
                     // When a view drag starts
                     case DragEvent.ACTION_DRAG_STARTED:
                         Toast dragStartedToast = Toast.makeText(getActivity(), "Small Quick Bar recognized : Drag Started", Toast.LENGTH_SHORT);
-                        dragStartedToast.show();
+//                        dragStartedToast.show();
                         return processDragStarted(dragEvent);
 
                     // When the view is being held over the imageView
                     case DragEvent.ACTION_DRAG_ENTERED:
                         Toast dragEnteredToast = Toast.makeText(getActivity(), "Small Quick Bar recognized : Drag Entered", Toast.LENGTH_SHORT);
-                        dragEnteredToast.show();
+//                        dragEnteredToast.show();
                         break;
 
                     // When the view is exited
                     case DragEvent.ACTION_DRAG_EXITED:
                         Toast dragExitedToast = Toast.makeText(getActivity(), "Small Quick Bar recognized : Drag Exited", Toast.LENGTH_SHORT);
-                        dragExitedToast.show();
+//                        dragExitedToast.show();
                         break;
 
                     // When the view is dropped on the quickbar
@@ -140,7 +130,7 @@ public class SmallQuickBarFragment extends Fragment implements LoaderManager.Loa
                 case BUCKET:
                     return true;
                 case IMAGE:
-                    break;
+                    return true;
                 default:
                     break;
             }
@@ -185,6 +175,11 @@ public class SmallQuickBarFragment extends Fragment implements LoaderManager.Loa
 
     private void processBucketDrop(DragEvent dragEvent, View v) {
         String data = (String) dragEvent.getClipData().getItemAt(0).coerceToText(getActivity());
+        mCurrentBucketID = Long.valueOf(data);
+        View dropped = (View) dragEvent.getLocalState();
+        BucketViewHolder holder = (BucketViewHolder) dropped.getTag();
+        Bitmap image = ((BitmapDrawable)holder.imageView.getDrawable()).getBitmap();
+        mCurrentItemImage.setImageBitmap(image);
         Toast t = Toast.makeText(getActivity(),"Detected bucket drop.  Data: " + data, Toast.LENGTH_SHORT);
         t.show();
     }

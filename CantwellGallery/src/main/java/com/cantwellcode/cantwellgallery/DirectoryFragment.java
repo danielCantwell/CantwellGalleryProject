@@ -201,7 +201,9 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
                 ClipData data = ClipData.newPlainText(ClipDataLabels.BUCKET.toString(),String.valueOf(l));
-                view.startDrag(data, new MyDragShadowBuilder(view), null, 0);
+                BucketViewHolder holder = (BucketViewHolder) view.getTag();
+                // Pass view as the local state object.
+                view.startDrag(data, new MyDragShadowBuilder(view), view, 0);
                 return true;
             }
         });

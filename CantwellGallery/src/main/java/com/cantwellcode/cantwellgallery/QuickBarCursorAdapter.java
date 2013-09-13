@@ -31,7 +31,6 @@ public class QuickBarCursorAdapter extends BaseAdapter {
     private Context             mContext;
     private Cursor              mCursor;
     private LayoutInflater      mInflater;
-    private long                mSelectedID;
 
     private static class ViewHolder{
         TextView textView;
@@ -72,10 +71,6 @@ public class QuickBarCursorAdapter extends BaseAdapter {
         } else notifyDataSetInvalidated();
     }
 
-    public void select(int listPosition){
-
-    }
-
     private void findColumns() {
         if (mCursor == null){
             mIDIndex      = -1;
@@ -112,17 +107,17 @@ public class QuickBarCursorAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+        BucketViewHolder holder;
         
         if (convertView==null){
             convertView = mInflater.inflate(R.layout.quick_bar_item,parent,false);
-            holder = new ViewHolder();
+            holder = new BucketViewHolder();
             holder.textView  = (TextView)  convertView.findViewById(R.id.quickBarItemTextView);
             holder.imageView = (ImageView) convertView.findViewById(R.id.quickBarItemImageView);
 
             convertView.setTag(holder);
         }else{
-            holder = (ViewHolder) convertView.getTag();
+            holder = (BucketViewHolder) convertView.getTag();
         }
 
         mCursor.moveToPosition(position);
