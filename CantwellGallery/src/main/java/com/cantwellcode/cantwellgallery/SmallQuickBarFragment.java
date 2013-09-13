@@ -38,6 +38,8 @@ public class SmallQuickBarFragment extends Fragment implements LoaderManager.Loa
         setupDrop(mCurrentItemImage);
         setupDrop(mNewItemImage);
 
+        //setupDrag(mCurrentItemImage);
+
         return root;
     }
 
@@ -57,6 +59,35 @@ public class SmallQuickBarFragment extends Fragment implements LoaderManager.Loa
 
     }
 
+    /*********************************
+     *        DRAG  AND  DROP        *
+     *********************************/
+
+    /**
+     * Setup a view to be able to be dragged
+     *
+     * @param view - the view that will be able to be dragged
+     */
+    private void setupDrag(final View view) {
+        view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                long id               = view.getId();
+                final String label    = Long.toString(id);
+                final String textData = label + ":" + "somethin";
+                ClipData data         = ClipData.newPlainText(label, textData);
+
+                view.startDrag(data, new MyDragShadowBuilder(view), id, 0);
+                return true;
+            }
+        });
+    }
+
+    /**
+     * Setup a view to accept other views to be dropped on it
+     *
+     * @param v - the view that will accept a drop
+     */
     private void setupDrop(final View v) {
 
         v.setOnDragListener(new View.OnDragListener() {
