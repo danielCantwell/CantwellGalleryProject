@@ -76,6 +76,7 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
         }
         mContentResolver = activity.getContentResolver();
         loadBuckets();
+        loadBucketContents(INITIAL_BUCKET_NAME);
     }
     /**
      * Place all initialization that should be retained across config changes in here.
@@ -169,6 +170,21 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
     }
 
     /**
+     * Construct load parameters for the specified bucket and initialize loader
+     * @param bucketDisplayName
+     */
+    private void loadBucketContents(String bucketDisplayName){
+        final Uri       uri             = BUCKET_URI;
+        final String[]  projection      = {BUCKET_ID,BUCKET_DISPLAY_NAME,IMAGE_ID,IMAGE_DISPLAY_NAME,IMAGE_DATA};
+        final String    selection       = BUCKET_DISPLAY_NAME + "=?";
+        final String[]  selectionArgs   = {String.valueOf(bucketDisplayName)};
+        final String    sortOrder       = DEFAULT_SORT_ORDER;
+
+        Bundle loaderArgs = getLoaderArgs(uri, projection, selection, selectionArgs, sortOrder);
+        load(BUCKET_CONTENT_LOADER,loaderArgs);
+    }
+
+    /**
      * Load or restart the specified loader with the supplied args
      * @param loaderID
      * @param loaderArgs
@@ -236,21 +252,6 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
     }
 
     private void processAllBucketsLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        if(!mInitialLoadComplete){
-            final int nameIndex = cursor.getColumnIndexOrThrow(BUCKET_DISPLAY_NAME);
-            final int idIndex = cursor.getColumnIndexOrThrow(BUCKET_ID);
-            cursor.moveToFirst();
-            while (!cursor.isAfterLast()){
-                String name = cursor.getString(nameIndex);
-                if (INITIAL_BUCKET_NAME == name){
-                    final long id = cursor.getLong(idIndex);
-                    loadBucketContents(id);
-                    break;
-                }
-                cursor.moveToNext();
-            }
-            mInitialLoadComplete = true;
-        }
         mAdapter.changeCursor(cursor);
     }
 
