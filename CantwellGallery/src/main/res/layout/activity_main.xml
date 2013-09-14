@@ -8,7 +8,7 @@
     <fragment
             android:layout_width="@dimen/quick_bar_width"
             android:layout_height="match_parent"
-            android:name="com.cantwellcode.cantwellgallery.SmallQuickBarFragment"
+            android:name="com.cantwellcode.cantwellgallery.SmallTargetBarFragment"
             android:id="@+id/quickBarFragment"
             tools:layout="@layout/small_quick_bar"/>
 

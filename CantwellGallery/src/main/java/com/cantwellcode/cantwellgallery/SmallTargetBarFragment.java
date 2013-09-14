@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,8 +24,8 @@ import android.widget.Toast;
 /**
  * Created by Chris on 9/6/13.
  */
-public class SmallQuickBarFragment extends Fragment {
-
+public class SmallTargetBarFragment extends Fragment {
+    private static final String TAG = "SMALL_TARGET_BAR_FRAGMENT";
 
     private ImageView   mCurrentItemImage;
     private ImageView   mNewItemImage;
@@ -35,10 +36,11 @@ public class SmallQuickBarFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.small_quick_bar,container,false);
+        View root           = inflater.inflate(R.layout.small_quick_bar,container,false);
 
-        mCurrentItemImage = (ImageView) root.findViewById(R.id.quickBarCurrentItemImage);
-        mNewItemImage     = (ImageView) root.findViewById(R.id.quickBarNewItemImage);
+        mCurrentItemImage   = (ImageView)   root.findViewById(R.id.quickBarCurrentItemImage);
+        mCurrentItemText    = (TextView)    root.findViewById(R.id.quickBarCurrentItemText);
+        mNewItemImage       = (ImageView)   root.findViewById(R.id.quickBarNewItemImage);
 
         setupDrop(mCurrentItemImage);
         setupDrop(mNewItemImage);
@@ -117,8 +119,7 @@ public class SmallQuickBarFragment extends Fragment {
 
     /**
      * Check if this is the drag operation you want. There might be other
-     * clients that would be generating the drag event. Here, we check the mime
-     * type of the data
+     * clients that would be generating the drag event. Here we check the label
      *
      * @param event
      * @return : true if the item has mimetype = plain text
@@ -126,51 +127,56 @@ public class SmallQuickBarFragment extends Fragment {
     private boolean processDragStarted(DragEvent event) {
         ClipDescription clipDesc = event.getClipDescription();
         if (clipDesc != null) {
-            switch (ClipDataLabels.valueOf(clipDesc.getLabel().toString())){
-                case BUCKET:
-                    return true;
-                case IMAGE:
-                    return true;
-                default:
-                    break;
+            String label = (String) clipDesc.getLabel();
+            try{
+                switch (ClipDataLabels.valueOf(label)){
+                    case BUCKET:
+                        return true;
+                    case IMAGE:
+                        return false;
+                    default:
+                        return false;
+                }
+            } catch(IllegalArgumentException e){
+                Log.d(TAG,"Invalid ClipData label: " + label);
+                return false;
             }
         }
         return false;
     }
 
     /**
-     * Handle drop events on small quickbar
+     * Handle drop events on target bar
      *
      * @param dragEvent - the drag event from the view that is being dragged
      * @param v - the view that is receiving the drop event
      * @return true if the drop is processed and handled, otherwise return false
      */
     private boolean processDrop(DragEvent dragEvent, View v) {
+        ClipDescription clipDescription = dragEvent.getClipDescription();
+        if (clipDescription==null) return false;
         switch (v.getId()) {
             // If the item is dropped on the view "quickBarCurrentItemImage"
             case R.id.quickBarCurrentItemImage:
                 Toast t = Toast.makeText(getActivity(), "Dropped on : quickBarCurrentItemImage", Toast.LENGTH_SHORT);
                 t.show();
-                ClipDescription clipDescription = dragEvent.getClipDescription();
-                if (clipDescription!=null){
-                    switch (ClipDataLabels.valueOf(clipDescription.getLabel().toString())){
-                        case BUCKET:
-                            processBucketDrop(dragEvent,v);
-                            break;
-                        case IMAGE:
-                            break;
-                        default:
-                    }
+                switch (ClipDataLabels.valueOf(clipDescription.getLabel().toString())){
+                    case BUCKET:
+                        processBucketDrop(dragEvent,v);
+                        return true;
+                    case IMAGE:
+                        return false;
+                    default:
+                        return false;
                 }
-                //long draggedViewID = Long.parseLong(dragEvent.getClipData().getDescription().getLabel().toString());
-                return true;
             // If the item is dropped on the view "quickBarNewItemImage"
             case R.id.quickBarNewItemImage:
                 Toast t1 = Toast.makeText(getActivity(), "Dropped on : quickBarNewItemImage", Toast.LENGTH_SHORT);
                 t1.show();
                 return true;
+            default:
+                return false;
         }
-        return false;
     }
 
     private void processBucketDrop(DragEvent dragEvent, View v) {
@@ -179,7 +185,9 @@ public class SmallQuickBarFragment extends Fragment {
         View dropped = (View) dragEvent.getLocalState();
         BucketViewHolder holder = (BucketViewHolder) dropped.getTag();
         Bitmap image = ((BitmapDrawable)holder.imageView.getDrawable()).getBitmap();
+        String title = (String) holder.textView.getText();
         mCurrentItemImage.setImageBitmap(image);
+        mCurrentItemText.setText(title);
         Toast t = Toast.makeText(getActivity(),"Detected bucket drop.  Data: " + data, Toast.LENGTH_SHORT);
         t.show();
     }

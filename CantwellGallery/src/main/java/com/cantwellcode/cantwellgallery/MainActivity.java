@@ -151,7 +151,7 @@ public class MainActivity extends FragmentActivity
      * @param v - the view that is receiving the drop event
      * @return true if the drop is processed and handled, otherwise return false
      */
-    private boolean processDrop(DragEvent dragEvent, View v) {
+     private boolean processDrop(DragEvent dragEvent, View v) {
         switch (v.getId()) {
             // If the item is dropped on the view "quickBarCurrentItemImage"
             case R.id.quickBarCurrentItemImage:
