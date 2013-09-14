@@ -61,17 +61,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="47ad2055-7b34-47ae-9de1-fe21829ab214" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/BucketLocalState.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ImageLocalState.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ImageViewHolder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ContentFragment.java" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ContentFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DatabaseContentHandler.java" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DatabaseContentHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DatabaseMaster.java" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DatabaseMaster.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DirectoryFragment.java" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DirectoryFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ImageCursorAdapter.java" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ImageCursorAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SmallTargetBarFragment.java" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SmallTargetBarFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/TargetBar.java" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/TargetBar.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="CantwellGallery.iws" />
@@ -186,7 +175,7 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="172" column="53" selection-start="6884" selection-end="6884" vertical-scroll-proportion="0.0" vertical-offset="1918" max-vertical-offset="2873">
+            <state line="172" column="53" selection-start="6884" selection-end="6884" vertical-scroll-proportion="0.0" vertical-offset="2907" max-vertical-offset="3077">
               <folding />
             </state>
           </provider>
@@ -195,19 +184,16 @@
       <file leaf-file-name="SmallTargetBarFragment.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SmallTargetBarFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="235" column="0" selection-start="8703" selection-end="8703" vertical-scroll-proportion="0.0" vertical-offset="3531" max-vertical-offset="4369">
-              <folding>
-                <element signature="e#2482#2977#0" expanded="true" />
-                <element signature="e#2966#2967#0" expanded="true" />
-              </folding>
+            <state line="235" column="0" selection-start="8703" selection-end="8703" vertical-scroll-proportion="0.0" vertical-offset="3978" max-vertical-offset="4692">
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DirectoryFragment.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="DirectoryFragment.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DirectoryFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="293" column="6" selection-start="11063" selection-end="11063" vertical-scroll-proportion="0.43723848" vertical-offset="4704" max-vertical-offset="6256">
+            <state line="293" column="6" selection-start="11063" selection-end="11063" vertical-scroll-proportion="0.0" vertical-offset="4896" max-vertical-offset="6256">
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#load#0;class#DirectoryFragment#0" expanded="false" />
@@ -216,19 +202,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ContentFragment.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ContentFragment.java">
+      <file leaf-file-name="ClipDataLabels.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ClipDataLabels.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="81" column="0" selection-start="2967" selection-end="2967" vertical-scroll-proportion="0.0" vertical-offset="912" max-vertical-offset="1462">
+            <state line="5" column="12" selection-start="95" selection-end="95" vertical-scroll-proportion="0.1183844" vertical-offset="0" max-vertical-offset="718">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ImageLocalState.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ImageLocalState.java">
+      <file leaf-file-name="ContentFragment.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ContentFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="21" selection-start="468" selection-end="468" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
+            <state line="81" column="0" selection-start="2967" selection-end="2967" vertical-scroll-proportion="0.0" vertical-offset="1360" max-vertical-offset="1751">
               <folding />
             </state>
           </provider>
@@ -237,7 +223,7 @@
       <file leaf-file-name="TargetBar.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/TargetBar.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="1" selection-start="477" selection-end="477" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
+            <state line="15" column="1" selection-start="477" selection-end="477" vertical-scroll-proportion="0.0" vertical-offset="238" max-vertical-offset="374">
               <folding />
             </state>
           </provider>
@@ -246,7 +232,7 @@
       <file leaf-file-name="BucketLocalState.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/BucketLocalState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="36" selection-start="185" selection-end="185" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="561">
+            <state line="9" column="36" selection-start="185" selection-end="185" vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="561">
               <folding />
             </state>
           </provider>
@@ -255,7 +241,7 @@
       <file leaf-file-name="DatabaseMaster.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DatabaseMaster.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="32" selection-start="182" selection-end="182" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
+            <state line="8" column="32" selection-start="182" selection-end="182" vertical-scroll-proportion="0.0" vertical-offset="119" max-vertical-offset="306">
               <folding />
             </state>
           </provider>
@@ -264,7 +250,7 @@
       <file leaf-file-name="BucketViewHolder.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/BucketViewHolder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="13" selection-start="162" selection-end="162" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="289">
+            <state line="8" column="13" selection-start="162" selection-end="162" vertical-scroll-proportion="0.0" vertical-offset="119" max-vertical-offset="306">
               <folding />
             </state>
           </provider>
@@ -273,7 +259,7 @@
       <file leaf-file-name="DatabaseContentHandler.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DatabaseContentHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="39" selection-start="155" selection-end="155" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="272">
+            <state line="7" column="39" selection-start="155" selection-end="155" vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="272">
               <folding />
             </state>
           </provider>
@@ -306,7 +292,7 @@
           <key>
             <ExternalProjectPojo>
               <option name="name" value="CantwellGalleryProject" />
-              <option name="path" value="$PROJECT_DIR$" />
+              <option name="path" value="C:\Users" />
             </ExternalProjectPojo>
           </key>
           <value>
@@ -326,7 +312,7 @@
           <key>
             <ExternalProjectPojo>
               <option name="name" value="CantwellGalleryProject" />
-              <option name="path" value="C:\Users" />
+              <option name="path" value="$PROJECT_DIR$" />
             </ExternalProjectPojo>
           </key>
           <value>
@@ -664,6 +650,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -867,7 +854,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -887,11 +873,11 @@
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="MyAvd0" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
-    <property name="MemberChooser.showClasses" value="true" />
     <property name="FullScreen" value="false" />
+    <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -1142,7 +1128,6 @@
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293011" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39381722" sideWeight="0.6375" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32258064" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
@@ -1156,12 +1141,13 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.245625" sideWeight="0.67741936" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32258064" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32258064" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.67069894" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293011" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -1198,31 +1184,24 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/TargetBarListFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="86" column="9" selection-start="3722" selection-end="3931" vertical-scroll-proportion="0.0" vertical-offset="834" max-vertical-offset="4947">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/res/layout/target_bar_item.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider editor-type-id="text-editor">
         <state line="24" column="35" selection-start="1065" selection-end="1065" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="646">
           <folding />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/res/layout/small_target_bar.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state line="51" column="58" selection-start="2155" selection-end="2155" vertical-scroll-proportion="0.0" vertical-offset="850" max-vertical-offset="1190">
           <folding />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/BucketCursorAdapter.java">
@@ -1284,10 +1263,7 @@
     <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SmallTargetBarFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="235" column="0" selection-start="8703" selection-end="8703" vertical-scroll-proportion="0.0" vertical-offset="3531" max-vertical-offset="4369">
-          <folding>
-            <element signature="e#2482#2977#0" expanded="true" />
-            <element signature="e#2966#2967#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1314,11 +1290,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DirectoryFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="293" column="6" selection-start="11063" selection-end="11063" vertical-scroll-proportion="0.43723848" vertical-offset="4704" max-vertical-offset="6256">
+        <state line="293" column="6" selection-start="11063" selection-end="11063" vertical-scroll-proportion="0.0" vertical-offset="4896" max-vertical-offset="6256">
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#load#0;class#DirectoryFragment#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ClipDataLabels.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="12" selection-start="95" selection-end="95" vertical-scroll-proportion="0.1183844" vertical-offset="0" max-vertical-offset="718">
+          <folding />
         </state>
       </provider>
     </entry>
