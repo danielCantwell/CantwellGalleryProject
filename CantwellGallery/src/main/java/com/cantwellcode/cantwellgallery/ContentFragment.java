@@ -60,7 +60,7 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
 
 
     @Override
-    public void changeContentCursor(String label, Cursor cursor) {
+    public void changeContentLabelAndCursor(String label, Cursor cursor) {
         if(label != null) mTextView.setText(label);
         else mTextView.setText(DEFAULT_LABEL);
         mListAdapter.changeCursor(cursor);
@@ -77,8 +77,8 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
                 // Start an IMAGE drag event with ClipData set to the image id
                 ClipData data = ClipData.newPlainText(ClipDataLabels.IMAGE.toString(), String.valueOf(id));
-                view.startDrag(data, new MyDragShadowBuilder(view), view, 0);
-
+                ImageLocalState localState = new ImageLocalState((ImageViewHolder)view.getTag(), (Cursor)mListAdapter.getItem(position));
+                view.startDrag(data, new MyDragShadowBuilder(view), localState, 0);
                 return true;
             }
         });

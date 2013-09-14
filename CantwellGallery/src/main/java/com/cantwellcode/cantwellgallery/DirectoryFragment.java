@@ -45,14 +45,18 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
     private static final String MIN_ID                  = "MIN(" + IMAGE_ID + ")";
     private static final String BUCKET_ID               = MediaStore.Images.Media.BUCKET_ID;
     private static final String BUCKET_DISPLAY_NAME     = MediaStore.Images.Media.BUCKET_DISPLAY_NAME;
+    private static final String BUCKET_DATA             = MediaStore.Images.ImageColumns.DATA;
     private static final String DEFAULT_SORT_ORDER      = MediaStore.Images.Media.DEFAULT_SORT_ORDER;
+
+    // Loader Projections
+    private static final String[] ALL_BUCKETS_PROJECTION    = {MIN_ID, BUCKET_ID,BUCKET_DISPLAY_NAME,BUCKET_DATA};
+    private static final String[] BUCKET_CONTENT_PROJECTION = {BUCKET_ID,BUCKET_DISPLAY_NAME,IMAGE_ID,IMAGE_DISPLAY_NAME,IMAGE_DATA};
 
     // Loader IDs
     private static final int        ALL_BUCKETS_LOADER      = 0x001;
     private static final int        BUCKET_CONTENT_LOADER   = 0x002;
 
     private static final String     INITIAL_BUCKET_NAME     = "Camera";
-    private boolean                 mInitialLoadComplete    = false;
 
     // Private member variables
     private GridView                mGridView;
@@ -75,7 +79,7 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
             throw new ClassCastException(activity.toString() + " must implement DatabaseMaster.Callbacks");
         }
         mContentResolver = activity.getContentResolver();
-        loadBuckets();
+        loadAllBuckets();
         loadBucketContents(INITIAL_BUCKET_NAME);
     }
     /**
@@ -88,6 +92,7 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         mAdapter = new BucketCursorAdapter(getActivity(),null,BUCKET_ID,BUCKET_DISPLAY_NAME,MIN_ID);
+
     }
 
 
@@ -138,14 +143,14 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
     /**
      * Construct load parameters for all buckets and initialize loader
      */
-    private void loadBuckets() {
+    private void loadAllBuckets() {
         // The following will produce a cursor that contains only the first row of images for each
         //  unique bucket id.  This only works because the underlying database for MediaStore is SQLite
         // This produces the SQLite query string:
         //      SELECT %BUCKET_PROJECTION FROM (%URI) WHERE (1) GROUP BY (%BUCKET_ID) ORDER BY (%DEFAULT_SORT_ORDER)
         // WHERE (%s)
         final Uri       uri             = BUCKET_URI;
-        final String[]  projection      = {MIN_ID,BUCKET_ID,BUCKET_DISPLAY_NAME};
+        final String[]  projection      = ALL_BUCKETS_PROJECTION;
         final String    selection       = "1) GROUP BY (" + BUCKET_ID;
         final String[]  selectionArgs   = null;
         final String    sortOrder       = DEFAULT_SORT_ORDER;
@@ -160,13 +165,13 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
      */
     private void loadBucketContents(long bucketID){
         final Uri       uri             = BUCKET_URI;
-        final String[]  projection      = {BUCKET_ID,BUCKET_DISPLAY_NAME,IMAGE_ID,IMAGE_DISPLAY_NAME,IMAGE_DATA};
+        final String[]  projection      = BUCKET_CONTENT_PROJECTION;
         final String    selection       = BUCKET_ID + "=?";
         final String[]  selectionArgs   = {String.valueOf(bucketID)};
         final String    sortOrder       = DEFAULT_SORT_ORDER;
 
         Bundle loaderArgs = getLoaderArgs(uri, projection, selection, selectionArgs, sortOrder);
-        load(BUCKET_CONTENT_LOADER,loaderArgs);
+        load(BUCKET_CONTENT_LOADER, loaderArgs);
     }
 
     /**
@@ -175,7 +180,7 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
      */
     private void loadBucketContents(String bucketDisplayName){
         final Uri       uri             = BUCKET_URI;
-        final String[]  projection      = {BUCKET_ID,BUCKET_DISPLAY_NAME,IMAGE_ID,IMAGE_DISPLAY_NAME,IMAGE_DATA};
+        final String[]  projection      = BUCKET_CONTENT_PROJECTION;
         final String    selection       = BUCKET_DISPLAY_NAME + "=?";
         final String[]  selectionArgs   = {String.valueOf(bucketDisplayName)};
         final String    sortOrder       = DEFAULT_SORT_ORDER;
@@ -259,7 +264,7 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
         cursor.moveToFirst();
         final int index = cursor.getColumnIndexOrThrow(BUCKET_DISPLAY_NAME);
         final String label = cursor.getString(index);
-        mListener.changeContentCursor(label,cursor);
+        mListener.changeContentLabelAndCursor(label, cursor);
     }
 
     /**
@@ -271,7 +276,7 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
         final int id = cursorLoader.getId();
         switch (id){
             case ALL_BUCKETS_LOADER:
-                mAdapter.changeCursor(null);
+                processAllBucketsLoaderReset(cursorLoader);
                 break;
             case BUCKET_CONTENT_LOADER:
                 processBucketContentLoaderReset(cursorLoader);
@@ -281,8 +286,12 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
         }
     }
 
+    private void processAllBucketsLoaderReset(Loader<Cursor> cursorLoader) {
+        mAdapter.changeCursor(null);
+    }
+
     private void processBucketContentLoaderReset(Loader<Cursor> cursorLoader) {
-        mListener.changeContentCursor(null,null);
+        mListener.changeContentLabelAndCursor(null, null);
     }
 
     /**************************************
@@ -290,19 +299,37 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
      **************************************/
 
     /**
-     * Update the database so the specified image belongs to the specified bucket
-     * @param imageID
-     * @param bucketID
+     * Update the database so the specified image belongs to the specified bucket.
+     * The cursors must already be pointing to their respective data.
+     *
+     * @param imageCursor
+     * @param bucketCursor
      * @return
      */
-    public boolean moveImageToBucket(long imageID, long bucketID){
-        Toast t = Toast.makeText(getActivity(),"Moving image " + imageID + "to bucket " + bucketID,Toast.LENGTH_SHORT);
+    public boolean moveImageToBucket(Cursor imageCursor, Cursor bucketCursor){
+        final int imagePathIndex;
+        final int bucketPathIndex;
+        try {
+            imagePathIndex = imageCursor.getColumnIndexOrThrow(IMAGE_DATA);
+            bucketPathIndex = bucketCursor.getColumnIndexOrThrow(BUCKET_DATA);
+        }catch (IllegalArgumentException e){
+            e.printStackTrace();
+            return false;
+        }
+        String imagePath = imageCursor.getString(imagePathIndex);
+        String bucketPath = bucketCursor.getString(bucketPathIndex);
+        Toast t = Toast.makeText(getActivity(),"Moving image " + imagePath + " to bucket " + bucketPath,Toast.LENGTH_SHORT);
+        Log.d(TAG,"Moving image " + imagePath + " to bucket " + bucketPath);
         t.show();
         return true;
     }
 
+    public boolean createNewBucketFromImage(long imageID, String bucketName){
+        return true;
+    }
+
     /**
-     * Sets up database bucket loadBuckets when a bucket is selected.
+     * Sets up database bucket content when a bucket is selected.
      * @param gridView
      */
     private void setupListItemSelect(GridView gridView) {
@@ -332,8 +359,10 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
                 // Initiate a BUCKET drag event, passing the BUCKET_ID in ClipData
                 ClipData data = ClipData.newPlainText(ClipDataLabels.BUCKET.toString(),String.valueOf(id));
-                // Pass view as the local state object.
-                view.startDrag(data, new MyDragShadowBuilder(view), view, 0);
+                // Pass a BucketLocalState containing the ViewHolder information for the curent view
+                //      as well as the cursor pointing to the associated item.
+                BucketLocalState localState = new BucketLocalState((BucketViewHolder)view.getTag(),(Cursor)mAdapter.getItem(position));
+                view.startDrag(data, new MyDragShadowBuilder(view), localState, 0);
                 return true;
             }
         });

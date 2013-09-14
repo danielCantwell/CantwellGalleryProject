@@ -33,10 +33,6 @@ public class ImageCursorAdapter extends BaseAdapter{
     private LayoutInflater      mInflater;
     private BitmapCache         mCache;
 
-    private static class ViewHolder{
-        ImageView imageView;
-    }
-
     public ImageCursorAdapter(Context context, Cursor cursor, int itemLayoutID, int imageResourceID){
         if(context != null)mContext = context;
         else throw new IllegalArgumentException(NULL_CONTEXT);
@@ -95,15 +91,15 @@ public class ImageCursorAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+        ImageViewHolder holder;
         if (convertView==null){
             convertView = mInflater.inflate(mItemLayoutID,parent,false);
-            holder = new ViewHolder();
+            holder = new ImageViewHolder();
             holder.imageView = (ImageView) convertView.findViewById(mImageResourceID);
 
             convertView.setTag(holder);
         }else{
-            holder = (ViewHolder) convertView.getTag();
+            holder = (ImageViewHolder) convertView.getTag();
         }
         mCursor.moveToPosition(position);
         long imageID = mCursor.getLong(mImageIDIndex);

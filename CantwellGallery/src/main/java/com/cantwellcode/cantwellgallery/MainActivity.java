@@ -159,17 +159,17 @@ public class MainActivity extends FragmentActivity
     }
 
     @Override
-    public boolean onMoveItemToTarget(long itemID, long targetID) {
-        return mDirectoryFragment.moveImageToBucket(itemID,targetID);
+    public boolean onMoveItemToTarget(Cursor itemCursor, Cursor targetCursor) {
+        return mDirectoryFragment.moveImageToBucket(itemCursor, targetCursor);
     }
 
     @Override
-    public boolean onCreateNewTargetFromItem(long itemID) {
+    public boolean onCreateNewTargetFromItem(Cursor itemCursor) {
         return false;
     }
 
     @Override
-    public void changeContentCursor(String label, Cursor cursor) {
-        mDatabaseContentHandler.changeContentCursor(label,cursor);
+    public void changeContentLabelAndCursor(String label, Cursor cursor) {
+        mDatabaseContentHandler.changeContentLabelAndCursor(label, cursor);
     }
 }

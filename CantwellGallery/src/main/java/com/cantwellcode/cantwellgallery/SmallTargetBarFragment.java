@@ -3,6 +3,7 @@ package com.cantwellcode.cantwellgallery;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipDescription;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ public class SmallTargetBarFragment extends Fragment implements TargetBar{
     private ImageView   mCurrentTargetImage;
     private ImageView   mNewTargetImage;
     private TextView    mCurrentTargetText;
+    private Cursor      mCurrentTargetCursor;
 
     private long        mCurrentTargetID;
 
@@ -42,12 +44,18 @@ public class SmallTargetBarFragment extends Fragment implements TargetBar{
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mCurrentTargetCursor = null;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root           = inflater.inflate(R.layout.small_target_bar,container,false);
 
         mCurrentTargetImage = (ImageView)   root.findViewById(R.id.targetBarCurrentTargetImage);
-        mCurrentTargetText = (TextView)    root.findViewById(R.id.targetBarCurrentTargetText);
-        mNewTargetImage = (ImageView)   root.findViewById(R.id.targetBarNewTargetImage);
+        mCurrentTargetText  = (TextView)    root.findViewById(R.id.targetBarCurrentTargetText);
+        mNewTargetImage     = (ImageView)   root.findViewById(R.id.targetBarNewTargetImage);
 
         setupDrop(mCurrentTargetImage);
         setupDrop(mNewTargetImage);
@@ -133,23 +141,24 @@ public class SmallTargetBarFragment extends Fragment implements TargetBar{
      */
     private boolean processDragStarted(DragEvent event) {
         ClipDescription clipDesc = event.getClipDescription();
-        if (clipDesc != null) {
-            String label = (String) clipDesc.getLabel();
-            try{
-                switch (ClipDataLabels.valueOf(label)){
-                    case BUCKET:
-                        return true;
-                    case IMAGE:
-                        return true;
-                    default:
-                        return false;
-                }
-            } catch(IllegalArgumentException e){
-                Log.d(TAG,"Invalid ClipData label: " + label);
-                return false;
-            }
+        if (clipDesc == null) return false;
+
+        // Get the label to determine if the drag event can be handled.
+        ClipDataLabels label;
+        try {
+            label = ClipDataLabels.valueOf(clipDesc.getLabel().toString());
+        } catch (IllegalArgumentException e){
+            e.printStackTrace();
+            return false;
         }
-        return false;
+        switch (label){
+            case BUCKET:
+                return true;
+            case IMAGE:
+                return true;
+            default:
+                return false;
+        }
     }
 
     /**
@@ -162,36 +171,59 @@ public class SmallTargetBarFragment extends Fragment implements TargetBar{
     private boolean processDrop(DragEvent dragEvent, View v) {
         ClipDescription clipDescription = dragEvent.getClipDescription();
         if (clipDescription==null) return false;
-        ViewParent parent = v.getParent();
+        // Get the label to handle processing
+        ClipDataLabels label;
+        try {
+            label = ClipDataLabels.valueOf(clipDescription.getLabel().toString());
+        }catch (IllegalArgumentException e){
+            e.printStackTrace();
+            return false;
+        }
+        // Determine where the item was dropped and handle it appropriately
         switch (v.getId()) {
             // If the item is dropped on the view "targetBarCurrentItemImage"
             case R.id.targetBarCurrentTargetImage:
                 Toast t = Toast.makeText(getActivity(), "Dropped on : targetBarCurrentTarget", Toast.LENGTH_SHORT);
-                t.show();
-                switch (ClipDataLabels.valueOf(clipDescription.getLabel().toString())){
+//                t.show();
+                switch (label){
                     case BUCKET:
-                        processBucketDropOnCurrentTarget(dragEvent, v);
-                        return true;
+                        return processBucketDropOnCurrentTarget(dragEvent, v);
                     case IMAGE:
-                        processImageDropOnCurrentTarget(dragEvent, v);
-                        return true;
+                        return processImageDropOnCurrentTarget(dragEvent, v);
                     default:
                         return false;
                 }
             // If the item is dropped on the view "targetBarNewItemImage"
             case R.id.targetBarNewTargetImage:
                 Toast t1 = Toast.makeText(getActivity(), "Dropped on : targetBarNewTarget", Toast.LENGTH_SHORT);
-                t1.show();
-                return true;
+//                t1.show();
+                switch (label){
+                    case BUCKET:
+                        return false;
+                    case IMAGE:
+                        return false;
+                    default:
+                        return true;
+                }
             default:
                 return false;
         }
     }
 
-    private void processImageDropOnCurrentTarget(DragEvent dragEvent, View v) {
-        final String data = (String) dragEvent.getClipData().getItemAt(0).coerceToText(getActivity());
-        final long itemID = Long.valueOf(data);
-        moveItemToTarget(itemID,mCurrentTargetID);
+    /**
+     * Process drop event for dropped items labeled IMAGE
+     * @param dragEvent
+     * @param v
+     */
+    private boolean processImageDropOnCurrentTarget(DragEvent dragEvent, View v) {
+        if (mCurrentTargetCursor==null) return false;
+        // Get the local state info for the Image being dropped
+        ImageLocalState dropped = (ImageLocalState) dragEvent.getLocalState();
+
+        // Get the cursor for the image and pass it to moveItemToTarget
+        Cursor imageCursor = dropped.getCursor();
+        moveItemToTarget(imageCursor,mCurrentTargetCursor);
+        return true;
     }
 
     /**
@@ -199,39 +231,40 @@ public class SmallTargetBarFragment extends Fragment implements TargetBar{
      * @param dragEvent
      * @param v
      */
-    private void processBucketDropOnCurrentTarget(DragEvent dragEvent, View v) {
-        // Get the attached ClipData.  For buckets this should be the bucket id.
-        final String data = (String) dragEvent.getClipData().getItemAt(0).coerceToText(getActivity());
-        mCurrentTargetID = Long.valueOf(data);
-        // Get a reference to the view being dropped.  This must be set as the localState when
-        //      initiating the drag
-        View dropped = (View) dragEvent.getLocalState();
-        // Change displayed data using the BucketViewHolder which should be set as the tag of the dropped view
-        BucketViewHolder holder = (BucketViewHolder) dropped.getTag();
+    private boolean processBucketDropOnCurrentTarget(DragEvent dragEvent, View v) {
+        // Get the local state info for the Bucket view being dropped.
+        BucketLocalState dropped = (BucketLocalState) dragEvent.getLocalState();
+
+        // Save the cursor pointing to the Bucket data.
+        mCurrentTargetCursor = dropped.getCursor();
+
+        // Change displayed data using the BucketViewHolder stored in the local state.
+        BucketViewHolder holder = dropped.getHolder();
         Bitmap image = ((BitmapDrawable)holder.imageView.getDrawable()).getBitmap();
         String title = (String) holder.textView.getText();
         mCurrentTargetImage.setImageBitmap(image);
         mCurrentTargetText.setText(title);
+        return true;
     }
 
     /**
-     *
-     * @param itemID
-     * @param targetID
+     * Given the cursors corresponding to an item and a target, move the item to th target
+     * @param itemCursor
+     * @param targetCursor
      * @return
      */
     @Override
-    public boolean moveItemToTarget(long itemID, long targetID) {
-        return mListener.onMoveItemToTarget(itemID,targetID);
+    public boolean moveItemToTarget(Cursor itemCursor, Cursor targetCursor) {
+        return mListener.onMoveItemToTarget(itemCursor, targetCursor);
     }
 
     /**
-     *
-     * @param itemID
+     * Create a new target from data contained in the supplied item
+     * @param itemCursor
      * @return
      */
     @Override
-    public boolean createNewTargetFromItem(long itemID) {
-        return mListener.onCreateNewTargetFromItem(itemID);
+    public boolean createNewTargetFromItem(Cursor itemCursor) {
+        return mListener.onCreateNewTargetFromItem(itemCursor);
     }
 }
