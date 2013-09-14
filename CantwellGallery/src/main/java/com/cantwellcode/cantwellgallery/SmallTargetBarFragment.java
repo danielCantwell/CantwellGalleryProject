@@ -3,7 +3,6 @@ package com.cantwellcode.cantwellgallery;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipDescription;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -26,11 +25,11 @@ public class SmallTargetBarFragment extends Fragment implements TargetBar{
 
     private Callbacks   mListener;
 
-    private ImageView   mCurrentItemImage;
-    private ImageView   mNewItemImage;
-    private TextView    mCurrentItemText;
+    private ImageView   mCurrentTargetImage;
+    private ImageView   mNewTargetImage;
+    private TextView    mCurrentTargetText;
 
-    private long        mCurrentBucketID;
+    private long        mCurrentTargetID;
 
     @Override
     public void onAttach(Activity activity) {
@@ -46,14 +45,14 @@ public class SmallTargetBarFragment extends Fragment implements TargetBar{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root           = inflater.inflate(R.layout.small_target_bar,container,false);
 
-        mCurrentItemImage   = (ImageView)   root.findViewById(R.id.targetBarCurrentItemImage);
-        mCurrentItemText    = (TextView)    root.findViewById(R.id.targetBarCurrentItemText);
-        mNewItemImage       = (ImageView)   root.findViewById(R.id.targetBarNewItemImage);
+        mCurrentTargetImage = (ImageView)   root.findViewById(R.id.targetBarCurrentTargetImage);
+        mCurrentTargetText = (TextView)    root.findViewById(R.id.targetBarCurrentTargetText);
+        mNewTargetImage = (ImageView)   root.findViewById(R.id.targetBarNewTargetImage);
 
-        setupDrop(mCurrentItemImage);
-        setupDrop(mNewItemImage);
+        setupDrop(mCurrentTargetImage);
+        setupDrop(mNewTargetImage);
 
-        //setupDrag(mCurrentItemImage);
+        //setupDrag(mCurrentTargetImage);
 
         return root;
     }
@@ -141,7 +140,7 @@ public class SmallTargetBarFragment extends Fragment implements TargetBar{
                     case BUCKET:
                         return true;
                     case IMAGE:
-                        return false;
+                        return true;
                     default:
                         return false;
                 }
@@ -166,21 +165,22 @@ public class SmallTargetBarFragment extends Fragment implements TargetBar{
         ViewParent parent = v.getParent();
         switch (v.getId()) {
             // If the item is dropped on the view "targetBarCurrentItemImage"
-            case R.id.targetBarCurrentItemImage:
-                Toast t = Toast.makeText(getActivity(), "Dropped on : targetBarCurrentItem", Toast.LENGTH_SHORT);
+            case R.id.targetBarCurrentTargetImage:
+                Toast t = Toast.makeText(getActivity(), "Dropped on : targetBarCurrentTarget", Toast.LENGTH_SHORT);
                 t.show();
                 switch (ClipDataLabels.valueOf(clipDescription.getLabel().toString())){
                     case BUCKET:
-                        processBucketDrop(dragEvent,v);
+                        processBucketDropOnCurrentTarget(dragEvent, v);
                         return true;
                     case IMAGE:
-                        return false;
+                        processImageDropOnCurrentTarget(dragEvent, v);
+                        return true;
                     default:
                         return false;
                 }
             // If the item is dropped on the view "targetBarNewItemImage"
-            case R.id.targetBarNewItemImage:
-                Toast t1 = Toast.makeText(getActivity(), "Dropped on : targetBarNewItem", Toast.LENGTH_SHORT);
+            case R.id.targetBarNewTargetImage:
+                Toast t1 = Toast.makeText(getActivity(), "Dropped on : targetBarNewTarget", Toast.LENGTH_SHORT);
                 t1.show();
                 return true;
             default:
@@ -188,15 +188,21 @@ public class SmallTargetBarFragment extends Fragment implements TargetBar{
         }
     }
 
+    private void processImageDropOnCurrentTarget(DragEvent dragEvent, View v) {
+        final String data = (String) dragEvent.getClipData().getItemAt(0).coerceToText(getActivity());
+        final long itemID = Long.valueOf(data);
+        moveItemToTarget(itemID,mCurrentTargetID);
+    }
+
     /**
      * Processes a drop event for dropped items labeled BUCKET
      * @param dragEvent
      * @param v
      */
-    private void processBucketDrop(DragEvent dragEvent, View v) {
+    private void processBucketDropOnCurrentTarget(DragEvent dragEvent, View v) {
         // Get the attached ClipData.  For buckets this should be the bucket id.
-        String data = (String) dragEvent.getClipData().getItemAt(0).coerceToText(getActivity());
-        mCurrentBucketID = Long.valueOf(data);
+        final String data = (String) dragEvent.getClipData().getItemAt(0).coerceToText(getActivity());
+        mCurrentTargetID = Long.valueOf(data);
         // Get a reference to the view being dropped.  This must be set as the localState when
         //      initiating the drag
         View dropped = (View) dragEvent.getLocalState();
@@ -204,8 +210,8 @@ public class SmallTargetBarFragment extends Fragment implements TargetBar{
         BucketViewHolder holder = (BucketViewHolder) dropped.getTag();
         Bitmap image = ((BitmapDrawable)holder.imageView.getDrawable()).getBitmap();
         String title = (String) holder.textView.getText();
-        mCurrentItemImage.setImageBitmap(image);
-        mCurrentItemText.setText(title);
+        mCurrentTargetImage.setImageBitmap(image);
+        mCurrentTargetText.setText(title);
     }
 
     /**

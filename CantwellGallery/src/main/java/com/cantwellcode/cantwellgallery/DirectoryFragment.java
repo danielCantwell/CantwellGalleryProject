@@ -31,7 +31,6 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
     private static final String SELECTION       = "SELECTION";
     private static final String SELECTION_ARGS  = "SELECTION_ARGS";
     private static final String SORT_ORDER      = "SORT_ORDER";
-    private static final String LIST_POSITION   = "LIST_POSITION";
 
     // Exception Strings
     private static final String INVALID_LOADER_ID       = "Invalid Loader ID.";
@@ -48,13 +47,12 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
     private static final String BUCKET_DISPLAY_NAME     = MediaStore.Images.Media.BUCKET_DISPLAY_NAME;
     private static final String DEFAULT_SORT_ORDER      = MediaStore.Images.Media.DEFAULT_SORT_ORDER;
 
-    // Loader Args
-
-
-
     // Loader IDs
     private static final int        ALL_BUCKETS_LOADER      = 0x001;
     private static final int        BUCKET_CONTENT_LOADER   = 0x002;
+
+    private static final String     INITIAL_BUCKET_NAME     = "Camera";
+    private boolean                 mInitialLoadComplete    = false;
 
     // Private member variables
     private GridView                mGridView;
@@ -74,7 +72,7 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
         try {
             mListener = (Callbacks) activity;
         }catch (ClassCastException e){
-            throw new ClassCastException(activity.toString() + " must implement QuickBarCallbacks");
+            throw new ClassCastException(activity.toString() + " must implement DatabaseMaster.Callbacks");
         }
         mContentResolver = activity.getContentResolver();
         loadBuckets();
@@ -227,7 +225,7 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
         final int id = cursorLoader.getId();
         switch (id){
             case ALL_BUCKETS_LOADER:
-                mAdapter.changeCursor(cursor);
+                processAllBucketsLoadFinished(cursorLoader,cursor);
                 break;
             case BUCKET_CONTENT_LOADER:
                 processBucketContentLoadFinished(cursorLoader,cursor);
@@ -235,6 +233,25 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
             default:
                 break;
         }
+    }
+
+    private void processAllBucketsLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+        if(!mInitialLoadComplete){
+            final int nameIndex = cursor.getColumnIndexOrThrow(BUCKET_DISPLAY_NAME);
+            final int idIndex = cursor.getColumnIndexOrThrow(BUCKET_ID);
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()){
+                String name = cursor.getString(nameIndex);
+                if (INITIAL_BUCKET_NAME == name){
+                    final long id = cursor.getLong(idIndex);
+                    loadBucketContents(id);
+                    break;
+                }
+                cursor.moveToNext();
+            }
+            mInitialLoadComplete = true;
+        }
+        mAdapter.changeCursor(cursor);
     }
 
     private void processBucketContentLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
@@ -278,6 +295,8 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
      * @return
      */
     public boolean moveImageToBucket(long imageID, long bucketID){
+        Toast t = Toast.makeText(getActivity(),"Moving image " + imageID + "to bucket " + bucketID,Toast.LENGTH_SHORT);
+        t.show();
         return true;
     }
 
