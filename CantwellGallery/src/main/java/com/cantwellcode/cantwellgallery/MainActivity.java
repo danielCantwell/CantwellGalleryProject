@@ -145,14 +145,9 @@ public class MainActivity extends FragmentActivity
      private boolean processDrop(DragEvent dragEvent, View v) {
         switch (v.getId()) {
             // If the item is dropped on the view "quickBarCurrentItemImage"
-            case R.id.targetBarCurrentTargetImage:
-                Toast t = Toast.makeText(this, "Dropped on : quickBarCurrentItemImage", Toast.LENGTH_SHORT);
+            case R.id.utilityBarDeleteView:
+                Toast t = Toast.makeText(this, "Dropped on : utilityBarDeleteView", Toast.LENGTH_SHORT);
                 t.show();
-                return true;
-            // If the item is dropped on the view "quickBarNewItemImage"
-            case R.id.targetBarNewTargetImage:
-                Toast t1 = Toast.makeText(this, "Dropped on : quickBarNewItemImage", Toast.LENGTH_SHORT);
-                t1.show();
                 return true;
         }
         return false;
