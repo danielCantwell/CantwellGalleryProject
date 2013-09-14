@@ -3,7 +3,6 @@ package com.cantwellcode.cantwellgallery;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.database.Cursor;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,7 @@ import android.widget.TextView;
 /**
  * Created by Chris on 8/30/13.
  */
-public class QuickBarCursorAdapter extends BaseAdapter {
+public class BucketCursorAdapter extends BaseAdapter {
     private static final String TAG = "QUICK_BAR_CURSOR_ADAPTER";
 
     private static final String NULL_CONTEXT      = "Must supply a valid context.";
@@ -37,7 +36,7 @@ public class QuickBarCursorAdapter extends BaseAdapter {
         ImageView imageView;
     }
 
-    public QuickBarCursorAdapter(Context context, Cursor cursor, String idColumn, String textColumn, String imageIDColumn){
+    public BucketCursorAdapter(Context context, Cursor cursor, String idColumn, String textColumn, String imageIDColumn){
         // Initialize thumbnail cache
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         int memoryClassBytes = am.getMemoryClass()*1024*1024;
@@ -110,10 +109,10 @@ public class QuickBarCursorAdapter extends BaseAdapter {
         BucketViewHolder holder;
         
         if (convertView==null){
-            convertView = mInflater.inflate(R.layout.quick_bar_item,parent,false);
+            convertView = mInflater.inflate(R.layout.target_bar_item,parent,false);
             holder = new BucketViewHolder();
-            holder.textView  = (TextView)  convertView.findViewById(R.id.quickBarItemTextView);
-            holder.imageView = (ImageView) convertView.findViewById(R.id.quickBarItemImageView);
+            holder.textView  = (TextView)  convertView.findViewById(R.id.targetBarItemTextView);
+            holder.imageView = (ImageView) convertView.findViewById(R.id.targetBarItemImageView);
 
             convertView.setTag(holder);
         }else{

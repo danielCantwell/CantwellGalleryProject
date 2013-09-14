@@ -157,14 +157,10 @@ public class ContentFragment extends Fragment implements LoaderManager.LoaderCal
     private void setupDrag(final ListView listView) {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
-
-                long id               = listView.getAdapter().getItemId(position);
-                final String label    = Long.toString(id);
-                final String textData = label + ":" + position;
-                ClipData data         = ClipData.newPlainText(label, textData);
-
-                view.startDrag(data, new MyDragShadowBuilder(view), mListAdapter.getItem(position), 0);
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                // Start an IMAGE drag event with ClipData set to the image id
+                ClipData data         = ClipData.newPlainText(ClipDataLabels.IMAGE.toString(), String.valueOf(id));
+                view.startDrag(data, new MyDragShadowBuilder(view), view, 0);
 
                 return true;
             }

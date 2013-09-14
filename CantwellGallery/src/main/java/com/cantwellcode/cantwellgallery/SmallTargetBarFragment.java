@@ -1,31 +1,30 @@
 package com.cantwellcode.cantwellgallery;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipDescription;
-import android.database.Cursor;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 /**
  * Created by Chris on 9/6/13.
  */
-public class SmallTargetBarFragment extends Fragment {
+public class SmallTargetBarFragment extends Fragment implements TargetBar{
     private static final String TAG = "SMALL_TARGET_BAR_FRAGMENT";
+
+    private Callbacks   mListener;
 
     private ImageView   mCurrentItemImage;
     private ImageView   mNewItemImage;
@@ -33,14 +32,23 @@ public class SmallTargetBarFragment extends Fragment {
 
     private long        mCurrentBucketID;
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (Callbacks) activity;
+        }catch (ClassCastException e){
+            throw new ClassCastException(activity.toString() + " must implement QuickBarCallbacks");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root           = inflater.inflate(R.layout.small_quick_bar,container,false);
+        View root           = inflater.inflate(R.layout.small_target_bar,container,false);
 
-        mCurrentItemImage   = (ImageView)   root.findViewById(R.id.quickBarCurrentItemImage);
-        mCurrentItemText    = (TextView)    root.findViewById(R.id.quickBarCurrentItemText);
-        mNewItemImage       = (ImageView)   root.findViewById(R.id.quickBarNewItemImage);
+        mCurrentItemImage   = (ImageView)   root.findViewById(R.id.targetBarCurrentItemImage);
+        mCurrentItemText    = (TextView)    root.findViewById(R.id.targetBarCurrentItemText);
+        mNewItemImage       = (ImageView)   root.findViewById(R.id.targetBarNewItemImage);
 
         setupDrop(mCurrentItemImage);
         setupDrop(mNewItemImage);
@@ -90,25 +98,25 @@ public class SmallTargetBarFragment extends Fragment {
 
                     // When a view drag starts
                     case DragEvent.ACTION_DRAG_STARTED:
-                        Toast dragStartedToast = Toast.makeText(getActivity(), "Small Quick Bar recognized : Drag Started", Toast.LENGTH_SHORT);
+                        Toast dragStartedToast = Toast.makeText(getActivity(), "Small Target Bar recognized : Drag Started", Toast.LENGTH_SHORT);
 //                        dragStartedToast.show();
                         return processDragStarted(dragEvent);
 
                     // When the view is being held over the imageView
                     case DragEvent.ACTION_DRAG_ENTERED:
-                        Toast dragEnteredToast = Toast.makeText(getActivity(), "Small Quick Bar recognized : Drag Entered", Toast.LENGTH_SHORT);
+                        Toast dragEnteredToast = Toast.makeText(getActivity(), "Small Target Bar recognized : Drag Entered", Toast.LENGTH_SHORT);
 //                        dragEnteredToast.show();
                         break;
 
                     // When the view is exited
                     case DragEvent.ACTION_DRAG_EXITED:
-                        Toast dragExitedToast = Toast.makeText(getActivity(), "Small Quick Bar recognized : Drag Exited", Toast.LENGTH_SHORT);
+                        Toast dragExitedToast = Toast.makeText(getActivity(), "Small Target Bar recognized : Drag Exited", Toast.LENGTH_SHORT);
 //                        dragExitedToast.show();
                         break;
 
-                    // When the view is dropped on the quickbar
+                    // When the view is dropped on the target bar
                     case DragEvent.ACTION_DROP:
-                        Toast dropToast = Toast.makeText(getActivity(), "Small Quick Bar recognized : Drop", Toast.LENGTH_SHORT);
+                        Toast dropToast = Toast.makeText(getActivity(), "Small Target Bar recognized : Drop", Toast.LENGTH_SHORT);
                         dropToast.show();
                         return processDrop(dragEvent, v);
                 }
@@ -155,10 +163,11 @@ public class SmallTargetBarFragment extends Fragment {
     private boolean processDrop(DragEvent dragEvent, View v) {
         ClipDescription clipDescription = dragEvent.getClipDescription();
         if (clipDescription==null) return false;
+        ViewParent parent = v.getParent();
         switch (v.getId()) {
-            // If the item is dropped on the view "quickBarCurrentItemImage"
-            case R.id.quickBarCurrentItemImage:
-                Toast t = Toast.makeText(getActivity(), "Dropped on : quickBarCurrentItemImage", Toast.LENGTH_SHORT);
+            // If the item is dropped on the view "targetBarCurrentItemImage"
+            case R.id.targetBarCurrentItemImage:
+                Toast t = Toast.makeText(getActivity(), "Dropped on : targetBarCurrentItem", Toast.LENGTH_SHORT);
                 t.show();
                 switch (ClipDataLabels.valueOf(clipDescription.getLabel().toString())){
                     case BUCKET:
@@ -169,9 +178,9 @@ public class SmallTargetBarFragment extends Fragment {
                     default:
                         return false;
                 }
-            // If the item is dropped on the view "quickBarNewItemImage"
-            case R.id.quickBarNewItemImage:
-                Toast t1 = Toast.makeText(getActivity(), "Dropped on : quickBarNewItemImage", Toast.LENGTH_SHORT);
+            // If the item is dropped on the view "targetBarNewItemImage"
+            case R.id.targetBarNewItemImage:
+                Toast t1 = Toast.makeText(getActivity(), "Dropped on : targetBarNewItem", Toast.LENGTH_SHORT);
                 t1.show();
                 return true;
             default:
@@ -179,17 +188,44 @@ public class SmallTargetBarFragment extends Fragment {
         }
     }
 
+    /**
+     * Processes a drop event for dropped items labeled BUCKET
+     * @param dragEvent
+     * @param v
+     */
     private void processBucketDrop(DragEvent dragEvent, View v) {
+        // Get the attached ClipData.  For buckets this should be the bucket id.
         String data = (String) dragEvent.getClipData().getItemAt(0).coerceToText(getActivity());
         mCurrentBucketID = Long.valueOf(data);
+        // Get a reference to the view being dropped.  This must be set as the localState when
+        //      initiating the drag
         View dropped = (View) dragEvent.getLocalState();
+        // Change displayed data using the BucketViewHolder which should be set as the tag of the dropped view
         BucketViewHolder holder = (BucketViewHolder) dropped.getTag();
         Bitmap image = ((BitmapDrawable)holder.imageView.getDrawable()).getBitmap();
         String title = (String) holder.textView.getText();
         mCurrentItemImage.setImageBitmap(image);
         mCurrentItemText.setText(title);
-        Toast t = Toast.makeText(getActivity(),"Detected bucket drop.  Data: " + data, Toast.LENGTH_SHORT);
-        t.show();
     }
 
+    /**
+     *
+     * @param itemID
+     * @param targetID
+     * @return
+     */
+    @Override
+    public boolean moveItemToTarget(long itemID, long targetID) {
+        return mListener.onMoveItemToTarget(itemID,targetID);
+    }
+
+    /**
+     *
+     * @param itemID
+     * @return
+     */
+    @Override
+    public boolean createNewTargetFromItem(long itemID) {
+        return mListener.onCreateNewTargetFromItem(itemID);
+    }
 }

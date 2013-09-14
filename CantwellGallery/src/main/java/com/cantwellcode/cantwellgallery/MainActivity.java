@@ -1,33 +1,26 @@
 package com.cantwellcode.cantwellgallery;
 
-import android.content.ClipData;
 import android.content.ClipDescription;
-import android.graphics.Color;
-import android.net.Uri;
 import android.support.v4.app.FragmentManager;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.view.DragEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
-import java.io.FileNotFoundException;
-import java.net.URI;
 
 /**
  * Main Activity that is first loaded when the application starts
  */
 public class MainActivity extends FragmentActivity
-        implements QuickBarFragment.QuickBarCallbacks, DirectoryFragment.Callbacks {
+        implements TargetBar.Callbacks, DirectoryFragment.Callbacks {
 
     private static final String TAG                     = "MAIN ACTIVITY";
 
-    private QuickBarFragment    mQuickBarFragment;
+    private TargetBar           mTargetBar;
     private ContentFragment     mContentFragment;
+    private DirectoryFragment   mDirectoryFragment;
     private ImageView           mUtilityBarDeleteView;
 
 
@@ -40,9 +33,10 @@ public class MainActivity extends FragmentActivity
         setContentView(root);
 
         FragmentManager fm = getSupportFragmentManager();
-        // Initialize QuickBarFragment
-        //mQuickBarFragment   = (QuickBarFragment) fm.findFragmentById(R.id.quickBarFragment);
-        mContentFragment      = (ContentFragment)  fm.findFragmentById(R.id.contentFragment);
+        // Initialize TargetBarListFragment
+        //mTargetBarListFragment   = (TargetBarListFragment) fm.findFragmentById(R.id.quickBarFragment);
+        mContentFragment        = (ContentFragment)     fm.findFragmentById(R.id.contentFragment);
+        mDirectoryFragment      = (DirectoryFragment)   fm.findFragmentById(R.id.directoryFragment);
 
         mUtilityBarDeleteView = (ImageView) findViewById(R.id.utilityBarDeleteView);
         setupDrop(mUtilityBarDeleteView);
@@ -154,16 +148,26 @@ public class MainActivity extends FragmentActivity
      private boolean processDrop(DragEvent dragEvent, View v) {
         switch (v.getId()) {
             // If the item is dropped on the view "quickBarCurrentItemImage"
-            case R.id.quickBarCurrentItemImage:
+            case R.id.targetBarCurrentItemImage:
                 Toast t = Toast.makeText(this, "Dropped on : quickBarCurrentItemImage", Toast.LENGTH_SHORT);
                 t.show();
                 return true;
             // If the item is dropped on the view "quickBarNewItemImage"
-            case R.id.quickBarNewItemImage:
+            case R.id.targetBarNewItemImage:
                 Toast t1 = Toast.makeText(this, "Dropped on : quickBarNewItemImage", Toast.LENGTH_SHORT);
                 t1.show();
                 return true;
         }
+        return false;
+    }
+
+    @Override
+    public boolean onMoveItemToTarget(long itemID, long targetID) {
+        return mDirectoryFragment.moveImageToBucket(itemID,targetID);
+    }
+
+    @Override
+    public boolean onCreateNewTargetFromItem(long itemID) {
         return false;
     }
 }

@@ -6,11 +6,11 @@
                 android:clickable="false">
 
     <fragment
-            android:layout_width="@dimen/quick_bar_width"
+            android:layout_width="@dimen/target_bar_width"
             android:layout_height="match_parent"
             android:name="com.cantwellcode.cantwellgallery.SmallTargetBarFragment"
-            android:id="@+id/quickBarFragment"
-            tools:layout="@layout/small_quick_bar"/>
+            android:id="@+id/targetBarFragment"
+            tools:layout="@layout/small_target_bar"/>
 
     <com.cantwellcode.cantwellgallery.SlidingPane
             android:layout_height="match_parent"
@@ -18,7 +18,7 @@
             android:id="@+id/slidingpanelayout"
             android:layout_alignParentEnd="false"
             android:layout_alignParentLeft="false"
-            android:layout_toRightOf="@+id/quickBarFragment"
+            android:layout_toRightOf="@+id/targetBarFragment"
             android:layout_toLeftOf="@+id/utilityBar"
             android:layout_centerInParent="true">
 

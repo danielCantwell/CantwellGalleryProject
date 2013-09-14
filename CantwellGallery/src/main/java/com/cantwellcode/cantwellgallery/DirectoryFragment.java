@@ -2,6 +2,7 @@ package com.cantwellcode.cantwellgallery;
 
 import android.app.Activity;
 import android.content.ClipData;
+import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,19 +12,17 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.util.Log;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 /**
  * Created by Daniel on 8/13/13.
  */
-public class DirectoryFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
+public class DirectoryFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, DatabaseMaster {
     private static final String TAG = "DirectoryFragment";
 
     // Bundle tags
@@ -61,8 +60,9 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
 
     // Private member variables
     private GridView                mGridView;
-    private QuickBarCursorAdapter   mAdapter;
+    private BucketCursorAdapter     mAdapter;
     private Callbacks               mListener;
+    private ContentResolver         mContentResolver;
 
     public interface Callbacks{
         boolean onDirectoryPaneItemSelected(long id, String name);
@@ -81,6 +81,7 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
         }catch (ClassCastException e){
             throw new ClassCastException(activity.toString() + " must implement QuickBarCallbacks");
         }
+        mContentResolver = activity.getContentResolver();
         load();
     }
     /**
@@ -92,7 +93,7 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        mAdapter = new QuickBarCursorAdapter(getActivity(),null,BUCKET_ID,BUCKET_DISPLAY_NAME,MIN_ID);
+        mAdapter = new BucketCursorAdapter(getActivity(),null,BUCKET_ID,BUCKET_DISPLAY_NAME,MIN_ID);
     }
 
 
@@ -171,6 +172,20 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
         mAdapter.changeCursor(null);
     }
 
+    /**************************************
+     *        DATABASE MODIFICATION       *
+     **************************************/
+
+    /**
+     * Update the database so the specified image belongs to the specified bucket
+     * @param imageID
+     * @param bucketID
+     * @return
+     */
+    public boolean moveImageToBucket(long imageID, long bucketID){
+        return true;
+    }
+
     private void setupListItemSelect(GridView gridView) {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -199,9 +214,9 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
     private void setupDrag(GridView gridView) {
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
-                ClipData data = ClipData.newPlainText(ClipDataLabels.BUCKET.toString(),String.valueOf(l));
-                BucketViewHolder holder = (BucketViewHolder) view.getTag();
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                // Initiate a BUCKET drag event, passing the BUCKET_ID in ClipData
+                ClipData data = ClipData.newPlainText(ClipDataLabels.BUCKET.toString(),String.valueOf(id));
                 // Pass view as the local state object.
                 view.startDrag(data, new MyDragShadowBuilder(view), view, 0);
                 return true;

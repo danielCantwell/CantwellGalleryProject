@@ -4,7 +4,7 @@
     <string name="app_name">CantwellGallery</string>
     <string name="action_settings">Settings</string>
     <string name="directory_pane_header">All Albums</string>
-    <string name="quick_bar_header">Target Album</string>
+    <string name="target_bar_header">Target Album</string>
     <string name="new_item">Create New</string>
     <string name="default_directory_title">Choose Album</string>
 

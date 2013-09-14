@@ -28,8 +28,8 @@ import android.widget.Toast;
  * associated bindings.
  * This fragment will then keep a modifiable list of directories to display
  */
-public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
-    private static final String TAG = "QuickBarFragment";
+public class TargetBarListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+    private static final String TAG = "TargetBarListFragment";
 
     // Bundle tags
     private static final String URI             = "URI";
@@ -67,7 +67,7 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
     // Private member variables
     private QuickBarCallbacks       mListener;
     private ListView                mListView;
-    private QuickBarCursorAdapter   mQuickBarAdapter;
+    private BucketCursorAdapter mQuickBarAdapter;
 
     public interface QuickBarCallbacks{
     }
@@ -96,7 +96,7 @@ public class QuickBarFragment extends Fragment implements LoaderManager.LoaderCa
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        mQuickBarAdapter = new QuickBarCursorAdapter(getActivity(),null,BUCKET_ID,BUCKET_DISPLAY_NAME,MIN_ID);
+        mQuickBarAdapter = new BucketCursorAdapter(getActivity(),null,BUCKET_ID,BUCKET_DISPLAY_NAME,MIN_ID);
 
     }
 

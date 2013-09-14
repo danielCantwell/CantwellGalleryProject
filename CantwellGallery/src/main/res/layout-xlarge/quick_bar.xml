@@ -2,14 +2,14 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
-              android:layout_width="@dimen/quick_bar_width"
+              android:layout_width="@dimen/target_bar_width"
               android:layout_height="match_parent">
 
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="@dimen/header_height"
-            android:id="@+id/quickBarHeader"
-            android:text="@string/quick_bar_header"/>
+            android:id="@+id/targetBarHeader"
+            android:text="@string/target_bar_header"/>
 
     <ListView
             android:id="@+id/quickBarListView"
@@ -18,11 +18,11 @@
             android:layout_gravity="left|center_vertical"
             android:layout_alignParentTop="false"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/quickBarHeader"
+            android:layout_below="@+id/targetBarHeader"
             android:layout_above="@+id/quickBarNewItem"/>
 
     <RelativeLayout
-            android:layout_width="@dimen/quick_bar_width"
+            android:layout_width="@dimen/target_bar_width"
             android:layout_height="@dimen/new_item_height"
             android:layout_alignParentBottom="true"
             android:id="@+id/quickBarNewItem">
@@ -30,9 +30,9 @@
         <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/quickBarNewItemImage"
+                android:id="@+id/targetBarNewItemImage"
                 android:src="@android:drawable/ic_input_get"
-                android:layout_above="@+id/quickBarNewItemText"
+                android:layout_above="@+id/targetBarNewItemText"
                 android:layout_centerHorizontal="true"
                 android:focusableInTouchMode="false"/>
 
@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:text="@string/new_item"
-                android:id="@+id/quickBarNewItemText"
+                android:id="@+id/targetBarNewItemText"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"/>
     </RelativeLayout>
