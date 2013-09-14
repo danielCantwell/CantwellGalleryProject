@@ -1,6 +1,7 @@
 package com.cantwellcode.cantwellgallery;
 
 import android.content.ClipDescription;
+import android.database.Cursor;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -14,14 +15,15 @@ import android.widget.Toast;
  * Main Activity that is first loaded when the application starts
  */
 public class MainActivity extends FragmentActivity
-        implements TargetBar.Callbacks, DirectoryFragment.Callbacks {
+        implements TargetBar.Callbacks, DatabaseMaster.Callbacks {
 
     private static final String TAG                     = "MAIN ACTIVITY";
 
-    private TargetBar           mTargetBar;
-    private ContentFragment     mContentFragment;
-    private DirectoryFragment   mDirectoryFragment;
-    private ImageView           mUtilityBarDeleteView;
+    private TargetBar               mTargetBar;
+    private ContentFragment         mContentFragment;
+    private DirectoryFragment       mDirectoryFragment;
+    private ImageView               mUtilityBarDeleteView;
+    private DatabaseContentHandler  mDatabaseContentHandler;
 
 
     @Override
@@ -37,6 +39,7 @@ public class MainActivity extends FragmentActivity
         //mTargetBarListFragment   = (TargetBarListFragment) fm.findFragmentById(R.id.quickBarFragment);
         mContentFragment        = (ContentFragment)     fm.findFragmentById(R.id.contentFragment);
         mDirectoryFragment      = (DirectoryFragment)   fm.findFragmentById(R.id.directoryFragment);
+        mDatabaseContentHandler = mContentFragment;
 
         mUtilityBarDeleteView = (ImageView) findViewById(R.id.utilityBarDeleteView);
         setupDrop(mUtilityBarDeleteView);
@@ -77,12 +80,6 @@ public class MainActivity extends FragmentActivity
             }
         });
 
-    }
-
-    @Override
-    public boolean onDirectoryPaneItemSelected(long id, String name) {
-        mContentFragment.changeDirectory(name);
-        return true;
     }
 
     private void setupDrop(final View v) {
@@ -169,5 +166,10 @@ public class MainActivity extends FragmentActivity
     @Override
     public boolean onCreateNewTargetFromItem(long itemID) {
         return false;
+    }
+
+    @Override
+    public void changeContentCursor(String label, Cursor cursor) {
+        mDatabaseContentHandler.changeContentCursor(label,cursor);
     }
 }

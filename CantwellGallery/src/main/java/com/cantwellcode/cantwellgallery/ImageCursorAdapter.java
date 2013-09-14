@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 /**
  * Created by Chris on 9/2/13.
+ * Takes a cursor to image data and constructs views
+ * Assumes the cursor has a co
  */
 public class ImageCursorAdapter extends BaseAdapter{
     private static final String TAG = "ImageCursorAdapter";
@@ -19,8 +21,8 @@ public class ImageCursorAdapter extends BaseAdapter{
     private static final String NULL_CONTEXT = "Must supply a valid context.";
     private static final String NULL_COLUMN_NAMES = "Must supply non-null column names";
 
-    private String              mIDColumnName;
-    private String              mImageIDColumnName;
+    private String              mIDColumnName           = "_ID";
+    private String              mImageIDColumnName      = "_ID";
     private int                 mImageResourceID;
     private int                 mItemLayoutID;
     private int                 mIDIndex;
@@ -35,7 +37,7 @@ public class ImageCursorAdapter extends BaseAdapter{
         ImageView imageView;
     }
 
-    public ImageCursorAdapter(Context context, Cursor cursor, int itemLayoutID, int imageResourceID, String idColumn, String imageIDColumn){
+    public ImageCursorAdapter(Context context, Cursor cursor, int itemLayoutID, int imageResourceID){
         if(context != null)mContext = context;
         else throw new IllegalArgumentException(NULL_CONTEXT);
 
@@ -43,12 +45,6 @@ public class ImageCursorAdapter extends BaseAdapter{
 
         mItemLayoutID    = itemLayoutID;
         mImageResourceID = imageResourceID;
-
-        if(idColumn!=null && imageIDColumn!= null){
-            mIDColumnName      = idColumn;
-            mImageIDColumnName = imageIDColumn;
-            findColumns();
-        } else throw new IllegalArgumentException(NULL_COLUMN_NAMES);
 
         mInflater = LayoutInflater.from(context);
 

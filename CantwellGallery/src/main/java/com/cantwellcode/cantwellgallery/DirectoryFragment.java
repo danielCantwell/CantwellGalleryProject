@@ -37,26 +37,24 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
     private static final String INVALID_LOADER_ID       = "Invalid Loader ID.";
 
     // Database Columns
-    private static final String _ID                     = MediaStore.Images.Media._ID;
+    private static final Uri    BUCKET_URI              = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+
+    private static final String IMAGE_ID                = MediaStore.Images.Media._ID;
+    private static final String IMAGE_DISPLAY_NAME      = MediaStore.Images.Media.DISPLAY_NAME;
+    private static final String IMAGE_DATA              = MediaStore.Images.Media.DATA;
+
+    private static final String MIN_ID                  = "MIN(" + IMAGE_ID + ")";
     private static final String BUCKET_ID               = MediaStore.Images.Media.BUCKET_ID;
     private static final String BUCKET_DISPLAY_NAME     = MediaStore.Images.Media.BUCKET_DISPLAY_NAME;
     private static final String DEFAULT_SORT_ORDER      = MediaStore.Images.Media.DEFAULT_SORT_ORDER;
 
     // Loader Args
-    // The following will produce a cursor that contains only the first row of images for each
-    //  unique bucket id.  This only works because the underlying database for MediaStore is SQLite
-    // This produces the SQLite query string:
-    //      SELECT %BUCKET_PROJECTION FROM (%URI) WHERE (1) GROUP BY (%BUCKET_ID) ORDER BY (%DEFAULT_SORT_ORDER)
-    // WHERE (%s)
-    private static final Uri        BUCKET_URI              = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-    private static final String     MIN_ID                  = "MIN(" + _ID + ")";
-    private static final String[]   BUCKET_PROJECTION       = {MIN_ID,BUCKET_ID,BUCKET_DISPLAY_NAME};
-    private static final String     BUCKET_SELECTION        = "1) GROUP BY (" + BUCKET_ID;
-    private static final String[]   BUCKET_SELECTION_ARGS   = null;
-    private static final String     BUCKET_SORT_ORDER       = DEFAULT_SORT_ORDER;
+
+
 
     // Loader IDs
-    private static final int        DEFAULT_LOADER          = 0x001;
+    private static final int        ALL_BUCKETS_LOADER      = 0x001;
+    private static final int        BUCKET_CONTENT_LOADER   = 0x002;
 
     // Private member variables
     private GridView                mGridView;
@@ -64,9 +62,6 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
     private Callbacks               mListener;
     private ContentResolver         mContentResolver;
 
-    public interface Callbacks{
-        boolean onDirectoryPaneItemSelected(long id, String name);
-    }
 
     /**
      * Called when the fragment is attached to the host activity.
@@ -82,7 +77,7 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
             throw new ClassCastException(activity.toString() + " must implement QuickBarCallbacks");
         }
         mContentResolver = activity.getContentResolver();
-        load();
+        loadBuckets();
     }
     /**
      * Place all initialization that should be retained across config changes in here.
@@ -136,40 +131,140 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
     }
 
 
+    /**************************************
+     *        DATABASE LOADING            *
+     **************************************/
+
+
     /**
-     * Construct load parameters and initialize loader
+     * Construct load parameters for all buckets and initialize loader
      */
-    private void load() {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(URI,BUCKET_URI);
-        bundle.putStringArray(PROJECTION, BUCKET_PROJECTION);
-        bundle.putString(SELECTION, BUCKET_SELECTION);
-        bundle.putStringArray(SELECTION_ARGS, BUCKET_SELECTION_ARGS);
-        bundle.putString(SORT_ORDER,BUCKET_SORT_ORDER);
-        getLoaderManager().initLoader(DEFAULT_LOADER,bundle,this);
+    private void loadBuckets() {
+        // The following will produce a cursor that contains only the first row of images for each
+        //  unique bucket id.  This only works because the underlying database for MediaStore is SQLite
+        // This produces the SQLite query string:
+        //      SELECT %BUCKET_PROJECTION FROM (%URI) WHERE (1) GROUP BY (%BUCKET_ID) ORDER BY (%DEFAULT_SORT_ORDER)
+        // WHERE (%s)
+        final Uri       uri             = BUCKET_URI;
+        final String[]  projection      = {MIN_ID,BUCKET_ID,BUCKET_DISPLAY_NAME};
+        final String    selection       = "1) GROUP BY (" + BUCKET_ID;
+        final String[]  selectionArgs   = null;
+        final String    sortOrder       = DEFAULT_SORT_ORDER;
+
+        Bundle loaderArgs = getLoaderArgs(uri, projection, selection, selectionArgs, sortOrder);
+        load(ALL_BUCKETS_LOADER,loaderArgs);
     }
 
+    /**
+     * Construct load parameters for the specified bucket and initialize loader
+     * @param bucketID
+     */
+    private void loadBucketContents(long bucketID){
+        final Uri       uri             = BUCKET_URI;
+        final String[]  projection      = {BUCKET_ID,BUCKET_DISPLAY_NAME,IMAGE_ID,IMAGE_DISPLAY_NAME,IMAGE_DATA};
+        final String    selection       = BUCKET_ID + "=?";
+        final String[]  selectionArgs   = {String.valueOf(bucketID)};
+        final String    sortOrder       = DEFAULT_SORT_ORDER;
+
+        Bundle loaderArgs = getLoaderArgs(uri, projection, selection, selectionArgs, sortOrder);
+        load(BUCKET_CONTENT_LOADER,loaderArgs);
+    }
+
+    /**
+     * Load or restart the specified loader with the supplied args
+     * @param loaderID
+     * @param loaderArgs
+     */
+    private void load(int loaderID, Bundle loaderArgs){
+        LoaderManager lm = getLoaderManager();
+        if (lm.getLoader(loaderID)==null) lm.initLoader(loaderID,loaderArgs,this);
+        else lm.restartLoader(loaderID,loaderArgs,this);
+    }
+
+    /**
+     * Construct loaderArgs Bundle
+     * @param uri
+     * @param projection
+     * @param selection
+     * @param selectionArgs
+     * @param sortOrder
+     * @return
+     */
+    private static Bundle getLoaderArgs(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(URI,uri);
+        bundle.putStringArray(PROJECTION, projection);
+        bundle.putString(SELECTION, selection);
+        bundle.putStringArray(SELECTION_ARGS, selectionArgs);
+        bundle.putString(SORT_ORDER,sortOrder);
+        return bundle;
+    }
+
+    /**
+     * Called by the LoaderManager to create a loader with the given id and loaderArgs
+     * @param id
+     * @param loaderArgs
+     * @return
+     */
     @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {
-        Log.d(TAG, "onCreateLoader() thread = " + Thread.currentThread().getName());
-        Uri uri = bundle.getParcelable(URI);
-        String[] projection    = bundle.getStringArray(PROJECTION);
-        String   selection     = bundle.getString(SELECTION);
-        String[] selectionArgs = bundle.getStringArray(SELECTION_ARGS);
-        String   sortOrder     = bundle.getString(SORT_ORDER);
+    public Loader<Cursor> onCreateLoader(int id, Bundle loaderArgs) {
+        Uri uri = loaderArgs.getParcelable(URI);
+        String[] projection    = loaderArgs.getStringArray(PROJECTION);
+        String   selection     = loaderArgs.getString(SELECTION);
+        String[] selectionArgs = loaderArgs.getStringArray(SELECTION_ARGS);
+        String   sortOrder     = loaderArgs.getString(SORT_ORDER);
         CursorLoader loader = new CursorLoader(this.getActivity(),uri,projection,selection,selectionArgs,sortOrder);
         return loader;
     }
 
+    /**
+     * Called by the LoaderManager when a Loader has finished loading its data.
+     * @param cursorLoader
+     * @param cursor
+     */
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        Log.d(TAG, BUCKET_ID + " cursor finished loading. " + cursor.getCount() + " rows found.");
-        mAdapter.changeCursor(cursor);
+        final int id = cursorLoader.getId();
+        switch (id){
+            case ALL_BUCKETS_LOADER:
+                mAdapter.changeCursor(cursor);
+                break;
+            case BUCKET_CONTENT_LOADER:
+                processBucketContentLoadFinished(cursorLoader,cursor);
+                break;
+            default:
+                break;
+        }
     }
 
+    private void processBucketContentLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+        cursor.moveToFirst();
+        final int index = cursor.getColumnIndexOrThrow(BUCKET_DISPLAY_NAME);
+        final String label = cursor.getString(index);
+        mListener.changeContentCursor(label,cursor);
+    }
+
+    /**
+     * Called by the LoaderManager when a Loader is reset
+     * @param cursorLoader
+     */
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
-        mAdapter.changeCursor(null);
+        final int id = cursorLoader.getId();
+        switch (id){
+            case ALL_BUCKETS_LOADER:
+                mAdapter.changeCursor(null);
+                break;
+            case BUCKET_CONTENT_LOADER:
+                processBucketContentLoaderReset(cursorLoader);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void processBucketContentLoaderReset(Loader<Cursor> cursorLoader) {
+        mListener.changeContentCursor(null,null);
     }
 
     /**************************************
@@ -186,17 +281,17 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
         return true;
     }
 
+    /**
+     * Sets up database bucket loadBuckets when a bucket is selected.
+     * @param gridView
+     */
     private void setupListItemSelect(GridView gridView) {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Cursor cursor = (Cursor) mAdapter.getItem(position);
-                int index     = cursor.getColumnIndexOrThrow(BUCKET_DISPLAY_NAME);
-                String name   = cursor.getString(index);
-
-                Toast directorySelectedToast = Toast.makeText(getActivity(),"Album " + name + " selected", Toast.LENGTH_SHORT);
+                loadBucketContents(id);
+                Toast directorySelectedToast = Toast.makeText(getActivity(),"Album " + id + " selected", Toast.LENGTH_SHORT);
                 directorySelectedToast.show();
-                mListener.onDirectoryPaneItemSelected(id,name);
             }
         });
     }

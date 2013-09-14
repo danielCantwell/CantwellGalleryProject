@@ -7,6 +7,6 @@ import android.database.Cursor;
  */
 public interface DatabaseMaster {
     public interface Callbacks {
-        public void changeDetailCursor(String label,Cursor cursor);
+        public void changeContentCursor(String label, Cursor cursor);
     }
 }

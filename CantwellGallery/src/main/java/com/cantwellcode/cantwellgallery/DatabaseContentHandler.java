@@ -5,6 +5,6 @@ import android.database.Cursor;
 /**
  * Created by Chris on 9/13/13.
  */
-public interface DatabaseDetail {
-    public void changeDetailCursor(String label,Cursor cursor);
+public interface DatabaseContentHandler {
+    public void changeContentCursor(String label,Cursor cursor);
 }
