@@ -1116,7 +1116,11 @@
       <created>1379168719495</created>
       <updated>1379168719495</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="[Working] Second attempt at a push.">
+      <created>1379196660865</created>
+      <updated>1379196660865</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1178,7 +1182,8 @@
     <MESSAGE value="[Working] Moved all database loading to the DirectoryFragment." />
     <MESSAGE value="[Working] Image drop on target now calls back to directoryfragment to move image.&#10;&#10;&#10;Very strange bug in processAllBucketsLoadFinished.  I tried to do an initial load of the Camera bucket content.  If you look at the function, the if statement in it is not evaluating to true.  But I have set breakpoints and checked the values and for some reason Camera == Camera is not evaluating to true????  They even have the exact same hash code." />
     <MESSAGE value="[Working] Now loads the Camera album initially." />
-    <option name="LAST_COMMIT_MESSAGE" value="[Working] Now loads the Camera album initially." />
+    <MESSAGE value="[Working] Second attempt at a push." />
+    <option name="LAST_COMMIT_MESSAGE" value="[Working] Second attempt at a push." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
