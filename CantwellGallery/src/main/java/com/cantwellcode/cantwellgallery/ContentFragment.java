@@ -12,11 +12,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by Daniel on 8/13/13.
  */
 public class ContentFragment extends Fragment implements DatabaseContentHandler {
+
+    private SwipeDetect swipeDetect = new SwipeDetect();
 
     private static final String TAG = "ContentFragment";
 
@@ -53,7 +56,9 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
 
         mListView = (ListView) root.findViewById(R.id.contentPaneListView);
         mListView.setAdapter(mListAdapter);
+
         setupDrag(mListView);
+        setupSwipe(mListView);
 
         return root;
     }
@@ -84,12 +89,27 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
         });
     }
 
-    private void setupFling(final ListView listView) {
-        listView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
+    private void setupSwipe(final ListView listView) {
+        listView.setOnTouchListener(swipeDetect);
 
-                return false;
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
+                if (swipeDetect.swipeDetected()) {
+                    // On Swipe Right
+                    if (swipeDetect.getSwipe() == SwipeDetect.Swipe.Right) {
+
+                        Toast.makeText(getActivity(),
+                                "Swipe Right", Toast.LENGTH_SHORT).show();
+                    }
+                    // On Swipe Left
+                    if (swipeDetect.getSwipe() == SwipeDetect.Swipe.Left) {
+
+                        Toast.makeText(getActivity(),
+                                "Swipe Left", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
     }
