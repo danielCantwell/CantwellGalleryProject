@@ -5,12 +5,10 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,8 +16,6 @@ import android.widget.Toast;
  * Created by Daniel on 8/13/13.
  */
 public class ContentFragment extends Fragment implements DatabaseContentHandler {
-
-    private SwipeDetect swipeDetect = new SwipeDetect();
 
     private static final String TAG = "ContentFragment";
 
@@ -30,6 +26,8 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
     private ImageCursorAdapter      mListAdapter;
     private TextView                mTextView;
     private String                  mName;
+
+    private SwipeListViewDetect swipeDetect;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,6 +54,16 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
 
         mListView = (ListView) root.findViewById(R.id.contentPaneListView);
         mListView.setAdapter(mListAdapter);
+
+        swipeDetect = new SwipeListViewDetect(mListView, new SwipeListViewDetect.SlideCallbacks() {
+            @Override
+            public void onSlide(ListView listView, int[] reverseSortedPositions) {
+                for (int position : reverseSortedPositions) {
+                    // TODO : on slide function
+                    // slideItem(position);
+                }
+            }
+        });
 
         setupDrag(mListView);
         setupSwipe(mListView);
@@ -91,27 +99,13 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
 
     private void setupSwipe(final ListView listView) {
         listView.setOnTouchListener(swipeDetect);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-
-                if (swipeDetect.swipeDetected()) {
-                    // On Swipe Right
-                    if (swipeDetect.getSwipe() == SwipeDetect.Swipe.Right) {
-
-                        Toast.makeText(getActivity(),
-                                "Swipe Right", Toast.LENGTH_SHORT).show();
-                    }
-                    // On Swipe Left
-                    if (swipeDetect.getSwipe() == SwipeDetect.Swipe.Left) {
-
-                        Toast.makeText(getActivity(),
-                                "Swipe Left", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
+        listView.setOnScrollListener(swipeDetect.ScrollListener());
     }
-
+/*
+    private void slideItem(int position) {
+        // move file etc
+        // mListAdapter.remove(mAdapter.getItem(position));
+        // notify data set changed
+    }
+*/
 }
