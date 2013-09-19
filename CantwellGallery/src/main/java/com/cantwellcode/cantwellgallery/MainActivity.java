@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.view.DragEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -182,5 +185,31 @@ public class MainActivity extends FragmentActivity
     @Override
     public void changeContentLabelAndCursor(String label, Cursor cursor) {
         mDatabaseContentHandler.changeContentLabelAndCursor(label, cursor);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return true;
+    }
+
+    /********************************
+     *      Menu Item Clicks        *
+     ********************************/
+
+    public void menuClickSettings(MenuItem item) {
+        Toast settings = Toast.makeText(this, "Settings", Toast.LENGTH_SHORT);
+        settings.show();
+    }
+
+    public void menuClickHelp(MenuItem item) {
+        Toast help = Toast.makeText(this, "What would you like help with?", Toast.LENGTH_SHORT);
+        help.show();
+    }
+
+    public void menuClickInfo(MenuItem item) {
+        Toast info = Toast.makeText(this, "Created by Cantwell Code", Toast.LENGTH_SHORT);
+        info.show();
     }
 }
