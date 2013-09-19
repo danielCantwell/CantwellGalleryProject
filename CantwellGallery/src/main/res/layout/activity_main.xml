@@ -53,6 +53,16 @@
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 android:src="@android:drawable/ic_menu_delete"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:id="@+id/utilityBarHelpView"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:src="@android:drawable/ic_menu_help"/>
+
     </RelativeLayout>
 
 </RelativeLayout>
