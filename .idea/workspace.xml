@@ -58,9 +58,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="47ad2055-7b34-47ae-9de1-fe21829ab214" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ContentFragment.java" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ContentFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SwipeListViewDetect.java" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SwipeListViewDetect.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java" />
     </list>
     <ignored path="CantwellGallery.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -145,7 +143,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java" line="147" class="com.cantwellcode.cantwellgallery.MainActivity" package="com.cantwellcode.cantwellgallery">
+      <breakpoint url="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java" line="163" class="com.cantwellcode.cantwellgallery.MainActivity" package="com.cantwellcode.cantwellgallery">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -186,10 +184,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ContentFragment.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ContentFragment.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ContentFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="110" column="36" selection-start="3987" selection-end="3987" vertical-scroll-proportion="0.5555556" vertical-offset="1309" max-vertical-offset="1921">
+            <state line="110" column="36" selection-start="3987" selection-end="3987" vertical-scroll-proportion="0.0" vertical-offset="1309" max-vertical-offset="1921">
               <folding>
                 <element signature="e#1926#2270#0" expanded="true" />
                 <element signature="e#2259#2260#0" expanded="true" />
@@ -227,6 +225,18 @@
           </provider>
           <provider selected="true" editor-type-id="android-designer">
             <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainActivity.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="55" column="53" selection-start="2340" selection-end="2340" vertical-scroll-proportion="-1.25" vertical-offset="1547" max-vertical-offset="3060">
+              <folding>
+                <element signature="e#2124#2465#0" expanded="true" />
+                <element signature="e#2454#2455#0" expanded="true" />
+              </folding>
+            </state>
           </provider>
         </entry>
       </file>
@@ -627,7 +637,6 @@
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ImageLocalState.java" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/BucketLocalState.java" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/TargetBar.java" />
-        <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SmallTargetBarFragment.java" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/content_pane.xml" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/content_pane_item.xml" />
@@ -638,6 +647,7 @@
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ContentFragment.java" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SwipeListViewDetect.java" />
+        <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java" />
       </list>
     </option>
   </component>
@@ -1147,7 +1157,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="784" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1233,13 +1243,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="13" selection-start="495" selection-end="495" vertical-scroll-proportion="-5.7060304" vertical-offset="2390" max-vertical-offset="2788">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/res/layout/content_pane_item.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="17" column="17" selection-start="802" selection-end="802" vertical-scroll-proportion="0.7487047" vertical-offset="0" max-vertical-offset="391">
@@ -1285,16 +1288,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/res/layout/content_pane.xml">
-      <provider editor-type-id="text-editor">
-        <state line="29" column="63" selection-start="1175" selection-end="1175" vertical-scroll-proportion="0.0" vertical-offset="46" max-vertical-offset="646">
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/res/layout/directory_pane.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="612">
@@ -1302,16 +1295,6 @@
         </state>
       </provider>
       <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/res/layout/activity_main.xml">
-      <provider editor-type-id="text-editor">
-        <state line="68" column="0" selection-start="2826" selection-end="2826" vertical-scroll-proportion="0.0" vertical-offset="658" max-vertical-offset="1258">
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
         <state />
       </provider>
     </entry>
@@ -1333,10 +1316,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ContentFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="110" column="36" selection-start="3987" selection-end="3987" vertical-scroll-proportion="0.5555556" vertical-offset="1309" max-vertical-offset="1921">
+        <state line="110" column="36" selection-start="3987" selection-end="3987" vertical-scroll-proportion="0.0" vertical-offset="1309" max-vertical-offset="1921">
           <folding>
             <element signature="e#1926#2270#0" expanded="true" />
             <element signature="e#2259#2260#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/res/layout/content_pane.xml">
+      <provider editor-type-id="text-editor">
+        <state line="29" column="63" selection-start="1175" selection-end="1175" vertical-scroll-proportion="0.0" vertical-offset="46" max-vertical-offset="646">
+          <folding />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/res/layout/activity_main.xml">
+      <provider editor-type-id="text-editor">
+        <state line="68" column="0" selection-start="2826" selection-end="2826" vertical-scroll-proportion="0.0" vertical-offset="658" max-vertical-offset="1258">
+          <folding />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="55" column="53" selection-start="2340" selection-end="2340" vertical-scroll-proportion="-1.25" vertical-offset="1547" max-vertical-offset="3060">
+          <folding>
+            <element signature="e#2124#2465#0" expanded="true" />
+            <element signature="e#2454#2455#0" expanded="true" />
           </folding>
         </state>
       </provider>

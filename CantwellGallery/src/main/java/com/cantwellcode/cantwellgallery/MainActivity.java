@@ -23,6 +23,7 @@ public class MainActivity extends FragmentActivity
     private ContentFragment         mContentFragment;
     private DirectoryFragment       mDirectoryFragment;
     private ImageView               mUtilityBarDeleteView;
+    private ImageView               mUtilityBarHelpView;
     private DatabaseContentHandler  mDatabaseContentHandler;
 
 
@@ -41,8 +42,23 @@ public class MainActivity extends FragmentActivity
         mDirectoryFragment      = (DirectoryFragment)   fm.findFragmentById(R.id.directoryFragment);
         mDatabaseContentHandler = mContentFragment;
 
+        mUtilityBarHelpView   = (ImageView) findViewById(R.id.utilityBarHelpView);
         mUtilityBarDeleteView = (ImageView) findViewById(R.id.utilityBarDeleteView);
         setupDrop(mUtilityBarDeleteView);
+
+        /*
+         * This is what happens when the user presses the help (?) button
+         */
+        mUtilityBarHelpView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast helpToast = Toast.makeText(getBaseContext(),
+                        "You Pressed the Help Button.", Toast.LENGTH_SHORT);
+                helpToast.setMargin(10, 0);
+                helpToast.show();
+            }
+        });
+
 
         final SlidingPane slidingPaneLayout = SlidingPane.class.cast(root.findViewById(R.id.slidingpanelayout));
 
