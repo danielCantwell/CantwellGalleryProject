@@ -57,10 +57,9 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
 
         swipeDetect = new SwipeListViewDetect(mListView, new SwipeListViewDetect.SlideCallbacks() {
             @Override
-            public void onSlide(ListView listView, int[] reverseSortedPositions) {
+            public void onSlide(ListView listView, int[] reverseSortedPositions, SwipeListViewDetect.Direction direction) {
                 for (int position : reverseSortedPositions) {
-                    // TODO : on slide function
-                    // slideItem(position);
+                    slideItem(position, direction);
                 }
             }
         });
@@ -101,11 +100,21 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
         listView.setOnTouchListener(swipeDetect);
         listView.setOnScrollListener(swipeDetect.ScrollListener());
     }
-/*
-    private void slideItem(int position) {
+
+    private void slideItem(int position, SwipeListViewDetect.Direction direction) {
         // move file etc
         // mListAdapter.remove(mAdapter.getItem(position));
         // notify data set changed
+        String swipeDirection = null;
+
+        if (direction == SwipeListViewDetect.Direction.Left) {
+            swipeDirection = "Left";
+        } else if (direction == SwipeListViewDetect.Direction.Right) {
+            swipeDirection = "Right";
+        }
+
+        Toast directionToast = Toast.makeText(getActivity(), swipeDirection + "Swipe", Toast.LENGTH_SHORT);
+        directionToast.show();
     }
-*/
+
 }

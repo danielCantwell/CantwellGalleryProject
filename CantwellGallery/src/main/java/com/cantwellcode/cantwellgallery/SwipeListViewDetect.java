@@ -42,6 +42,8 @@ public class SwipeListViewDetect  implements View.OnTouchListener {
     private boolean     mSwiping;
     private boolean     mPaused;
 
+    public enum Direction {Left, Right};
+
     /**
      * Callback interface used to inform its client of a slide
      */
@@ -52,7 +54,7 @@ public class SwipeListViewDetect  implements View.OnTouchListener {
          * @param listView               - the view to slide
          * @param reverseSortedPositions - an array of positions to slide
          */
-        void onSlide(ListView listView, int[] reverseSortedPositions);
+        void onSlide(ListView listView, int[] reverseSortedPositions, Direction swipeDirection);
     }
 
     public SwipeListViewDetect(ListView listView, SlideCallbacks callbacks) {
@@ -155,8 +157,15 @@ public class SwipeListViewDetect  implements View.OnTouchListener {
                     // slide only if flinging in the same direction as dragging
                     slide = (velocityX < 0) == (deltaX < 0);
                     slideRight = mVelocityTracker.getXVelocity() > 0;
+
                 }
                 if (slide) {
+                    final Direction swipeDirection;
+                    if (slideRight) {
+                        swipeDirection = Direction.Right;
+                    } else {
+                        swipeDirection = Direction.Left;
+                    }
                     // slide
                     final View downView = mDownView; // mDownView gets null'd before animation ends
                     final int downPosition = mDownPosition;
@@ -170,7 +179,7 @@ public class SwipeListViewDetect  implements View.OnTouchListener {
                             .setListener(new AnimatorListenerAdapter() {
                                 @Override
                                 public void onAnimationEnd(Animator animation) {
-                                    performSlide(downView, downPosition);
+                                    performSlide(downView, downPosition, swipeDirection);
                                 }
                             });
                 } else {
@@ -224,7 +233,7 @@ public class SwipeListViewDetect  implements View.OnTouchListener {
     }
 
     class PendingSlideData implements Comparable<PendingSlideData> {
-        public int  position;
+        public int position;
         public View view;
 
         public PendingSlideData(int position, View view) {
@@ -238,7 +247,7 @@ public class SwipeListViewDetect  implements View.OnTouchListener {
         }
     }
 
-    private void performSlide(final View slideView, final int slidePosition) {
+    private void performSlide(final View slideView, final int slidePosition, final Direction direction) {
         // Animate teh slide list item to zero-height and fire the slide callback
         // when all slide list item animations have completed
 
@@ -260,7 +269,7 @@ public class SwipeListViewDetect  implements View.OnTouchListener {
                     for (int i = mPendingSlides.size() - 1; i >= 0; i--) {
                         slidePositions[i] = mPendingSlides.get(i).position;
                     }
-                    mCallbacks.onSlide(mListView, slidePositions);
+                    mCallbacks.onSlide(mListView, slidePositions, direction);
 
                     ViewGroup.LayoutParams lp;
                     for (PendingSlideData pendingSlide : mPendingSlides) {
