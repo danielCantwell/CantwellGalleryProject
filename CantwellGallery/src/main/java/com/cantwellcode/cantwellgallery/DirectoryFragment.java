@@ -17,6 +17,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,8 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Daniel on 8/13/13.
@@ -68,9 +71,10 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
     private static final String     INITIAL_BUCKET_NAME     = "Camera";
 
     // Private member variables
-    private GridView                mGridView;
-    private BucketCursorAdapter     mAdapter;
-    private Callbacks               mListener;
+    private GridView                    mGridView;
+    private BucketCursorAdapter         mAdapter;
+    private Callbacks                   mListener;
+    private HashMap<File,File>          mFileMoveQueue;
 
     /**
      * Called when the fragment is attached to the host activity.
@@ -101,7 +105,7 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         mAdapter = new BucketCursorAdapter(getActivity(),null,BUCKET_ID,BUCKET_DISPLAY_NAME,MIN_ID);
-
+        mFileMoveQueue = new HashMap<File, File>();
     }
 
 
@@ -337,13 +341,28 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
         // Make sure we have write permission for both the image and the bucket directory and attempt
         //      to rename the image to the correct directory.
         if (!bucketFile.canWrite() || !imageFile.canWrite()) return false;
-        if (!imageFile.renameTo(new File(bucketDirectory,imageFile.getName()))) return false;
+        // Add the transaction to the queue
+        queueFileMove(imageFile,bucketFile);
+        return true;
+    }
 
-        // The file rename was successful, update the mediastore
-        //sendBroadcast works but is very slow.  Can we speed it up?
+    private void queueFileMove(File file, File directory) {
+        mFileMoveQueue.put(file,directory);
+    }
+
+    private void commitFileMoveQueue(){
+        for (File file : mFileMoveQueue.keySet()){
+            File directory = mFileMoveQueue.get(file);
+            if(!file.renameTo(new File(directory,file.getName()))) throw new RuntimeException("File move failed.");
+        }
+        mFileMoveQueue.clear();
+        // All file renames were successful, update the mediastore
         getActivity().sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://"
                 + Environment.getExternalStorageDirectory())));
-        return true;
+    }
+
+    public void commitAll(){
+        commitFileMoveQueue();
     }
 
 

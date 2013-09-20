@@ -135,7 +135,8 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
             long imageID = mListAdapter.getItemId(position);
             String path     = getImagePath((Cursor) mListAdapter.getItem(position));
             ImageData imageData = new ImageData(imageID,path,view);
-            mListener.onSwipeLeft(imageData);
+            if(mListener.onSwipeLeft(imageData)){
+            }
             swipeDirection = "Left";
         } else if (direction == SwipeListViewDetect.Direction.Right) {
             swipeDirection = "Right";

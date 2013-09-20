@@ -215,13 +215,16 @@ public class SmallTargetBarFragment extends Fragment implements TargetBar{
      * @param v
      */
     private boolean processImageDropOnCurrentTarget(DragEvent dragEvent, View v) {
-        if (mCurrentTargetID==-1) return false;
+        if (mCurrentTargetData==null) return false;
         // Get the local state info for the Image being dropped
-        ImageData item = (ImageData) dragEvent.getLocalState();
+        ImageData imageData = (ImageData) dragEvent.getLocalState();
 
         // Get the cursor for the image and pass it to moveItemToTarget
-        moveItemToTarget(item,mCurrentTargetData);
-        return true;
+        if(moveItemToTarget(imageData,mCurrentTargetData)){
+            View itemView = imageData.getView();
+            itemView.setVisibility(View.GONE);
+            return true;
+        } else return false;
     }
 
     /**

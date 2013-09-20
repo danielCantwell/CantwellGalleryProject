@@ -61,7 +61,7 @@ public class MainActivity extends FragmentActivity
 
             @Override
             public void onPanelSlide(View view, float v) {
-
+                mDirectoryFragment.commitAll();
             }
 
             @Override

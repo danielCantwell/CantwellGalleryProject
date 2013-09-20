@@ -56,16 +56,15 @@
       </layout>
     </layouts>
   </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="cantwellgallery" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="47ad2055-7b34-47ae-9de1-fe21829ab214" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/BucketData.java" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/BucketData.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/CantwellGallery.iml" afterPath="$PROJECT_DIR$/CantwellGallery/CantwellGallery.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ContentFragment.java" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ContentFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DirectoryData.java" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DirectoryData.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DirectoryFragment.java" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DirectoryFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SmallTargetBarFragment.java" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SmallTargetBarFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="CantwellGallery.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -165,7 +164,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DirectoryFragment.java" line="338" class="com.cantwellcode.cantwellgallery.DirectoryFragment" package="com.cantwellcode.cantwellgallery">
+      <breakpoint url="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SmallTargetBarFragment.java" line="224" class="com.cantwellcode.cantwellgallery.SmallTargetBarFragment" package="com.cantwellcode.cantwellgallery">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -180,7 +179,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DirectoryFragment.java" line="330" class="com.cantwellcode.cantwellgallery.DirectoryFragment" package="com.cantwellcode.cantwellgallery">
+      <breakpoint url="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ContentFragment.java" line="137" class="com.cantwellcode.cantwellgallery.ContentFragment" package="com.cantwellcode.cantwellgallery">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -195,52 +194,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DirectoryFragment.java" line="333" class="com.cantwellcode.cantwellgallery.DirectoryFragment" package="com.cantwellcode.cantwellgallery">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DirectoryFragment.java" line="334" class="com.cantwellcode.cantwellgallery.DirectoryFragment" package="com.cantwellcode.cantwellgallery">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DirectoryFragment.java" line="345" class="com.cantwellcode.cantwellgallery.DirectoryFragment" package="com.cantwellcode.cantwellgallery">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DirectoryFragment.java" line="339" class="com.cantwellcode.cantwellgallery.DirectoryFragment" package="com.cantwellcode.cantwellgallery">
+      <breakpoint url="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ContentFragment.java" line="139" class="com.cantwellcode.cantwellgallery.ContentFragment" package="com.cantwellcode.cantwellgallery">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -269,7 +223,7 @@
       <file leaf-file-name="ContentFragment.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ContentFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="131" column="0" selection-start="4784" selection-end="4784" vertical-scroll-proportion="0.0" vertical-offset="1779" max-vertical-offset="2482">
+            <state line="137" column="49" selection-start="5149" selection-end="5149" vertical-scroll-proportion="0.0" vertical-offset="1834" max-vertical-offset="2499">
               <folding />
             </state>
           </provider>
@@ -278,7 +232,7 @@
       <file leaf-file-name="SmallTargetBarFragment.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SmallTargetBarFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="234" column="0" selection-start="8712" selection-end="8712" vertical-scroll-proportion="0.0" vertical-offset="3479" max-vertical-offset="4556">
+            <state line="224" column="44" selection-start="8449" selection-end="8449" vertical-scroll-proportion="0.0" vertical-offset="3135" max-vertical-offset="4607">
               <folding />
             </state>
           </provider>
@@ -287,13 +241,22 @@
       <file leaf-file-name="DirectoryFragment.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DirectoryFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="345" column="20" selection-start="13231" selection-end="13231" vertical-scroll-proportion="0.62343097" vertical-offset="5159" max-vertical-offset="6562">
+            <state line="358" column="66" selection-start="13619" selection-end="13619" vertical-scroll-proportion="0.52582157" vertical-offset="5403" max-vertical-offset="6834">
               <folding>
-                <element signature="e#13549#13947#0" expanded="true" />
-                <element signature="e#13936#13937#0" expanded="true" />
-                <element signature="e#14318#15609#0" expanded="true" />
-                <element signature="e#15598#15599#0" expanded="true" />
+                <element signature="e#14164#14562#0" expanded="true" />
+                <element signature="e#14551#14552#0" expanded="true" />
+                <element signature="e#14933#16224#0" expanded="true" />
+                <element signature="e#16213#16214#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ImageCursorAdapter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ImageCursorAdapter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="13" selection-start="473" selection-end="473" vertical-scroll-proportion="0.0" vertical-offset="285" max-vertical-offset="1921">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -328,7 +291,7 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="190" column="0" selection-start="7537" selection-end="7537" vertical-scroll-proportion="0.0" vertical-offset="2833" max-vertical-offset="3859">
+            <state line="63" column="0" selection-start="2734" selection-end="2734" vertical-scroll-proportion="0.0" vertical-offset="708" max-vertical-offset="3859">
               <folding />
             </state>
           </provider>
@@ -723,16 +686,16 @@
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ThumbnailAsyncTask.java" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/BucketLocalState.java" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ImageLocalState.java" />
-        <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DatabaseContentHandler.java" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/TargetBar.java" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ItemData.java" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ImageData.java" />
-        <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ContentFragment.java" />
-        <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SmallTargetBarFragment.java" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/BucketData.java" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DirectoryData.java" />
+        <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java" />
+        <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SmallTargetBarFragment.java" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DirectoryFragment.java" />
+        <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ContentFragment.java" />
       </list>
     </option>
   </component>
@@ -1271,7 +1234,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1279,19 +1242,19 @@
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293011" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39247313" sideWeight="0.6375" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39247313" sideWeight="0.6375" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32258064" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32258064" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32258064" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32258064" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2125" sideWeight="0.67741936" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2125" sideWeight="0.6075269" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17473118" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
@@ -1338,11 +1301,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/res/drawable-mdpi/ic_launcher.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/res/drawable-mdpi/ic_left_arrow.png">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -1412,13 +1370,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SmallTargetBarFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="234" column="0" selection-start="8712" selection-end="8712" vertical-scroll-proportion="0.0" vertical-offset="3479" max-vertical-offset="4556">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SwipeListViewDetect.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="269" column="0" selection-start="10171" selection-end="10171" vertical-scroll-proportion="0.0" vertical-offset="4081" max-vertical-offset="4777">
@@ -1426,28 +1377,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ContentFragment.java">
+    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SmallTargetBarFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="131" column="0" selection-start="4784" selection-end="4784" vertical-scroll-proportion="0.0" vertical-offset="1779" max-vertical-offset="2482">
+        <state line="224" column="44" selection-start="8449" selection-end="8449" vertical-scroll-proportion="0.0" vertical-offset="3135" max-vertical-offset="4607">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="190" column="0" selection-start="7537" selection-end="7537" vertical-scroll-proportion="0.0" vertical-offset="2833" max-vertical-offset="3859">
+        <state line="63" column="0" selection-start="2734" selection-end="2734" vertical-scroll-proportion="0.0" vertical-offset="708" max-vertical-offset="3859">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ImageCursorAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="13" selection-start="473" selection-end="473" vertical-scroll-proportion="0.0" vertical-offset="285" max-vertical-offset="1921">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ContentFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="137" column="49" selection-start="5149" selection-end="5149" vertical-scroll-proportion="0.0" vertical-offset="1834" max-vertical-offset="2499">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/DirectoryFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="345" column="20" selection-start="13231" selection-end="13231" vertical-scroll-proportion="0.62343097" vertical-offset="5159" max-vertical-offset="6562">
+        <state line="358" column="66" selection-start="13619" selection-end="13619" vertical-scroll-proportion="0.52582157" vertical-offset="5403" max-vertical-offset="6834">
           <folding>
-            <element signature="e#13549#13947#0" expanded="true" />
-            <element signature="e#13936#13937#0" expanded="true" />
-            <element signature="e#14318#15609#0" expanded="true" />
-            <element signature="e#15598#15599#0" expanded="true" />
+            <element signature="e#14164#14562#0" expanded="true" />
+            <element signature="e#14551#14552#0" expanded="true" />
+            <element signature="e#14933#16224#0" expanded="true" />
+            <element signature="e#16213#16214#0" expanded="true" />
           </folding>
         </state>
       </provider>
