@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 /**
@@ -26,7 +27,6 @@ public class MainActivity extends FragmentActivity
     private ContentFragment         mContentFragment;
     private DirectoryFragment       mDirectoryFragment;
     private ImageView               mUtilityBarDeleteView;
-    private ImageView               mUtilityBarHelpView;
     private DatabaseContentHandler  mDatabaseContentHandler;
 
 
@@ -45,23 +45,8 @@ public class MainActivity extends FragmentActivity
         mDirectoryFragment      = (DirectoryFragment)   fm.findFragmentById(R.id.directoryFragment);
         mDatabaseContentHandler = mContentFragment;
 
-        mUtilityBarHelpView   = (ImageView) findViewById(R.id.utilityBarHelpView);
         mUtilityBarDeleteView = (ImageView) findViewById(R.id.utilityBarDeleteView);
         setupDrop(mUtilityBarDeleteView);
-
-        /*
-         * This is what happens when the user presses the help (?) button
-         */
-        mUtilityBarHelpView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast helpToast = Toast.makeText(getBaseContext(),
-                        "You Pressed the Help Button.", Toast.LENGTH_SHORT);
-                helpToast.setMargin(10, 0);
-                helpToast.show();
-            }
-        });
-
 
         final SlidingPane slidingPaneLayout = SlidingPane.class.cast(root.findViewById(R.id.slidingpanelayout));
 
@@ -187,28 +172,47 @@ public class MainActivity extends FragmentActivity
         mDatabaseContentHandler.changeContentLabelAndCursor(label, cursor);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main, menu);
-        return true;
-    }
-
     /********************************
      *      Menu Item Clicks        *
      ********************************/
 
-    public void menuClickSettings(MenuItem item) {
+    public void showPopup(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.action_settings:
+                        menuClickSettings();
+                        return true;
+                    case R.id.action_help:
+                        menuClickHelp();
+                        return true;
+                    case R.id.action_info:
+                        menuClickInfo();
+                    default:
+                        return false;
+                }
+            }
+        });
+
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.main, popup.getMenu());
+        popup.show();
+    }
+
+    public void menuClickSettings() {
         Toast settings = Toast.makeText(this, "Settings", Toast.LENGTH_SHORT);
         settings.show();
     }
 
-    public void menuClickHelp(MenuItem item) {
+    public void menuClickHelp() {
         Toast help = Toast.makeText(this, "What would you like help with?", Toast.LENGTH_SHORT);
         help.show();
     }
 
-    public void menuClickInfo(MenuItem item) {
+    public void menuClickInfo() {
         Toast info = Toast.makeText(this, "Created by Cantwell Code", Toast.LENGTH_SHORT);
         info.show();
     }
