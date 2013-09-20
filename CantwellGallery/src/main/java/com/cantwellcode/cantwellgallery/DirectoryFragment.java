@@ -2,10 +2,12 @@ package com.cantwellcode.cantwellgallery;
 
 import android.app.Activity;
 import android.content.ClipData;
+import android.content.Intent;
 import android.database.Cursor;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -24,7 +26,8 @@ import java.io.File;
 /**
  * Created by Daniel on 8/13/13.
  */
-public class DirectoryFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, DatabaseMaster {
+public class DirectoryFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>,
+        DatabaseMaster, MediaScannerConnection.MediaScannerConnectionClient {
     private static final String TAG = "DirectoryFragment";
 
     // Bundle tags
@@ -314,11 +317,24 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
      *        DATABASE MODIFICATION       *
      **************************************/
 
+
+    private void scan() {
+        MediaScannerConnection connection = new MediaScannerConnection(getActivity(),this);
+
+    }
+
+    @Override
+    public void onMediaScannerConnected() {
+
+    }
+
+    @Override
+    public void onScanCompleted(String s, Uri uri) {
+
+    }
+
     /**
-     * Update the database so the specified image belongs to the specified bucket.
-     * The cursors must already be pointing to their respective data.
-     *
-     *
+     * Move the image to the target bucket directory and update the Mediastore
      *
      * @param imagePath
      * @param bucketPath
@@ -328,21 +344,16 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
         File bucket             = new File(bucketPath);
         File bucketDirectory    = new File(bucket.getParent());
         File image              = new File(imagePath);
-        if(!bucketDirectory.canWrite() || !image.canWrite()){
-            return false;
-        }
-        if (!image.renameTo(new File(bucketDirectory,image.getName()))){
-            return false;
-        }
+        // Make sure we have write permission for both the image and the bucket directory and attempt
+        //      to rename the image to the correct directory.
+        if(!bucketDirectory.canWrite() || !image.canWrite()) return false;
+        if (!image.renameTo(new File(bucketDirectory,image.getName()))) return false;
         // The file rename was successful, update the mediastore
-        MediaScannerConnection.scanFile(getActivity(),new String[]{image.toString(),bucket.toString()},null,new MediaScannerConnection.OnScanCompletedListener() {
-            @Override
-            public void onScanCompleted(String s, Uri uri) {
-                Log.d(TAG,"Media scan complete.");
-            }
-        });
+        getActivity().sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://"
+                + Environment.getExternalStorageDirectory())));
         return true;
     }
+
 
     public boolean createNewBucketFromImage(long imageID, String bucketName){
         return true;
@@ -394,6 +405,5 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
             }
         });
     }
-
 
 }

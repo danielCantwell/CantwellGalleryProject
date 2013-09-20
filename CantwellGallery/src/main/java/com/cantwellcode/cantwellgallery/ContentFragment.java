@@ -32,7 +32,7 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
     private TextView                mTextView;
     private String                  mName;
 
-    private SwipeListViewDetect swipeDetect;
+    private SwipeListViewDetect     swipeDetect;
 
     @Override
     public void onAttach(Activity activity) {
@@ -111,7 +111,7 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
                 }catch (IllegalArgumentException e){
                     e.printStackTrace();
                 }
-                ImageLocalState localState = new ImageLocalState((ImageViewHolder)view.getTag(), (Cursor)mListAdapter.getItem(position), id, path);
+                ImageLocalState localState = new ImageLocalState(view, (ImageViewHolder)view.getTag(), (Cursor)mListAdapter.getItem(position), id, path);
                 view.startDrag(data, new MyDragShadowBuilder(view), localState, 0);
                 return true;
             }
