@@ -61,7 +61,8 @@
             android:id="@+id/utilityBarHelpView"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:src="@android:drawable/ic_menu_help"/>
+            android:src="@android:drawable/ic_menu_more"
+            android:onClick="showPopup"/>
 
     </RelativeLayout>
 

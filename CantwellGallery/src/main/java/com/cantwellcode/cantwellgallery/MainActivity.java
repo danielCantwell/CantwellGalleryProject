@@ -7,8 +7,12 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.view.DragEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 /**
@@ -23,7 +27,6 @@ public class MainActivity extends FragmentActivity
     private ContentFragment         mContentFragment;
     private DirectoryFragment       mDirectoryFragment;
     private ImageView               mUtilityBarDeleteView;
-    private ImageView               mUtilityBarHelpView;
     private DatabaseContentHandler  mDatabaseContentHandler;
     private DatabaseMaster          mDatabaseMaster;
 
@@ -36,6 +39,11 @@ public class MainActivity extends FragmentActivity
         final View root = getLayoutInflater().inflate(R.layout.activity_main, null);
         setContentView(root);
 
+
+        findViewById(R.id.bottomArrow).setBackgroundResource(R.drawable.ic_right_arrow);
+        findViewById(R.id.middleArrow).setBackgroundResource(R.drawable.ic_right_arrow);
+        findViewById(R.id.topArrow).setBackgroundResource(R.drawable.ic_right_arrow);
+
         FragmentManager fm = getSupportFragmentManager();
         // Initialize TargetBarListFragment
         //mTargetBarListFragment   = (TargetBarListFragment) fm.findFragmentById(R.id.quickBarFragment);
@@ -45,23 +53,8 @@ public class MainActivity extends FragmentActivity
         mDatabaseContentHandler = mContentFragment;
         mDatabaseMaster         = mDirectoryFragment;
 
-        mUtilityBarHelpView   = (ImageView) findViewById(R.id.utilityBarHelpView);
         mUtilityBarDeleteView = (ImageView) findViewById(R.id.utilityBarDeleteView);
         setupDrop(mUtilityBarDeleteView);
-
-        /*
-         * This is what happens when the user presses the help (?) button
-         */
-        mUtilityBarHelpView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast helpToast = Toast.makeText(getBaseContext(),
-                        "You Pressed the Help Button.", Toast.LENGTH_SHORT);
-                helpToast.setMargin(10, 0);
-                helpToast.show();
-            }
-        });
-
 
         final SlidingPane slidingPaneLayout = SlidingPane.class.cast(root.findViewById(R.id.slidingpanelayout));
 
@@ -76,9 +69,10 @@ public class MainActivity extends FragmentActivity
             public void onPanelOpened(View view) {
 
                 switch (view.getId()) {
-                    case R.id.directoryFragment:
-                        //getSupportFragmentManager().findFragmentById(R.id.contentFragment).setHasOptionsMenu(true);
-                        //getSupportFragmentManager().findFragmentById(R.id.contentFragment).setHasOptionsMenu(false);
+                    case R.id.contentFragment:
+                        findViewById(R.id.bottomArrow).setBackgroundResource(R.drawable.ic_left_arrow);
+                        findViewById(R.id.middleArrow).setBackgroundResource(R.drawable.ic_left_arrow);
+                        findViewById(R.id.topArrow).setBackgroundResource(R.drawable.ic_left_arrow);
                         break;
                     default:
                         break;
@@ -89,9 +83,10 @@ public class MainActivity extends FragmentActivity
             public void onPanelClosed(View view) {
 
                 switch (view.getId()) {
-                    case R.id.directoryFragment:
-                        //getSupportFragmentManager().findFragmentById(R.id.contentFragment).setHasOptionsMenu(false);
-                        //getSupportFragmentManager().findFragmentById(R.id.directoryFragment).setHasOptionsMenu(true);
+                    case R.id.contentFragment:
+                        findViewById(R.id.bottomArrow).setBackgroundResource(R.drawable.ic_right_arrow);
+                        findViewById(R.id.middleArrow).setBackgroundResource(R.drawable.ic_right_arrow);
+                        findViewById(R.id.topArrow).setBackgroundResource(R.drawable.ic_right_arrow);
                         break;
                     default:
                         break;
@@ -196,5 +191,50 @@ public class MainActivity extends FragmentActivity
     public boolean onSwipeLeft(Cursor imageCursor) {
         Cursor bucketCursor = mTargetBar.getCurrentTarget();
         return mDirectoryFragment.moveImageToBucket(imageCursor,bucketCursor);
+    }
+    
+    /************************
+     *      Menu Item       *
+     ***********************/
+
+    public void showPopup(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.action_settings:
+                        menuClickSettings();
+                        return true;
+                    case R.id.action_help:
+                        menuClickHelp();
+                        return true;
+                    case R.id.action_info:
+                        menuClickInfo();
+                    default:
+                        return false;
+                }
+            }
+        });
+
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.main, popup.getMenu());
+        popup.show();
+    }
+
+    public void menuClickSettings() {
+        Toast settings = Toast.makeText(this, "Settings", Toast.LENGTH_SHORT);
+        settings.show();
+    }
+
+    public void menuClickHelp() {
+        Toast help = Toast.makeText(this, "What would you like help with?", Toast.LENGTH_SHORT);
+        help.show();
+    }
+
+    public void menuClickInfo() {
+        Toast info = Toast.makeText(this, "Created by Cantwell Code", Toast.LENGTH_SHORT);
+        info.show();
     }
 }
