@@ -28,7 +28,7 @@ public class ThumbnailAsyncTask extends AsyncTask<Long,Void,Bitmap> {
         if(result != null) return result;
         result = MediaStore.Images.Thumbnails.getThumbnail(mContext.getContentResolver(),imageID,
                 MediaStore.Images.Thumbnails.MINI_KIND,null);
-        mCache.put(imageID,result);
+        if(result != null) mCache.put(imageID,result);
         return result;
     }
 

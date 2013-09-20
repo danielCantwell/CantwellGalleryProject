@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +23,8 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
 
 
     // Default values
-    private static final String     DEFAULT_LABEL       = "No Album Selected";
+    private static final String     DEFAULT_LABEL   = "No Album Selected";
+    private static final String     IMAGE_DATA      = MediaStore.Images.Media.DATA;
 
     private Callbacks               mListener;
     private ListView                mListView;
@@ -102,7 +104,14 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
                 // Start an IMAGE drag event with ClipData set to the image id
                 ClipData data = ClipData.newPlainText(ClipDataLabels.IMAGE.toString(), String.valueOf(id));
-                ImageLocalState localState = new ImageLocalState((ImageViewHolder)view.getTag(), (Cursor)mListAdapter.getItem(position));
+                Cursor cursor = (Cursor) mListAdapter.getItem(position);
+                String path = null;
+                try {
+                    path = cursor.getString(cursor.getColumnIndexOrThrow(IMAGE_DATA));
+                }catch (IllegalArgumentException e){
+                    e.printStackTrace();
+                }
+                ImageLocalState localState = new ImageLocalState((ImageViewHolder)view.getTag(), (Cursor)mListAdapter.getItem(position), id, path);
                 view.startDrag(data, new MyDragShadowBuilder(view), localState, 0);
                 return true;
             }
@@ -121,8 +130,9 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
         String swipeDirection = null;
 
         if (direction == SwipeListViewDetect.Direction.Left) {
-            Cursor cursor = (Cursor) mListAdapter.getItem(position);
-            mListener.onSwipeLeft(cursor);
+            long imageID = mListAdapter.getItemId(position);
+            String path     = getImagePath((Cursor) mListAdapter.getItem(position));
+            mListener.onSwipeLeft(path);
             swipeDirection = "Left";
         } else if (direction == SwipeListViewDetect.Direction.Right) {
             swipeDirection = "Right";
@@ -130,6 +140,16 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
 
         Toast directionToast = Toast.makeText(getActivity(), swipeDirection + "Swipe", Toast.LENGTH_SHORT);
         directionToast.show();
+    }
+
+    private String getImagePath(Cursor imageCursor) {
+        String path = null;
+        try {
+            path = imageCursor.getString(imageCursor.getColumnIndexOrThrow(IMAGE_DATA));
+        }catch (IllegalArgumentException e){
+            e.printStackTrace();
+        }
+        return path;
     }
 
 }

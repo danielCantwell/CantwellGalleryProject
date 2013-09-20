@@ -2,9 +2,6 @@ package com.cantwellcode.cantwellgallery;
 
 import android.app.Activity;
 import android.content.ClipData;
-import android.content.ContentResolver;
-import android.content.ContentUris;
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
@@ -58,6 +55,7 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
     private static final String[] BUCKET_CONTENT_PROJECTION = {BUCKET_ID,BUCKET_DISPLAY_NAME,IMAGE_ID,IMAGE_DISPLAY_NAME,IMAGE_DATA};
 
     // Loader IDs
+    private static final int        MEDIASTORE_LOADER       = 0x000;
     private static final int        ALL_BUCKETS_LOADER      = 0x001;
     private static final int        BUCKET_CONTENT_LOADER   = 0x002;
 
@@ -67,8 +65,8 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
     private GridView                mGridView;
     private BucketCursorAdapter     mAdapter;
     private Callbacks               mListener;
-    private ContentResolver         mContentResolver;
 
+    private Cursor                  mMediaStoreCursor;
 
     /**
      * Called when the fragment is attached to the host activity.
@@ -83,10 +81,12 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
         }catch (ClassCastException e){
             throw new ClassCastException(activity.toString() + " must implement DatabaseMaster.Callbacks");
         }
-        mContentResolver = activity.getContentResolver();
+        loadMediaStore();
         loadAllBuckets();
         loadBucketContents(INITIAL_BUCKET_NAME);
     }
+
+
     /**
      * Place all initialization that should be retained across config changes in here.
      * This will not be called again because we use setRetainInstance(true).
@@ -144,6 +144,17 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
      *        DATABASE LOADING            *
      **************************************/
 
+
+    private void loadMediaStore() {
+        final Uri       uri             = BUCKET_URI;
+        final String[]  projection      = null;
+        final String    selection       = null;
+        final String[]  selectionArgs   = null;
+        final String    sortOrder       = DEFAULT_SORT_ORDER;
+
+        Bundle loaderArgs = getLoaderArgs(uri,projection,selection,selectionArgs,sortOrder);
+        load(MEDIASTORE_LOADER,loaderArgs);
+    }
 
     /**
      * Construct load parameters for all buckets and initialize loader
@@ -307,69 +318,29 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
      * Update the database so the specified image belongs to the specified bucket.
      * The cursors must already be pointing to their respective data.
      *
-     * @param imageCursor
-     * @param bucketCursor
+     *
+     *
+     * @param imagePath
+     * @param bucketPath
      * @return
      */
-    public boolean moveImageToBucket(Cursor imageCursor, Cursor bucketCursor){
-        final int imagePathIndex;
-        final int bucketPathIndex;
-        final int bucketIDIndex;
-        final int bucketDisplayNameIndex;
-        final int imageIDIndex;
-        try {
-            imagePathIndex          = imageCursor.getColumnIndexOrThrow(IMAGE_DATA);
-            bucketPathIndex         = bucketCursor.getColumnIndexOrThrow(BUCKET_DATA);
-            bucketIDIndex           = bucketCursor.getColumnIndexOrThrow(BUCKET_ID);
-            bucketDisplayNameIndex  = bucketCursor.getColumnIndexOrThrow(BUCKET_DISPLAY_NAME);
-            imageIDIndex            = imageCursor.getColumnIndexOrThrow(IMAGE_ID);
-        }catch (IllegalArgumentException e){
-            e.printStackTrace();
-            return false;
-        }
-        String imagePath = imageCursor.getString(imagePathIndex);
-        String bucketPath = bucketCursor.getString(bucketPathIndex);
-
+    public boolean moveImageToBucket(String imagePath, String bucketPath){
         File bucket             = new File(bucketPath);
         File bucketDirectory    = new File(bucket.getParent());
         File image              = new File(imagePath);
-        if(!bucketDirectory.canWrite() || !image.canWrite()) return false;
-        if (!image.renameTo(new File(bucketDirectory,image.getName()))) return false;
-
+        if(!bucketDirectory.canWrite() || !image.canWrite()){
+            return false;
+        }
+        if (!image.renameTo(new File(bucketDirectory,image.getName()))){
+            return false;
+        }
         // The file rename was successful, update the mediastore
-        MediaScannerConnection.scanFile(getActivity(),new String[]{image.toString()},null,new MediaScannerConnection.OnScanCompletedListener() {
+        MediaScannerConnection.scanFile(getActivity(),new String[]{image.toString(),bucket.toString()},null,new MediaScannerConnection.OnScanCompletedListener() {
             @Override
             public void onScanCompleted(String s, Uri uri) {
                 Log.d(TAG,"Media scan complete.");
             }
         });
-
-        long imageID                = imageCursor.getLong(imageIDIndex);
-        long bucketID               = bucketCursor.getLong(bucketIDIndex);
-        String bucketDisplayName    = bucketCursor.getString(bucketDisplayNameIndex);
-
-        // Construct values to update mediastore with
-
-/*        ContentValues values        = new ContentValues();
-        values.put(BUCKET_ID,bucketID);
-        values.put(BUCKET_DISPLAY_NAME,bucketDisplayName);
-
-        // Update mediastore with the new values
-        ContentResolver cr      = getActivity().getContentResolver();
-        Uri uri                 = ContentUris.withAppendedId(BUCKET_URI,imageID);
-        String selection        = IMAGE_ID + "=?";
-        String[] selectionArgs  = {String.valueOf(imageID)};
-        int r;
-        try {
-            r = cr.update(uri,values,null,null);
-        }catch (IllegalArgumentException e){
-            e.printStackTrace();
-            Log.e(TAG,e.getMessage());
-            return false;
-        }
-
-        Log.d(TAG,"Moving image " + imagePath + " to bucket " + bucketPath);
-        */
         return true;
     }
 
@@ -410,7 +381,14 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
                 ClipData data = ClipData.newPlainText(ClipDataLabels.BUCKET.toString(),String.valueOf(id));
                 // Pass a BucketLocalState containing the ViewHolder information for the curent view
                 //      as well as the cursor pointing to the associated item.
-                BucketLocalState localState = new BucketLocalState((BucketViewHolder)view.getTag(),(Cursor)mAdapter.getItem(position));
+                Cursor cursor = (Cursor) mAdapter.getItem(position);
+                String path = "";
+                try{
+                    path = cursor.getString(cursor.getColumnIndexOrThrow(BUCKET_DATA));
+                }catch (IllegalArgumentException e){
+                    e.printStackTrace();
+                }
+                BucketLocalState localState = new BucketLocalState((BucketViewHolder)view.getTag(),(Cursor)mAdapter.getItem(position), id, path);
                 view.startDrag(data, new MyDragShadowBuilder(view), localState, 0);
                 return true;
             }

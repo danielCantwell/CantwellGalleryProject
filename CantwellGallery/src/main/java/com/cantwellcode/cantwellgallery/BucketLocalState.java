@@ -9,11 +9,15 @@ public class BucketLocalState {
 
     private final BucketViewHolder  mHolder;
     private final Cursor            mCursor;
+    private final long              mBucketID;
+    private final String            mBucketPath;
 
 
-    public BucketLocalState(BucketViewHolder holder, Cursor cursor) {
+    public BucketLocalState(BucketViewHolder holder, Cursor cursor, long bucketID, String bucketPath) {
         this.mHolder = holder;
         this.mCursor = cursor;
+        this.mBucketID = bucketID;
+        this.mBucketPath = bucketPath;
     }
 
     public BucketViewHolder getHolder() {
@@ -21,6 +25,12 @@ public class BucketLocalState {
     }
     public Cursor getCursor() {
         return mCursor;
+    }
+    public long getBucketID() {
+        return mBucketID;
+    }
+    public String getBucketPath() {
+        return mBucketPath;
     }
 
 

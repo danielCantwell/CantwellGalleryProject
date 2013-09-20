@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.view.DragEvent;
-import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -168,8 +167,8 @@ public class MainActivity extends FragmentActivity
     }
 
     @Override
-    public boolean onMoveItemToTarget(Cursor itemCursor, Cursor targetCursor) {
-        return mDirectoryFragment.moveImageToBucket(itemCursor, targetCursor);
+    public boolean onMoveItemToTarget(String itemPath, String targetPath) {
+        return mDirectoryFragment.moveImageToBucket(itemPath, targetPath);
     }
 
     @Override
@@ -184,13 +183,14 @@ public class MainActivity extends FragmentActivity
 
     /**
      * Swipe left callback for content fragment
-     * @param imageCursor
+     * @param imagePath
      * @return
      */
     @Override
-    public boolean onSwipeLeft(Cursor imageCursor) {
-        Cursor bucketCursor = mTargetBar.getCurrentTarget();
-        return mDirectoryFragment.moveImageToBucket(imageCursor,bucketCursor);
+    public boolean onSwipeLeft(String imagePath) {
+        long bucketID = mTargetBar.getCurrentTarget();
+        final String bucketPath     = mTargetBar.getCurrentTargetPath();
+        return mDirectoryFragment.moveImageToBucket(imagePath,bucketPath);
     }
     
     /************************

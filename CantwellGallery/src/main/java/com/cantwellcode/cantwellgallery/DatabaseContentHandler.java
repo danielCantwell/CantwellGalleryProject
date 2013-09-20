@@ -7,7 +7,7 @@ import android.database.Cursor;
  */
 public interface DatabaseContentHandler {
     public interface Callbacks{
-        public boolean onSwipeLeft(Cursor cursor);
+        public boolean onSwipeLeft(String itemPath);
     }
 
     public void changeContentLabelAndCursor(String label, Cursor cursor);
