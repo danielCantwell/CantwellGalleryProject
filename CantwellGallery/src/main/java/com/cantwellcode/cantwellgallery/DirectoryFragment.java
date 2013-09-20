@@ -19,6 +19,8 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import java.io.File;
+
 /**
  * Created by Daniel on 8/13/13.
  */
@@ -318,9 +320,23 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
         }
         String imagePath = imageCursor.getString(imagePathIndex);
         String bucketPath = bucketCursor.getString(bucketPathIndex);
-        Toast t = Toast.makeText(getActivity(),"Moving image " + imagePath + " to bucket " + bucketPath,Toast.LENGTH_SHORT);
+
+        File bucket = new File(bucketPath);
+        File bucketDirectory = new File(bucket.getParent());
+        boolean br = bucketDirectory.canRead();
+        boolean bw = bucketDirectory.canWrite();
+        if(!bucketDirectory.canWrite()){
+            if (!bucketDirectory.setWritable(true));{
+                return false;
+            }
+        }
+        File image = new File(imagePath);
+        boolean ir = image.canRead();
+        boolean iw = image.canWrite();
+
         Log.d(TAG,"Moving image " + imagePath + " to bucket " + bucketPath);
-        t.show();
+
+
         return true;
     }
 

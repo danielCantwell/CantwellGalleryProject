@@ -13,4 +13,5 @@ public interface TargetBar {
 
     public boolean moveItemToTarget(Cursor itemCursor, Cursor targetCursor);
     public boolean createNewTargetFromItem(Cursor itemCursor);
+    public Cursor getCurrentTarget();
 }

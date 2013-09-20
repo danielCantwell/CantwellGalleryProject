@@ -30,6 +30,7 @@ public class SmallTargetBarFragment extends Fragment implements TargetBar{
     private ImageView   mNewTargetImage;
     private TextView    mCurrentTargetText;
     private Cursor      mCurrentTargetCursor;
+    private int         mCurrentTargetCursorPosition;
 
     private long        mCurrentTargetID;
 
@@ -237,6 +238,7 @@ public class SmallTargetBarFragment extends Fragment implements TargetBar{
 
         // Save the cursor pointing to the Bucket data.
         mCurrentTargetCursor = dropped.getCursor();
+        mCurrentTargetCursorPosition = mCurrentTargetCursor.getPosition();
 
         // Change displayed data using the BucketViewHolder stored in the local state.
         BucketViewHolder holder = dropped.getHolder();
@@ -266,5 +268,11 @@ public class SmallTargetBarFragment extends Fragment implements TargetBar{
     @Override
     public boolean createNewTargetFromItem(Cursor itemCursor) {
         return mListener.onCreateNewTargetFromItem(itemCursor);
+    }
+
+    @Override
+    public Cursor getCurrentTarget() {
+        mCurrentTargetCursor.moveToPosition(mCurrentTargetCursorPosition);
+        return mCurrentTargetCursor;
     }
 }

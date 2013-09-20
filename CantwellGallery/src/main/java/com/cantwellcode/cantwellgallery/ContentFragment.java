@@ -1,5 +1,6 @@
 package com.cantwellcode.cantwellgallery;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -19,15 +20,27 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
 
     private static final String TAG = "ContentFragment";
 
+
     // Default values
     private static final String     DEFAULT_LABEL       = "No Album Selected";
 
+    private Callbacks               mListener;
     private ListView                mListView;
     private ImageCursorAdapter      mListAdapter;
     private TextView                mTextView;
     private String                  mName;
 
     private SwipeListViewDetect swipeDetect;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (Callbacks) activity;
+        }catch (ClassCastException e){
+            throw new ClassCastException(activity.toString() + " must implement ContentFragment.Callbacks");
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -108,6 +121,8 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
         String swipeDirection = null;
 
         if (direction == SwipeListViewDetect.Direction.Left) {
+            Cursor cursor = (Cursor) mListAdapter.getItem(position);
+            mListener.onSwipeLeft(cursor);
             swipeDirection = "Left";
         } else if (direction == SwipeListViewDetect.Direction.Right) {
             swipeDirection = "Right";

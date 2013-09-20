@@ -15,7 +15,7 @@ import android.widget.Toast;
  * Main Activity that is first loaded when the application starts
  */
 public class MainActivity extends FragmentActivity
-        implements TargetBar.Callbacks, DatabaseMaster.Callbacks {
+        implements TargetBar.Callbacks, DatabaseMaster.Callbacks, DatabaseContentHandler.Callbacks {
 
     private static final String TAG                     = "MAIN ACTIVITY";
 
@@ -25,6 +25,7 @@ public class MainActivity extends FragmentActivity
     private ImageView               mUtilityBarDeleteView;
     private ImageView               mUtilityBarHelpView;
     private DatabaseContentHandler  mDatabaseContentHandler;
+    private DatabaseMaster          mDatabaseMaster;
 
 
     @Override
@@ -40,7 +41,9 @@ public class MainActivity extends FragmentActivity
         //mTargetBarListFragment   = (TargetBarListFragment) fm.findFragmentById(R.id.quickBarFragment);
         mContentFragment        = (ContentFragment)     fm.findFragmentById(R.id.contentFragment);
         mDirectoryFragment      = (DirectoryFragment)   fm.findFragmentById(R.id.directoryFragment);
+        mTargetBar              = (TargetBar)           fm.findFragmentById(R.id.targetBarFragment);
         mDatabaseContentHandler = mContentFragment;
+        mDatabaseMaster         = mDirectoryFragment;
 
         mUtilityBarHelpView   = (ImageView) findViewById(R.id.utilityBarHelpView);
         mUtilityBarDeleteView = (ImageView) findViewById(R.id.utilityBarDeleteView);
@@ -182,5 +185,16 @@ public class MainActivity extends FragmentActivity
     @Override
     public void changeContentLabelAndCursor(String label, Cursor cursor) {
         mDatabaseContentHandler.changeContentLabelAndCursor(label, cursor);
+    }
+
+    /**
+     * Swipe left callback for content fragment
+     * @param imageCursor
+     * @return
+     */
+    @Override
+    public boolean onSwipeLeft(Cursor imageCursor) {
+        Cursor bucketCursor = mTargetBar.getCurrentTarget();
+        return mDirectoryFragment.moveImageToBucket(imageCursor,bucketCursor);
     }
 }
