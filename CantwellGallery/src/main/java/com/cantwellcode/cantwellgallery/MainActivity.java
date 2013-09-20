@@ -38,6 +38,10 @@ public class MainActivity extends FragmentActivity
         final View root = getLayoutInflater().inflate(R.layout.activity_main, null);
         setContentView(root);
 
+
+        findViewById(R.id.bottomArrow).setBackgroundResource(R.drawable.ic_right_arrow);
+        findViewById(R.id.topArrow).setBackgroundResource(R.drawable.ic_right_arrow);
+
         FragmentManager fm = getSupportFragmentManager();
         // Initialize TargetBarListFragment
         //mTargetBarListFragment   = (TargetBarListFragment) fm.findFragmentById(R.id.quickBarFragment);
@@ -61,9 +65,9 @@ public class MainActivity extends FragmentActivity
             public void onPanelOpened(View view) {
 
                 switch (view.getId()) {
-                    case R.id.directoryFragment:
-                        //getSupportFragmentManager().findFragmentById(R.id.contentFragment).setHasOptionsMenu(true);
-                        //getSupportFragmentManager().findFragmentById(R.id.contentFragment).setHasOptionsMenu(false);
+                    case R.id.contentFragment:
+                        findViewById(R.id.bottomArrow).setBackgroundResource(R.drawable.ic_left_arrow);
+                        findViewById(R.id.topArrow).setBackgroundResource(R.drawable.ic_left_arrow);
                         break;
                     default:
                         break;
@@ -74,9 +78,9 @@ public class MainActivity extends FragmentActivity
             public void onPanelClosed(View view) {
 
                 switch (view.getId()) {
-                    case R.id.directoryFragment:
-                        //getSupportFragmentManager().findFragmentById(R.id.contentFragment).setHasOptionsMenu(false);
-                        //getSupportFragmentManager().findFragmentById(R.id.directoryFragment).setHasOptionsMenu(true);
+                    case R.id.contentFragment:
+                        findViewById(R.id.bottomArrow).setBackgroundResource(R.drawable.ic_right_arrow);
+                        findViewById(R.id.topArrow).setBackgroundResource(R.drawable.ic_right_arrow);
                         break;
                     default:
                         break;
@@ -172,9 +176,9 @@ public class MainActivity extends FragmentActivity
         mDatabaseContentHandler.changeContentLabelAndCursor(label, cursor);
     }
 
-    /********************************
-     *      Menu Item Clicks        *
-     ********************************/
+    /************************
+     *      Menu Item       *
+     ***********************/
 
     public void showPopup(View v) {
         PopupMenu popup = new PopupMenu(this, v);

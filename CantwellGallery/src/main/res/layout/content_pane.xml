@@ -29,5 +29,21 @@
             android:layout_centerInParent="true"
             android:layout_toRightOf="@+id/contentPaneDragArea"/>
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/topArrow"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/contentPaneHeader"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottomArrow"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"/>
+
 
 </RelativeLayout>
