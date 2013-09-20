@@ -3,7 +3,10 @@ package com.cantwellcode.cantwellgallery;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.database.Cursor;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -311,9 +314,15 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
     public boolean moveImageToBucket(Cursor imageCursor, Cursor bucketCursor){
         final int imagePathIndex;
         final int bucketPathIndex;
+        final int bucketIDIndex;
+        final int bucketDisplayNameIndex;
+        final int imageIDIndex;
         try {
-            imagePathIndex = imageCursor.getColumnIndexOrThrow(IMAGE_DATA);
-            bucketPathIndex = bucketCursor.getColumnIndexOrThrow(BUCKET_DATA);
+            imagePathIndex          = imageCursor.getColumnIndexOrThrow(IMAGE_DATA);
+            bucketPathIndex         = bucketCursor.getColumnIndexOrThrow(BUCKET_DATA);
+            bucketIDIndex           = bucketCursor.getColumnIndexOrThrow(BUCKET_ID);
+            bucketDisplayNameIndex  = bucketCursor.getColumnIndexOrThrow(BUCKET_DISPLAY_NAME);
+            imageIDIndex            = imageCursor.getColumnIndexOrThrow(IMAGE_ID);
         }catch (IllegalArgumentException e){
             e.printStackTrace();
             return false;
@@ -321,22 +330,46 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
         String imagePath = imageCursor.getString(imagePathIndex);
         String bucketPath = bucketCursor.getString(bucketPathIndex);
 
-        File bucket = new File(bucketPath);
-        File bucketDirectory = new File(bucket.getParent());
-        boolean br = bucketDirectory.canRead();
-        boolean bw = bucketDirectory.canWrite();
-        if(!bucketDirectory.canWrite()){
-            if (!bucketDirectory.setWritable(true));{
-                return false;
+        File bucket             = new File(bucketPath);
+        File bucketDirectory    = new File(bucket.getParent());
+        File image              = new File(imagePath);
+        if(!bucketDirectory.canWrite() || !image.canWrite()) return false;
+        if (!image.renameTo(new File(bucketDirectory,image.getName()))) return false;
+
+        // The file rename was successful, update the mediastore
+        MediaScannerConnection.scanFile(getActivity(),new String[]{image.toString()},null,new MediaScannerConnection.OnScanCompletedListener() {
+            @Override
+            public void onScanCompleted(String s, Uri uri) {
+                Log.d(TAG,"Media scan complete.");
             }
+        });
+
+        long imageID                = imageCursor.getLong(imageIDIndex);
+        long bucketID               = bucketCursor.getLong(bucketIDIndex);
+        String bucketDisplayName    = bucketCursor.getString(bucketDisplayNameIndex);
+
+        // Construct values to update mediastore with
+
+/*        ContentValues values        = new ContentValues();
+        values.put(BUCKET_ID,bucketID);
+        values.put(BUCKET_DISPLAY_NAME,bucketDisplayName);
+
+        // Update mediastore with the new values
+        ContentResolver cr      = getActivity().getContentResolver();
+        Uri uri                 = ContentUris.withAppendedId(BUCKET_URI,imageID);
+        String selection        = IMAGE_ID + "=?";
+        String[] selectionArgs  = {String.valueOf(imageID)};
+        int r;
+        try {
+            r = cr.update(uri,values,null,null);
+        }catch (IllegalArgumentException e){
+            e.printStackTrace();
+            Log.e(TAG,e.getMessage());
+            return false;
         }
-        File image = new File(imagePath);
-        boolean ir = image.canRead();
-        boolean iw = image.canWrite();
 
         Log.d(TAG,"Moving image " + imagePath + " to bucket " + bucketPath);
-
-
+        */
         return true;
     }
 
