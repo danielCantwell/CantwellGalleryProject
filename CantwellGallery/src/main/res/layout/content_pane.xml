@@ -12,7 +12,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/contentPaneHeader"
-            android:background="#98aaed"/>
+            android:background="@android:color/transparent"/>
 
     <TextView
             android:layout_width="wrap_content"
@@ -40,10 +40,16 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/middleArrow"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/bottomArrow"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"/>
-
 
 </RelativeLayout>
