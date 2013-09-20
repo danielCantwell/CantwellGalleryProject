@@ -74,7 +74,7 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
             @Override
             public void onSlide(ListView listView, int[] reverseSortedPositions, SwipeListViewDetect.Direction direction, View view) {
                 for (int position : reverseSortedPositions) {
-                    slideItem(position, direction);
+                    slideItem(view, position, direction);
                 }
             }
         });
@@ -125,7 +125,7 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
         listView.setOnScrollListener(swipeDetect.ScrollListener());
     }
 
-    private void slideItem(int position, SwipeListViewDetect.Direction direction) {
+    private void slideItem(View view, int position, SwipeListViewDetect.Direction direction) {
         // move file etc
         // mListAdapter.remove(mAdapter.getItem(position));
         // notify data set changed
@@ -134,7 +134,8 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
         if (direction == SwipeListViewDetect.Direction.Left) {
             long imageID = mListAdapter.getItemId(position);
             String path     = getImagePath((Cursor) mListAdapter.getItem(position));
-            //mListener.onSwipeLeft(path);
+            ImageData imageData = new ImageData(imageID,path,view);
+            mListener.onSwipeLeft(imageData);
             swipeDirection = "Left";
         } else if (direction == SwipeListViewDetect.Direction.Right) {
             swipeDirection = "Right";

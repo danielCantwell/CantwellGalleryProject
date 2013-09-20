@@ -235,7 +235,7 @@ public class SmallTargetBarFragment extends Fragment implements TargetBar{
         mCurrentTargetData = bucketData;
 
         // Change displayed data using the BucketViewHolder stored in the local state.
-        BucketViewHolder holder = bucketData.getHolder();
+        BucketViewHolder holder = (BucketViewHolder) bucketData.getView().getTag();
         Bitmap image = ((BitmapDrawable)holder.imageView.getDrawable()).getBitmap();
         String title = (String) holder.textView.getText();
         mCurrentTargetImage.setImageBitmap(image);
@@ -276,7 +276,7 @@ public class SmallTargetBarFragment extends Fragment implements TargetBar{
     }
 
     @Override
-    public Object getCurrentTargetData() {
-        return null;
+    public BucketData getCurrentTargetData() {
+        return mCurrentTargetData;
     }
 }

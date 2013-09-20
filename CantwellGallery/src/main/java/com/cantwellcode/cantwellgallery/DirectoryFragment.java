@@ -2,6 +2,9 @@ package com.cantwellcode.cantwellgallery;
 
 import android.app.Activity;
 import android.content.ClipData;
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.media.MediaScannerConnection;
@@ -13,6 +16,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +44,7 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
     private static final String INVALID_LOADER_ID       = "Invalid Loader ID.";
 
     // Database Columns
-    private static final Uri    BUCKET_URI              = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+    private static final Uri    MEDIASTORE_URI          = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
 
     private static final String IMAGE_ID                = MediaStore.Images.Media._ID;
     private static final String IMAGE_DISPLAY_NAME      = MediaStore.Images.Media.DISPLAY_NAME;
@@ -67,8 +71,6 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
     private GridView                mGridView;
     private BucketCursorAdapter     mAdapter;
     private Callbacks               mListener;
-
-    private Cursor                  mMediaStoreCursor;
 
     /**
      * Called when the fragment is attached to the host activity.
@@ -148,7 +150,7 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
 
 
     private void loadMediaStore() {
-        final Uri       uri             = BUCKET_URI;
+        final Uri       uri             = MEDIASTORE_URI;
         final String[]  projection      = null;
         final String    selection       = null;
         final String[]  selectionArgs   = null;
@@ -167,7 +169,7 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
         // This produces the SQLite query string:
         //      SELECT %BUCKET_PROJECTION FROM (%URI) WHERE (1) GROUP BY (%BUCKET_ID) ORDER BY (%DEFAULT_SORT_ORDER)
         // WHERE (%s)
-        final Uri       uri             = BUCKET_URI;
+        final Uri       uri             = MEDIASTORE_URI;
         final String[]  projection      = ALL_BUCKETS_PROJECTION;
         final String    selection       = "1) GROUP BY (" + BUCKET_ID;
         final String[]  selectionArgs   = null;
@@ -182,7 +184,7 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
      * @param bucketID
      */
     private void loadBucketContents(long bucketID){
-        final Uri       uri             = BUCKET_URI;
+        final Uri       uri             = MEDIASTORE_URI;
         final String[]  projection      = BUCKET_CONTENT_PROJECTION;
         final String    selection       = BUCKET_ID + "=?";
         final String[]  selectionArgs   = {String.valueOf(bucketID)};
@@ -197,7 +199,7 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
      * @param bucketDisplayName
      */
     private void loadBucketContents(String bucketDisplayName){
-        final Uri       uri             = BUCKET_URI;
+        final Uri       uri             = MEDIASTORE_URI;
         final String[]  projection      = BUCKET_CONTENT_PROJECTION;
         final String    selection       = BUCKET_DISPLAY_NAME + "=?";
         final String[]  selectionArgs   = {String.valueOf(bucketDisplayName)};
@@ -316,6 +318,8 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
      *        DATABASE MODIFICATION       *
      **************************************/
 
+
+
     /**
      * Move the image to the target bucket directory and update the Mediastore
      *
@@ -324,15 +328,19 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
      * @return
      */
     public boolean moveImageToBucket(ImageData imageData, BucketData bucketData){
-        String directory       = bucketData.getDirectoryPath();
-        String imagePath        = imageData.getItemPath();
-        File bucket             = new File(directory);
-        File image              = new File(imagePath);
+        String bucketDirectory          = bucketData.getDirectoryPath();
+        String oldPath                  = imageData.getItemPath();
+        Uri imageUri = ContentUris.withAppendedId(MEDIASTORE_URI,imageData.getItemID());
+        File bucketFile                 = new File(bucketDirectory);
+        File imageFile                  = new File(oldPath);
+        String imageDirectory           = imageFile.getParent();
         // Make sure we have write permission for both the image and the bucket directory and attempt
         //      to rename the image to the correct directory.
-        if(!bucket.canWrite() || !image.canWrite()) return false;
-        if (!image.renameTo(new File(directory,image.getName()))) return false;
+        if (!bucketFile.canWrite() || !imageFile.canWrite()) return false;
+        if (!imageFile.renameTo(new File(bucketDirectory,imageFile.getName()))) return false;
+
         // The file rename was successful, update the mediastore
+        //sendBroadcast works but is very slow.  Can we speed it up?
         getActivity().sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://"
                 + Environment.getExternalStorageDirectory())));
         return true;
@@ -378,13 +386,15 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
                 //      as well as the cursor pointing to the associated item.
                 Cursor cursor = (Cursor) mAdapter.getItem(position);
                 String path = "";
+                String displayName = "";
                 try{
                     path = cursor.getString(cursor.getColumnIndexOrThrow(BUCKET_DATA));
+                    displayName = cursor.getString(cursor.getColumnIndexOrThrow(BUCKET_DISPLAY_NAME));
                 }catch (IllegalArgumentException e){
                     e.printStackTrace();
                 }
                 File file = new File(path);
-                BucketData bucketData = new BucketData(id,file.getParent().toString(),view);
+                BucketData bucketData = new BucketData(id,file.getParent().toString(),displayName,view);
                 view.startDrag(data, new MyDragShadowBuilder(view), bucketData, 0);
                 return true;
             }

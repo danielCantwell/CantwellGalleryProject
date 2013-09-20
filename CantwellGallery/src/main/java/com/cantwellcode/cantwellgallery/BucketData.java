@@ -12,8 +12,8 @@ public class BucketData extends DirectoryData{
     public View getView() {
         return mView;
     }
-    public BucketData(long directoryID, String directoryPath, View view) {
-        super(directoryID, directoryPath);
+    public BucketData(long directoryID, String directoryPath, String displayName, View view) {
+        super(directoryID, directoryPath, displayName);
         mView = view;
     }
 }

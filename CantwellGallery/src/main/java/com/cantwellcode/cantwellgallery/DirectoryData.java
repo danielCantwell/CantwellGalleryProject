@@ -10,6 +10,7 @@ import java.io.File;
 public class DirectoryData {
     private final long      mDirectoryID;
     private final String    mDirectoryPath;
+    private final String    mDisplayName;
 
     public long getDirectoryID() {
         return mDirectoryID;
@@ -17,9 +18,13 @@ public class DirectoryData {
     public String getDirectoryPath() {
         return mDirectoryPath;
     }
-    public DirectoryData(long directoryID, String directoryPath) {
-        this.mDirectoryID = directoryID;
-        this.mDirectoryPath = directoryPath;
+    public String getDisplayName() {
+        return mDisplayName;
+    }
+    public DirectoryData(long directoryID, String directoryPath, String displayName) {
+        mDirectoryID = directoryID;
+        mDirectoryPath = directoryPath;
+        mDisplayName = displayName;
         File file = new File(directoryPath);
         if (!file.isDirectory()) throw new IllegalArgumentException("Must provide directory path.");
     }
