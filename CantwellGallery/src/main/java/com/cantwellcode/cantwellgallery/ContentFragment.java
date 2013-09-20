@@ -72,7 +72,7 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
 
         swipeDetect = new SwipeListViewDetect(mListView, new SwipeListViewDetect.SlideCallbacks() {
             @Override
-            public void onSlide(ListView listView, int[] reverseSortedPositions, SwipeListViewDetect.Direction direction) {
+            public void onSlide(ListView listView, int[] reverseSortedPositions, SwipeListViewDetect.Direction direction, View view) {
                 for (int position : reverseSortedPositions) {
                     slideItem(position, direction);
                 }

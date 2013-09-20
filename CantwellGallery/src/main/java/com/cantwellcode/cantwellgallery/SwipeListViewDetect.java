@@ -54,7 +54,7 @@ public class SwipeListViewDetect  implements View.OnTouchListener {
          * @param listView               - the view to slide
          * @param reverseSortedPositions - an array of positions to slide
          */
-        void onSlide(ListView listView, int[] reverseSortedPositions, Direction swipeDirection);
+        void onSlide(ListView listView, int[] reverseSortedPositions, Direction swipeDirection, View view);
     }
 
     public SwipeListViewDetect(ListView listView, SlideCallbacks callbacks) {
@@ -267,7 +267,7 @@ public class SwipeListViewDetect  implements View.OnTouchListener {
                     for (int i = mPendingSlides.size() - 1; i >= 0; i--) {
                         slidePositions[i] = mPendingSlides.get(i).position;
                     }
-                    mCallbacks.onSlide(mListView, slidePositions, direction);
+                    mCallbacks.onSlide(mListView, slidePositions, direction, mDownView);
 
                     ViewGroup.LayoutParams lp;
                     for (PendingSlideData pendingSlide : mPendingSlides) {
