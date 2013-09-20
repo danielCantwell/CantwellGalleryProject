@@ -106,13 +106,15 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
                 ClipData data = ClipData.newPlainText(ClipDataLabels.IMAGE.toString(), String.valueOf(id));
                 Cursor cursor = (Cursor) mListAdapter.getItem(position);
                 String path = null;
+                // Attempt to retreive the image path from the cursor
                 try {
                     path = cursor.getString(cursor.getColumnIndexOrThrow(IMAGE_DATA));
                 }catch (IllegalArgumentException e){
                     e.printStackTrace();
                 }
-                ImageLocalState localState = new ImageLocalState(view, (ImageViewHolder)view.getTag(), (Cursor)mListAdapter.getItem(position), id, path);
-                view.startDrag(data, new MyDragShadowBuilder(view), localState, 0);
+                // Create new imageData to pass as local state
+                ImageData imageData = new ImageData(id,path,view);
+                view.startDrag(data, new MyDragShadowBuilder(view), imageData, 0);
                 return true;
             }
         });
@@ -132,7 +134,7 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
         if (direction == SwipeListViewDetect.Direction.Left) {
             long imageID = mListAdapter.getItemId(position);
             String path     = getImagePath((Cursor) mListAdapter.getItem(position));
-            mListener.onSwipeLeft(path);
+            //mListener.onSwipeLeft(path);
             swipeDirection = "Left";
         } else if (direction == SwipeListViewDetect.Direction.Right) {
             swipeDirection = "Right";

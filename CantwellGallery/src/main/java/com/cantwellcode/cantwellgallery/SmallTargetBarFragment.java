@@ -29,6 +29,7 @@ public class SmallTargetBarFragment extends Fragment implements TargetBar{
     private TextView    mCurrentTargetText;
     private long        mCurrentTargetID;
     private String      mCurrentTargetPath;
+    private BucketData  mCurrentTargetData;
 
     @Override
     public void onAttach(Activity activity) {
@@ -44,6 +45,7 @@ public class SmallTargetBarFragment extends Fragment implements TargetBar{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCurrentTargetPath = null;
+        mCurrentTargetData = null;
     }
 
     @Override
@@ -215,12 +217,10 @@ public class SmallTargetBarFragment extends Fragment implements TargetBar{
     private boolean processImageDropOnCurrentTarget(DragEvent dragEvent, View v) {
         if (mCurrentTargetID==-1) return false;
         // Get the local state info for the Image being dropped
-        ImageLocalState dropped = (ImageLocalState) dragEvent.getLocalState();
+        ImageData item = (ImageData) dragEvent.getLocalState();
 
         // Get the cursor for the image and pass it to moveItemToTarget
-        final long imageID = dropped.getImageID();
-        final String imagePath = dropped.getImagePath();
-        moveItemToTarget(imagePath,mCurrentTargetPath);
+        moveItemToTarget(item,mCurrentTargetData);
         return true;
     }
 
@@ -231,14 +231,11 @@ public class SmallTargetBarFragment extends Fragment implements TargetBar{
      */
     private boolean processBucketDropOnCurrentTarget(DragEvent dragEvent, View v) {
         // Get the local state info for the Bucket view being dropped.
-        BucketLocalState dropped = (BucketLocalState) dragEvent.getLocalState();
-
-        //Save Target id
-        mCurrentTargetID = dropped.getBucketID();
-        mCurrentTargetPath = dropped.getBucketPath();
+        BucketData bucketData = (BucketData) dragEvent.getLocalState();
+        mCurrentTargetData = bucketData;
 
         // Change displayed data using the BucketViewHolder stored in the local state.
-        BucketViewHolder holder = dropped.getHolder();
+        BucketViewHolder holder = bucketData.getHolder();
         Bitmap image = ((BitmapDrawable)holder.imageView.getDrawable()).getBitmap();
         String title = (String) holder.textView.getText();
         mCurrentTargetImage.setImageBitmap(image);
@@ -249,13 +246,13 @@ public class SmallTargetBarFragment extends Fragment implements TargetBar{
     /**
      * Given the cursors corresponding to an item and a target, move the item to th target
      *
-     * @param itemPath
-     * @param targetPath
+     * @param itemData
+     * @param targetData
      * @return
      */
     @Override
-    public boolean moveItemToTarget(String itemPath, String targetPath) {
-        return mListener.onMoveItemToTarget(itemPath, targetPath);
+    public boolean moveItemToTarget(ImageData itemData, BucketData targetData) {
+        return mListener.onMoveItemToTarget(itemData, targetData);
     }
 
     /**
@@ -276,5 +273,10 @@ public class SmallTargetBarFragment extends Fragment implements TargetBar{
     @Override
     public String getCurrentTargetPath() {
         return mCurrentTargetPath;
+    }
+
+    @Override
+    public Object getCurrentTargetData() {
+        return null;
     }
 }

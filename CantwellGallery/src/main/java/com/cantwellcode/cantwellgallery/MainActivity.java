@@ -167,8 +167,8 @@ public class MainActivity extends FragmentActivity
     }
 
     @Override
-    public boolean onMoveItemToTarget(String itemPath, String targetPath) {
-        return mDirectoryFragment.moveImageToBucket(itemPath, targetPath);
+    public boolean onMoveItemToTarget(ImageData itemData, BucketData targetData) {
+        return mDirectoryFragment.moveImageToBucket(itemData, targetData);
     }
 
     @Override
@@ -183,14 +183,13 @@ public class MainActivity extends FragmentActivity
 
     /**
      * Swipe left callback for content fragment
-     * @param imagePath
+     * @param imageData
      * @return
      */
     @Override
-    public boolean onSwipeLeft(String imagePath) {
-        long bucketID = mTargetBar.getCurrentTarget();
-        final String bucketPath     = mTargetBar.getCurrentTargetPath();
-        return mDirectoryFragment.moveImageToBucket(imagePath,bucketPath);
+    public boolean onSwipeLeft(ImageData imageData) {
+        BucketData bucketData = (BucketData) mTargetBar.getCurrentTargetData();
+        return mDirectoryFragment.moveImageToBucket(imageData,bucketData);
     }
     
     /************************

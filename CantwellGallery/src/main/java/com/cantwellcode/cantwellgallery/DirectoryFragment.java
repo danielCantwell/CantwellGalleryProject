@@ -13,7 +13,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,7 @@ import java.io.File;
  * Created by Daniel on 8/13/13.
  */
 public class DirectoryFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>,
-        DatabaseMaster, MediaScannerConnection.MediaScannerConnectionClient {
+        DatabaseMaster {
     private static final String TAG = "DirectoryFragment";
 
     // Bundle tags
@@ -317,37 +316,22 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
      *        DATABASE MODIFICATION       *
      **************************************/
 
-
-    private void scan() {
-        MediaScannerConnection connection = new MediaScannerConnection(getActivity(),this);
-
-    }
-
-    @Override
-    public void onMediaScannerConnected() {
-
-    }
-
-    @Override
-    public void onScanCompleted(String s, Uri uri) {
-
-    }
-
     /**
      * Move the image to the target bucket directory and update the Mediastore
      *
-     * @param imagePath
-     * @param bucketPath
+     * @param imageData
+     * @param bucketData
      * @return
      */
-    public boolean moveImageToBucket(String imagePath, String bucketPath){
-        File bucket             = new File(bucketPath);
-        File bucketDirectory    = new File(bucket.getParent());
+    public boolean moveImageToBucket(ImageData imageData, BucketData bucketData){
+        String directory       = bucketData.getDirectoryPath();
+        String imagePath        = imageData.getItemPath();
+        File bucket             = new File(directory);
         File image              = new File(imagePath);
         // Make sure we have write permission for both the image and the bucket directory and attempt
         //      to rename the image to the correct directory.
-        if(!bucketDirectory.canWrite() || !image.canWrite()) return false;
-        if (!image.renameTo(new File(bucketDirectory,image.getName()))) return false;
+        if(!bucket.canWrite() || !image.canWrite()) return false;
+        if (!image.renameTo(new File(directory,image.getName()))) return false;
         // The file rename was successful, update the mediastore
         getActivity().sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://"
                 + Environment.getExternalStorageDirectory())));
@@ -390,7 +374,7 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
                 // Initiate a BUCKET drag event, passing the BUCKET_ID in ClipData
                 ClipData data = ClipData.newPlainText(ClipDataLabels.BUCKET.toString(),String.valueOf(id));
-                // Pass a BucketLocalState containing the ViewHolder information for the curent view
+                // Pass a BucketData containing the ViewHolder information for the curent view
                 //      as well as the cursor pointing to the associated item.
                 Cursor cursor = (Cursor) mAdapter.getItem(position);
                 String path = "";
@@ -399,8 +383,9 @@ public class DirectoryFragment extends Fragment implements LoaderManager.LoaderC
                 }catch (IllegalArgumentException e){
                     e.printStackTrace();
                 }
-                BucketLocalState localState = new BucketLocalState((BucketViewHolder)view.getTag(),(Cursor)mAdapter.getItem(position), id, path);
-                view.startDrag(data, new MyDragShadowBuilder(view), localState, 0);
+                File file = new File(path);
+                BucketData bucketData = new BucketData(id,file.getParent().toString(),view);
+                view.startDrag(data, new MyDragShadowBuilder(view), bucketData, 0);
                 return true;
             }
         });
