@@ -12,7 +12,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/contentPaneHeader"
-            android:background="@android:color/transparent"/>
+            android:background="@android:color/holo_blue_bright"/>
 
     <TextView
             android:layout_width="wrap_content"
@@ -32,31 +32,8 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/topArrow"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/contentPaneHeader"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/middleArrow"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/bottomArrow"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_above="@+id/space"/>
-
-    <Space
-        android:id="@+id/space"
-        android:layout_width="@dimen/header_height"
-        android:layout_height="@dimen/header_height"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true" />
 
 </RelativeLayout>

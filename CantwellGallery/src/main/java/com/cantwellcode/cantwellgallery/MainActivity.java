@@ -38,10 +38,7 @@ public class MainActivity extends FragmentActivity
         final View root = getLayoutInflater().inflate(R.layout.activity_main, null);
         setContentView(root);
 
-
-        findViewById(R.id.bottomArrow).setBackgroundResource(R.drawable.ic_right_arrow);
         findViewById(R.id.middleArrow).setBackgroundResource(R.drawable.ic_right_arrow);
-        findViewById(R.id.topArrow).setBackgroundResource(R.drawable.ic_right_arrow);
 
         FragmentManager fm = getSupportFragmentManager();
         // Initialize TargetBarListFragment
@@ -69,9 +66,7 @@ public class MainActivity extends FragmentActivity
 
                 switch (view.getId()) {
                     case R.id.contentFragment:
-                        findViewById(R.id.bottomArrow).setBackgroundResource(R.drawable.ic_left_arrow);
                         findViewById(R.id.middleArrow).setBackgroundResource(R.drawable.ic_left_arrow);
-                        findViewById(R.id.topArrow).setBackgroundResource(R.drawable.ic_left_arrow);
                         break;
                     default:
                         break;
@@ -83,9 +78,7 @@ public class MainActivity extends FragmentActivity
 
                 switch (view.getId()) {
                     case R.id.contentFragment:
-                        findViewById(R.id.bottomArrow).setBackgroundResource(R.drawable.ic_right_arrow);
                         findViewById(R.id.middleArrow).setBackgroundResource(R.drawable.ic_right_arrow);
-                        findViewById(R.id.topArrow).setBackgroundResource(R.drawable.ic_right_arrow);
                         break;
                     default:
                         break;
