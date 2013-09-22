@@ -58,11 +58,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="47ad2055-7b34-47ae-9de1-fe21829ab214" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/InfoDialog.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/media_info_dialog.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ContentFragment.java" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ContentFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/activity_main.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/media_info_dialog.xml" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/media_info_dialog.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="CantwellGallery.iws" />
@@ -264,25 +260,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="InfoDialog.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/InfoDialog.java">
+      <file leaf-file-name="ContentFragment.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ContentFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="35" column="67" selection-start="1193" selection-end="1193" vertical-scroll-proportion="0.0" vertical-offset="238" max-vertical-offset="1122">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#974#1233#0" expanded="true" />
-                <element signature="e#1214#1215#0" expanded="true" />
-                <element signature="e#1278#1539#0" expanded="true" />
-                <element signature="e#1520#1521#0" expanded="true" />
-              </folding>
+            <state line="39" column="0" selection-start="1244" selection-end="1244" vertical-scroll-proportion="0.0" vertical-offset="1772" max-vertical-offset="2448">
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainActivity.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="InfoDialog.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/InfoDialog.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="35" column="67" selection-start="1193" selection-end="1193" vertical-scroll-proportion="0.68" vertical-offset="0" max-vertical-offset="884">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="251" column="10" selection-start="8967" selection-end="8967" vertical-scroll-proportion="1.2192771" vertical-offset="3659" max-vertical-offset="4318">
+            <state line="251" column="10" selection-start="8967" selection-end="8967" vertical-scroll-proportion="0.0" vertical-offset="3693" max-vertical-offset="4318">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -296,7 +295,7 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="37" selection-start="1171" selection-end="1171" vertical-scroll-proportion="-21.08" vertical-offset="0" max-vertical-offset="1802">
+            <state line="30" column="31" selection-start="1127" selection-end="1127" vertical-scroll-proportion="-9.48" vertical-offset="273" max-vertical-offset="1819">
               <folding />
             </state>
           </provider>
@@ -308,7 +307,7 @@
             <state />
           </provider>
           <provider editor-type-id="text-editor">
-            <state line="63" column="64" selection-start="2796" selection-end="2796" vertical-scroll-proportion="0.0" vertical-offset="726" max-vertical-offset="1428">
+            <state line="63" column="64" selection-start="2796" selection-end="2796" vertical-scroll-proportion="0.0" vertical-offset="1071" max-vertical-offset="1428">
               <folding />
             </state>
           </provider>
@@ -341,7 +340,7 @@
           <key>
             <ExternalProjectPojo>
               <option name="name" value="CantwellGalleryProject" />
-              <option name="path" value="C:\Users" />
+              <option name="path" value="$PROJECT_DIR$" />
             </ExternalProjectPojo>
           </key>
           <value>
@@ -361,7 +360,7 @@
           <key>
             <ExternalProjectPojo>
               <option name="name" value="CantwellGalleryProject" />
-              <option name="path" value="$PROJECT_DIR$" />
+              <option name="path" value="C:\Users" />
             </ExternalProjectPojo>
           </key>
           <value>
@@ -711,8 +710,8 @@
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ContentFragment.java" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/InfoDialog.java" />
-        <option value="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/media_info_dialog.xml" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java" />
+        <option value="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/media_info_dialog.xml" />
       </list>
     </option>
   </component>
@@ -748,6 +747,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -980,7 +980,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -1001,11 +1000,11 @@
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Droid" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
-    <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
+    <property name="FullScreen" value="false" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -1045,6 +1044,19 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -1070,19 +1082,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -1281,7 +1280,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="784" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1296,7 +1295,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32258064" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32258064" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32258064" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1425,13 +1424,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ContentFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="160" column="0" selection-start="5884" selection-end="5884" vertical-scroll-proportion="0.0" vertical-offset="1823" max-vertical-offset="2448">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/res/layout/activity_main.xml">
       <provider selected="true" editor-type-id="android-designer">
         <state />
@@ -1442,35 +1434,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/InfoDialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="67" selection-start="1193" selection-end="1193" vertical-scroll-proportion="0.0" vertical-offset="238" max-vertical-offset="1122">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#974#1233#0" expanded="true" />
-            <element signature="e#1214#1215#0" expanded="true" />
-            <element signature="e#1278#1539#0" expanded="true" />
-            <element signature="e#1520#1521#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/res/layout/media_info_dialog.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="37" selection-start="1171" selection-end="1171" vertical-scroll-proportion="-21.08" vertical-offset="0" max-vertical-offset="1802">
+        <state line="30" column="31" selection-start="1127" selection-end="1127" vertical-scroll-proportion="-9.48" vertical-offset="273" max-vertical-offset="1819">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="251" column="10" selection-start="8967" selection-end="8967" vertical-scroll-proportion="1.2192771" vertical-offset="3659" max-vertical-offset="4318">
+        <state line="251" column="10" selection-start="8967" selection-end="8967" vertical-scroll-proportion="0.0" vertical-offset="3903" max-vertical-offset="4318">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/ContentFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="0" selection-start="1244" selection-end="1244" vertical-scroll-proportion="0.0" vertical-offset="1772" max-vertical-offset="2448">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/InfoDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="67" selection-start="1193" selection-end="1193" vertical-scroll-proportion="0.68" vertical-offset="0" max-vertical-offset="884">
+          <folding />
         </state>
       </provider>
     </entry>
