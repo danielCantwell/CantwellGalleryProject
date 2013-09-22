@@ -1,5 +1,6 @@
 package com.cantwellcode.cantwellgallery;
 
+import android.app.DialogFragment;
 import android.content.ClipDescription;
 import android.database.Cursor;
 import android.support.v4.app.FragmentManager;
@@ -18,7 +19,7 @@ import android.widget.Toast;
  * Main Activity that is first loaded when the application starts
  */
 public class MainActivity extends FragmentActivity
-        implements TargetBar.Callbacks, DatabaseMaster.Callbacks, DatabaseContentHandler.Callbacks {
+        implements TargetBar.Callbacks, DatabaseMaster.Callbacks, DatabaseContentHandler.Callbacks, InfoDialog.InfoDialogListener {
 
     private static final String TAG                     = "MAIN ACTIVITY";
 
@@ -26,6 +27,7 @@ public class MainActivity extends FragmentActivity
     private ContentFragment         mContentFragment;
     private DirectoryFragment       mDirectoryFragment;
     private ImageView               mUtilityBarDeleteView;
+    private ImageView               mUtilityBarInfoView;
     private DatabaseContentHandler  mDatabaseContentHandler;
     private DatabaseMaster          mDatabaseMaster;
 
@@ -50,7 +52,9 @@ public class MainActivity extends FragmentActivity
         mDatabaseMaster         = mDirectoryFragment;
 
         mUtilityBarDeleteView = (ImageView) findViewById(R.id.utilityBarDeleteView);
+        mUtilityBarInfoView   = (ImageView) findViewById(R.id.utilityBarInfoView);
         setupDrop(mUtilityBarDeleteView);
+        setupDrop(mUtilityBarInfoView);
 
         final SlidingPane slidingPaneLayout = SlidingPane.class.cast(root.findViewById(R.id.slidingpanelayout));
 
@@ -98,26 +102,18 @@ public class MainActivity extends FragmentActivity
 
                     // When a view drag starts
                     case DragEvent.ACTION_DRAG_STARTED:
-                        Toast dragStartedToast = Toast.makeText(MainActivity.this, "Trash Can recognized: Drag Started", Toast.LENGTH_SHORT);
-//                        dragStartedToast.show();
                         return processDragStarted(dragEvent);
 
                     // When the view is being held over the imageView
                     case DragEvent.ACTION_DRAG_ENTERED:
-                        Toast dragEnteredToast = Toast.makeText(MainActivity.this, "Trash Can recognized: Drag Entered", Toast.LENGTH_SHORT);
-//                        dragEnteredToast.show();
                         break;
 
                     // When the view is exited
                     case DragEvent.ACTION_DRAG_EXITED:
-                        Toast dragExitedToast = Toast.makeText(MainActivity.this, "Trash Can recognized: Drag Exited", Toast.LENGTH_SHORT);
-//                        dragExitedToast.show();
                         break;
 
                     // When the view is dropped on the quickbar
                     case DragEvent.ACTION_DROP:
-                        Toast dropToast = Toast.makeText(MainActivity.this, "Trash Can recognized: Drop", Toast.LENGTH_SHORT);
-//                        dropToast.show();
                         return processDrop(dragEvent, v);
                 }
                 return false;
@@ -155,6 +151,9 @@ public class MainActivity extends FragmentActivity
                 Toast t = Toast.makeText(this, "Dropped on : utilityBarDeleteView", Toast.LENGTH_SHORT);
                 t.show();
                 return true;
+            case R.id.utilityBarInfoView:
+                DialogFragment dialogFragment = new InfoDialog();
+                dialogFragment.show(getFragmentManager(), "media_info");
         }
         return false;
     }
@@ -185,9 +184,9 @@ public class MainActivity extends FragmentActivity
         return mDirectoryFragment.moveImageToBucket(imageData,bucketData);
     }
     
-    /************************
-     *      Menu Item       *
-     ***********************/
+    /*************************
+     *      Menu Click       *
+     ************************/
 
     public void showPopup(View v) {
         PopupMenu popup = new PopupMenu(this, v);
@@ -228,5 +227,28 @@ public class MainActivity extends FragmentActivity
     public void menuClickInfo() {
         Toast info = Toast.makeText(this, "Created by Cantwell Code", Toast.LENGTH_SHORT);
         info.show();
+    }
+
+    /********************************
+     *      Media Info Dialog       *
+     ********************************/
+
+    @Override
+    public void onDialogOkClick(DialogFragment dialog) {
+        dialog.getDialog().cancel();
+    }
+
+    @Override
+    public void onDialogEditClick(DialogFragment dialog) {
+        /*
+        findViewById(R.id.dialog_edit_name).setFocusable(true);
+        findViewById(R.id.dialog_edit_name).setClickable(true);
+
+        findViewById(R.id.dialog_edit_date).setFocusable(true);
+        findViewById(R.id.dialog_edit_date).setClickable(true);
+
+        findViewById(R.id.dialog_edit_description).setFocusable(true);
+        findViewById(R.id.dialog_edit_description).setClickable(true);
+        */
     }
 }

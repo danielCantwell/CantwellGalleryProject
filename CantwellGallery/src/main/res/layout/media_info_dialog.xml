@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/dialog_media_info">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:scaleType="center"
+        android:background="@android:color/holo_blue_bright" />
+
+    <LinearLayout
+        android:paddingLeft="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/dialog_text_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:text="Name  : "/>
+        <EditText
+            android:id="@+id/dialog_edit_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:focusable="false"
+            android:clickable="false"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingLeft="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/dialog_text_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:text="Date  : "/>
+        <EditText
+            android:id="@+id/dialog_edit_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:hint="date"
+            android:focusable="false"
+            android:clickable="false"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingLeft="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/dialog_text_album"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:text="Album : "/>
+        <EditText
+            android:id="@+id/dialog_edit_album"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:hint="album"
+            android:focusable="false"
+            android:clickable="false"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingLeft="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/dialog_text_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:text="Description : "/>
+        <EditText
+            android:id="@+id/dialog_edit_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:hint="description"
+            android:focusable="false"
+            android:clickable="false"/>
+    </LinearLayout>
+
+</LinearLayout>

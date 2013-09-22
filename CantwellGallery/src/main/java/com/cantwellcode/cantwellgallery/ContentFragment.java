@@ -1,7 +1,11 @@
 package com.cantwellcode.cantwellgallery;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.ClipData;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -85,14 +89,12 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
         return root;
     }
 
-
     @Override
     public void changeContentLabelAndCursor(String label, Cursor cursor) {
         if(label != null) mTextView.setText(label);
         else mTextView.setText(DEFAULT_LABEL);
         mListAdapter.changeCursor(cursor);
     }
-
 
     /*********************************
      *        DRAG  AND  DROP        *
