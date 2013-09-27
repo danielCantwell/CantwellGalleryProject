@@ -58,6 +58,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="47ad2055-7b34-47ae-9de1-fe21829ab214" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SettingsDialog.java" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SettingsDialog.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/settings_dialog.xml" afterPath="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/settings_dialog.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -287,24 +288,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="settings_dialog.xml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="settings_dialog.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/res/layout/settings_dialog.xml">
-          <provider editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="527">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="16" column="48" selection-start="610" selection-end="610" vertical-scroll-proportion="-10.88" vertical-offset="0" max-vertical-offset="527">
               <folding />
             </state>
           </provider>
-          <provider selected="true" editor-type-id="android-designer">
+          <provider editor-type-id="android-designer">
             <state />
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SettingsDialog.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="SettingsDialog.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SettingsDialog.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="52" selection-start="332" selection-end="332" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="629">
+            <state line="29" column="41" selection-start="935" selection-end="935" vertical-scroll-proportion="0.4506024" vertical-offset="306" max-vertical-offset="986">
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#1054#1476#0" expanded="true" />
+                <element signature="e#1465#1466#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -730,9 +733,9 @@
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/media_info_dialog.xml" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/InfoDialog.java" />
-        <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SettingsDialog.java" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java" />
         <option value="$PROJECT_DIR$/CantwellGallery/src/main/res/layout/settings_dialog.xml" />
+        <option value="$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SettingsDialog.java" />
       </list>
     </option>
   </component>
@@ -1472,15 +1475,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SettingsDialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="52" selection-start="332" selection-end="332" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="629">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="212" column="55" selection-start="7751" selection-end="7751" vertical-scroll-proportion="0.0" vertical-offset="3111" max-vertical-offset="4097">
@@ -1489,13 +1483,24 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/res/layout/settings_dialog.xml">
-      <provider editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="600">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="48" selection-start="610" selection-end="610" vertical-scroll-proportion="-10.88" vertical-offset="0" max-vertical-offset="527">
           <folding />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="android-designer">
+      <provider editor-type-id="android-designer">
         <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CantwellGallery/src/main/java/com/cantwellcode/cantwellgallery/SettingsDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="41" selection-start="935" selection-end="935" vertical-scroll-proportion="0.4506024" vertical-offset="306" max-vertical-offset="986">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1054#1476#0" expanded="true" />
+            <element signature="e#1465#1466#0" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
   </component>

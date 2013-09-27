@@ -23,9 +23,30 @@ public class SettingsDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.settings_dialog, container);
         mColorButton = (Button) view.findViewById(R.id.settingsButtonChangeColor);
         mAlbumButton = (Button) view.findViewById(R.id.settingsButtonChangeDefaultAlbum);
+        
+        setupButtonClick(mColorButton);
+        setupButtonClick(mAlbumButton);
 
         getDialog().setTitle("Settings");
 
         return view;
+    }
+    
+    private void setupButtonClick(Button button) {
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()) {
+                    case R.id.settingsButtonChangeColor:
+
+                        break;
+                    case R.id.settingsButtonChangeDefaultAlbum:
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
     }
 }
