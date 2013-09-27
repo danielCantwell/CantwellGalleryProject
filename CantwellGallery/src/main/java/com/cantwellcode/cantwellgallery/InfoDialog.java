@@ -16,8 +16,8 @@ import android.widget.ImageView;
 public class InfoDialog extends DialogFragment {
 
     public interface InfoDialogListener {
-        public void onDialogOkClick(DialogFragment dialog);
-        public void onDialogEditClick(DialogFragment dialog);
+        public void onInfoDialogOkClick(DialogFragment dialog);
+        public void onInfoDialogEditClick(DialogFragment dialog);
     }
 
     InfoDialogListener mListener;
@@ -33,13 +33,13 @@ public class InfoDialog extends DialogFragment {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        mListener.onDialogOkClick(InfoDialog.this);
+                        mListener.onInfoDialogOkClick(InfoDialog.this);
                     }
                 })
                 .setNegativeButton("EDIT", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        mListener.onDialogEditClick(InfoDialog.this);
+                        mListener.onInfoDialogEditClick(InfoDialog.this);
                     }
                 });
 

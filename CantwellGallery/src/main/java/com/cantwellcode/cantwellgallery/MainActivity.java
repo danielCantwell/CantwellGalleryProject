@@ -215,8 +215,8 @@ public class MainActivity extends FragmentActivity
     }
 
     public void menuClickSettings() {
-        Toast settings = Toast.makeText(this, "Settings", Toast.LENGTH_SHORT);
-        settings.show();
+        SettingsDialog settingsDialog = new SettingsDialog();
+        settingsDialog.show(getSupportFragmentManager(), "fragment_settings");
     }
 
     public void menuClickHelp() {
@@ -234,12 +234,12 @@ public class MainActivity extends FragmentActivity
      ********************************/
 
     @Override
-    public void onDialogOkClick(DialogFragment dialog) {
+    public void onInfoDialogOkClick(DialogFragment dialog) {
         dialog.getDialog().cancel();
     }
 
     @Override
-    public void onDialogEditClick(DialogFragment dialog) {
+    public void onInfoDialogEditClick(DialogFragment dialog) {
         /*
         findViewById(R.id.dialog_edit_name).setFocusable(true);
         findViewById(R.id.dialog_edit_name).setClickable(true);
