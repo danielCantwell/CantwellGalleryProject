@@ -12,9 +12,9 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Change Slide Color Button"
+        android:text="Change Slide Bar Color"
         android:id="@+id/settingsButtonChangeColor"
-        android:textColor="@android:color/holo_blue_bright" />
+        android:textColor="@android:color/white" />
 
     <Button
         android:layout_width="match_parent"
@@ -22,5 +22,5 @@
         android:text="Change Default Album"
         android:id="@+id/settingsButtonChangeDefaultAlbum"
         android:layout_gravity="center"
-        android:textColor="@android:color/holo_blue_bright" />
+        android:textColor="@android:color/white" />
 </LinearLayout>
