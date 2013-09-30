@@ -3,6 +3,7 @@ package com.cantwellcode.cantwellgallery;
 import android.app.DialogFragment;
 import android.content.ClipDescription;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -28,8 +29,11 @@ public class MainActivity extends FragmentActivity
     private DirectoryFragment       mDirectoryFragment;
     private ImageView               mUtilityBarDeleteView;
     private ImageView               mUtilityBarInfoView;
+    private ImageView               mChangeViewButton;
     private DatabaseContentHandler  mDatabaseContentHandler;
     private DatabaseMaster          mDatabaseMaster;
+
+    private String mViewStyle;
 
 
     @Override
@@ -55,6 +59,16 @@ public class MainActivity extends FragmentActivity
         mUtilityBarInfoView   = (ImageView) findViewById(R.id.utilityBarInfoView);
         setupDrop(mUtilityBarDeleteView);
         setupDrop(mUtilityBarInfoView);
+
+        mChangeViewButton = (ImageView) findViewById(R.id.changeContentViewButton);
+        mChangeViewButton.setImageResource(R.drawable.ic_view_as_list);
+        mViewStyle = "LIST";
+        mChangeViewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchViewStyle(mChangeViewButton);
+            }
+        });
 
         final SlidingPane slidingPaneLayout = SlidingPane.class.cast(root.findViewById(R.id.slidingpanelayout));
 
@@ -250,5 +264,19 @@ public class MainActivity extends FragmentActivity
         findViewById(R.id.dialog_edit_description).setFocusable(true);
         findViewById(R.id.dialog_edit_description).setClickable(true);
         */
+    }
+
+    /************************************
+     *      List/Grid View Button       *
+     ************************************/
+
+    public void switchViewStyle(ImageView imageView) {
+        if (mViewStyle == "GRID") {
+            imageView.setImageResource(R.drawable.ic_view_as_list);
+            mViewStyle = "LIST";
+        } else if (mViewStyle == "LIST") {
+            imageView.setImageResource(R.drawable.ic_view_as_grid);
+            mViewStyle = "GRID";
+        }
     }
 }
