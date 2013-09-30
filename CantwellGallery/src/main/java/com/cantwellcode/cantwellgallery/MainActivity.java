@@ -33,8 +33,6 @@ public class MainActivity extends FragmentActivity
     private DatabaseContentHandler  mDatabaseContentHandler;
     private DatabaseMaster          mDatabaseMaster;
 
-    private String mViewStyle;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,16 +57,6 @@ public class MainActivity extends FragmentActivity
         mUtilityBarInfoView   = (ImageView) findViewById(R.id.utilityBarInfoView);
         setupDrop(mUtilityBarDeleteView);
         setupDrop(mUtilityBarInfoView);
-
-        mChangeViewButton = (ImageView) findViewById(R.id.changeContentViewButton);
-        mChangeViewButton.setImageResource(R.drawable.ic_view_as_list);
-        mViewStyle = "LIST";
-        mChangeViewButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switchViewStyle(mChangeViewButton);
-            }
-        });
 
         final SlidingPane slidingPaneLayout = SlidingPane.class.cast(root.findViewById(R.id.slidingpanelayout));
 
@@ -254,29 +242,7 @@ public class MainActivity extends FragmentActivity
 
     @Override
     public void onInfoDialogEditClick(DialogFragment dialog) {
-        /*
-        findViewById(R.id.dialog_edit_name).setFocusable(true);
-        findViewById(R.id.dialog_edit_name).setClickable(true);
-
-        findViewById(R.id.dialog_edit_date).setFocusable(true);
-        findViewById(R.id.dialog_edit_date).setClickable(true);
-
-        findViewById(R.id.dialog_edit_description).setFocusable(true);
-        findViewById(R.id.dialog_edit_description).setClickable(true);
-        */
+        dialog.getDialog().cancel();
     }
 
-    /************************************
-     *      List/Grid View Button       *
-     ************************************/
-
-    public void switchViewStyle(ImageView imageView) {
-        if (mViewStyle == "GRID") {
-            imageView.setImageResource(R.drawable.ic_view_as_list);
-            mViewStyle = "LIST";
-        } else if (mViewStyle == "LIST") {
-            imageView.setImageResource(R.drawable.ic_view_as_grid);
-            mViewStyle = "GRID";
-        }
-    }
 }

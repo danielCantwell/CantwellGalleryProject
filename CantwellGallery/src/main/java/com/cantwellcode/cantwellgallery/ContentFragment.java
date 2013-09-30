@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +35,9 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
     private ListView                mListView;
     private ImageCursorAdapter      mListAdapter;
     private TextView                mTextView;
+    private ImageView               mChangeViewButton;
     private String                  mName;
+    private String                  mViewStyle;
 
     private SwipeListViewDetect     swipeDetect;
 
@@ -85,6 +88,16 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
 
         setupDrag(mListView);
         setupSwipe(mListView);
+
+        mChangeViewButton = (ImageView) root.findViewById(R.id.changeContentViewButton);
+        mChangeViewButton.setImageResource(R.drawable.ic_view_as_list);
+        mViewStyle = "LIST";
+        mChangeViewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchViewStyle(mChangeViewButton);
+            }
+        });
 
         return root;
     }
@@ -155,6 +168,20 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
             e.printStackTrace();
         }
         return path;
+    }
+
+    /************************************
+     *      List/Grid View Button       *
+     ************************************/
+
+    public void switchViewStyle(ImageView imageView) {
+        if (mViewStyle == "GRID") {
+            imageView.setImageResource(R.drawable.ic_view_as_list);
+            mViewStyle = "LIST";
+        } else if (mViewStyle == "LIST") {
+            imageView.setImageResource(R.drawable.ic_view_as_grid);
+            mViewStyle = "GRID";
+        }
     }
 
 }
