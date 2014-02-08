@@ -20,7 +20,8 @@ import android.widget.Toast;
  * Main Activity that is first loaded when the application starts
  */
 public class MainActivity extends FragmentActivity
-        implements TargetBar.Callbacks, DatabaseMaster.Callbacks, DatabaseContentHandler.Callbacks, InfoDialog.InfoDialogListener {
+        implements TargetBar.Callbacks, DatabaseMaster.Callbacks, DatabaseContentHandler.Callbacks,
+        InfoDialog.InfoDialogListener, ColorPickerDialog.ColorDialogListener, SettingsDialog.SettingsDialogListener {
 
     private static final String TAG                     = "MAIN ACTIVITY";
 
@@ -218,7 +219,7 @@ public class MainActivity extends FragmentActivity
 
     public void menuClickSettings() {
         SettingsDialog settingsDialog = new SettingsDialog();
-        settingsDialog.show(getSupportFragmentManager(), "fragment_settings");
+        settingsDialog.show(getFragmentManager(), "fragment_settings");
     }
 
     public void menuClickHelp() {
@@ -245,4 +246,29 @@ public class MainActivity extends FragmentActivity
         dialog.getDialog().cancel();
     }
 
+
+    /**********************************
+     *       Color Picker Dialog      *
+     **********************************/
+
+    @Override
+    public void onColorDialogOkClick(DialogFragment dialog) {
+
+    }
+
+    @Override
+    public void onColorDialogCancelClick(DialogFragment dialog) {
+
+    }
+
+    /******************************
+     *       Settings Dialog      *
+     ******************************/
+
+    @Override
+    public void onSettingsDialogColorClick(DialogFragment dialog) {
+        dialog.dismiss();
+        DialogFragment colorPickerDialog = new ColorPickerDialog();
+        colorPickerDialog.show(getFragmentManager(), "fragment_colorpicker");
+    }
 }
