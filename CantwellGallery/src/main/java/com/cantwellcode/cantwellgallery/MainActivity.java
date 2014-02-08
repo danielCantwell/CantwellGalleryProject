@@ -252,12 +252,13 @@ public class MainActivity extends FragmentActivity
      **********************************/
 
     @Override
-    public void onColorDialogOkClick(DialogFragment dialog) {
-
+    public void onColorDialogOkClick(ColorPickerDialog dialog) {
+        mContentFragment.setSlideBarColor(Integer.parseInt(dialog.rValue.getText().toString()),
+                Integer.parseInt(dialog.gValue.getText().toString()), Integer.parseInt(dialog.bValue.getText().toString()));
     }
 
     @Override
-    public void onColorDialogCancelClick(DialogFragment dialog) {
+    public void onColorDialogCancelClick(ColorPickerDialog dialog) {
 
     }
 

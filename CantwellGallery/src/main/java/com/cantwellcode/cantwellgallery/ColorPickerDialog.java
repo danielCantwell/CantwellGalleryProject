@@ -19,8 +19,8 @@ import android.widget.TextView;
 public class ColorPickerDialog extends DialogFragment {
 
     public interface ColorDialogListener {
-        public void onColorDialogOkClick(DialogFragment dialog);
-        public void onColorDialogCancelClick(DialogFragment dialog);
+        public void onColorDialogOkClick(ColorPickerDialog dialog);
+        public void onColorDialogCancelClick(ColorPickerDialog dialog);
     }
 
     ColorDialogListener mListener;

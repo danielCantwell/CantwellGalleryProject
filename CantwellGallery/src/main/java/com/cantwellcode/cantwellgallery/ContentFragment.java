@@ -7,6 +7,7 @@ import android.app.DialogFragment;
 import android.content.ClipData;
 import android.content.DialogInterface;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -36,6 +37,7 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
     private ImageCursorAdapter      mListAdapter;
     private TextView                mTextView;
     private ImageView               mChangeViewButton;
+    private ImageView               mSlideBar;
     private String                  mName;
     private String                  mViewStyle;
 
@@ -73,6 +75,8 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
         mTextView = (TextView) root.findViewById(R.id.contentPaneHeader);
         if (mName == null) mTextView.setText(DEFAULT_LABEL);
         else mTextView.setText(mName);
+
+        mSlideBar = (ImageView) root.findViewById(R.id.contentPaneDragArea);
 
         mListView = (ListView) root.findViewById(R.id.contentPaneListView);
         mListView.setAdapter(mListAdapter);
@@ -182,6 +186,10 @@ public class ContentFragment extends Fragment implements DatabaseContentHandler 
             imageView.setImageResource(R.drawable.ic_view_as_grid);
             mViewStyle = "GRID";
         }
+    }
+
+    public void setSlideBarColor(int red, int green, int blue) {
+        mSlideBar.setBackgroundColor(Color.rgb(red, green, blue));
     }
 
 }
