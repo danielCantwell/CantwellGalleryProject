@@ -52,7 +52,7 @@ public class InfoDialog extends DialogFragment {
         } catch (ClassCastException e) {
             // If the activity doesn't implement the interface, throw exception
             throw new ClassCastException(activity.toString()
-                    + " must implement NoticeDialogListener");
+                    + " must implement InfoDialogListener");
         }
     }
 }

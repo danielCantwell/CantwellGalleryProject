@@ -253,6 +253,7 @@ public class MainActivity extends FragmentActivity
 
     @Override
     public void onColorDialogOkClick(ColorPickerDialog dialog) {
+        // get the values from the color picker and pass it to the content fragment
         mContentFragment.setSlideBarColor(Integer.parseInt(dialog.rValue.getText().toString()),
                 Integer.parseInt(dialog.gValue.getText().toString()), Integer.parseInt(dialog.bValue.getText().toString()));
     }
